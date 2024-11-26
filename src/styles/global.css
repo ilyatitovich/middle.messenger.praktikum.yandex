@@ -1,0 +1,31 @@
+@import './fonts.css';
+@import './theme.css';
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  scroll-behavior: smooth;
+  line-height: 1.5;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  overflow-x: hidden;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+a {
+  color: currentColor;
+  /* text-decoration: none; */
+}
