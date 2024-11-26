@@ -28,33 +28,33 @@
 
 1. Клонируйте репозиторий:
 
-```bash
-git clone https://github.com/ilyatitovich/middle.messenger.praktikum.yandex.git
-```
+   ```bash
+   git clone https://github.com/ilyatitovich/middle.messenger.praktikum.yandex.git
+   ```
 
 2. Перейдите в папку с проектом:
 
-```bash
-cd y-chat
-```
+   ```bash
+   cd y-chat
+   ```
 
 3. Установите зависимости:
 
-```bash
-npm install
-```
+   ```bash
+   npm install
+   ```
 
 4. Запустите приложение:
 
-```bash
-npm run start
-```
+   ```bash
+   npm run start
+   ```
 
 5. Запуск в режиме разработки:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
 ## Live версия
 
