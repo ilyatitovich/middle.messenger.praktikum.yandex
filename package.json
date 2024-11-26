@@ -30,5 +30,8 @@
     "postcss": "^8.4.49",
     "typescript": "^5.7.2",
     "vite": "^6.0.0"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.8"
   }
 }

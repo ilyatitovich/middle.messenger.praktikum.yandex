@@ -1,4 +1,7 @@
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-   Привет Яндекс.Практикум!
-  </div`
+import Handlebars from 'handlebars'
+
+import homePage from './pages/home'
+
+const template = Handlebars.compile(homePage)
+
+document.querySelector<HTMLDivElement>('#app')!.innerHTML = template({})
