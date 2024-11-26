@@ -8,6 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
     "build": "tsc && vite build",
+    "start": "tsc && vite build && node server.cjs",
     "preview": "vite preview"
   },
   "engines": {
@@ -25,13 +26,13 @@
   },
   "homepage": "https://github.com/ilyatitovich/middle.messenger.praktikum.yandex#readme",
   "devDependencies": {
-    "@types/node": "^22.10.0",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "typescript": "^5.7.2",
     "vite": "^6.0.0"
   },
   "dependencies": {
+    "express": "^4.21.1",
     "handlebars": "^4.7.8"
   }
 }
