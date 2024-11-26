@@ -12,3 +12,7 @@ npm-debug.log*
 .env
 .env.production
 
+#formating
+.vscode
+.prettierrc
+.editorconfig
