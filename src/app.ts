@@ -73,8 +73,8 @@ export default class App {
     this.render()
   }
 
-  showPage(page: string, options: Record<string, string> = {}): void {
+  showPage(page: string, props: Record<string, string> = {}): void {
     const template = compile(page)
-    this.appElement!.innerHTML = template(options)
+    this.appElement!.innerHTML = template(props)
   }
 }
