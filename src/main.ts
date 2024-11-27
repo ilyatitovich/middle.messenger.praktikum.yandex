@@ -1,7 +1,7 @@
 import './styles/global.css'
-import Handlebars from 'handlebars'
-import homePage from './pages/home'
+import App from './app'
 
-const template = Handlebars.compile(homePage)
-
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = template({})
+window.addEventListener('DOMContentLoaded', () => {
+  const app = new App()
+  app.render()
+})
