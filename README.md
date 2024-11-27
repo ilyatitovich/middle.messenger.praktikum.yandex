@@ -22,7 +22,7 @@
 
 ## Дизайн
 
-[Дизайн приложения выполнен в редакторе Figma](https://figma.com)
+[Дизайн приложения выполнен в редакторе Figma](https://www.figma.com/design/zfqizT8NEYCLaOUsm95N1k/middle.messenger.praktikum.yandex?node-id=0-1&t=WvK4MT1XLEpIoF7J-1)
 
 ## Локальный запуск
 
