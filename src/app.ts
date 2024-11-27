@@ -30,16 +30,16 @@ export default class App {
       case '/':
         this.showPage(homePage)
         break
-      case 'login':
+      case '/login':
         this.showPage(loginPage)
         break
-      case 'signin':
+      case '/signin':
         this.showPage(signinPage)
         break
-      case 'profile':
+      case '/profile':
         this.showPage(profilePage)
         break
-      case 'chat':
+      case '/chat':
         this.showPage(chatPage)
         break
       default:

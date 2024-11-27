@@ -7,13 +7,23 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1em;
   text-align: center;
+}
+
+.home__header {
+  margin-bottom: 1em;
 }
 
 .home__title {
   width: 100%;
   font-size: 4rem;
+}
+
+.home__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
 }
 
 .home__button {
@@ -22,8 +32,8 @@
   color: white;
   border-radius: 0.25em;
   transition: opacity 0.2s;
-}
 
-.home__button:hover {
-  opacity: 0.9;
+  &:hover {
+    opacity: 0.9;
+  }
 }
