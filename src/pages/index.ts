@@ -1,8 +1,8 @@
 import homePage from './home'
-import loginPage from './login'
+import signInPage from './signin'
 import profilePage from './profile'
-import signinPage from './signin'
+import signUpPage from './signup'
 import chatPage from './chat'
 import errorPage from './error'
 
-export { homePage, loginPage, profilePage, signinPage, chatPage, errorPage }
+export { homePage, signInPage, profilePage, signUpPage, chatPage, errorPage }

@@ -1,8 +1,8 @@
 import { compile } from 'handlebars'
 import {
   homePage,
-  loginPage,
-  signinPage,
+  signInPage,
+  signUpPage,
   profilePage,
   chatPage,
   errorPage
@@ -30,11 +30,11 @@ export default class App {
       case '/':
         this.showPage(homePage)
         break
-      case '/login':
-        this.showPage(loginPage)
-        break
       case '/signin':
-        this.showPage(signinPage)
+        this.showPage(signInPage)
+        break
+      case '/signup':
+        this.showPage(signUpPage)
         break
       case '/profile':
         this.showPage(profilePage)

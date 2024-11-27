@@ -30,3 +30,17 @@ a {
   color: currentColor;
   text-decoration: none;
 }
+
+button {
+  border: none;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+}
