@@ -1,8 +1,8 @@
-import error404Page from './404'
 import homePage from './home'
 import loginPage from './login'
 import profilePage from './profile'
 import signinPage from './signin'
 import chatPage from './chat'
+import errorPage from './error'
 
-export { error404Page, homePage, loginPage, profilePage, signinPage, chatPage }
+export { homePage, loginPage, profilePage, signinPage, chatPage, errorPage }

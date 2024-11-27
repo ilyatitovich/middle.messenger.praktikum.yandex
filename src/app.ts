@@ -1,11 +1,11 @@
 import { compile } from 'handlebars'
 import {
-  error404Page,
   homePage,
   loginPage,
   signinPage,
   profilePage,
-  chatPage
+  chatPage,
+  errorPage
 } from './pages'
 
 type AppElement = HTMLElement | null
@@ -20,7 +20,7 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: '/'
+      currentPage: window.location.pathname
     }
     this.appElement = document.getElementById('app')
   }
@@ -43,7 +43,10 @@ export default class App {
         this.showPage(chatPage)
         break
       default:
-        this.showPage(error404Page)
+        this.showPage(errorPage, {
+          title: '404',
+          description: 'Не туда попали'
+        })
         break
     }
 
@@ -57,9 +60,7 @@ export default class App {
       link.addEventListener('click', (e: MouseEvent) => {
         e.preventDefault()
 
-        const target = e.target as HTMLAnchorElement
-
-        const page = target.dataset.page
+        const page = link.getAttribute('href')
         if (page) {
           this.changePage(page)
         }

@@ -1,0 +1,23 @@
+.error-page {
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.error-page__title {
+  font-size: 3rem;
+}
+
+.error-page__description {
+  font-size: 1.25rem;
+}
+
+.error-page__link {
+  margin-top: 2em;
+  color: var(--primary-color);
+}
