@@ -1,4 +1,7 @@
 @import './home/home.css';
 @import './error/error.css';
-@import './signin/signin.css';
-@import './signup/signup';
+
+.signin,
+.signup {
+  padding: 2em 0;
+}
