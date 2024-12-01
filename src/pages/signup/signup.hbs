@@ -1,3 +1,139 @@
-<main>
-  <h1>signup</h1>
+<main class='signup'>
+  <section class='auth-form__card' aria-labelledby='signup-title'>
+    <h1 id='signup-title' class='auth-form__title'>Регистрация</h1>
+    <form class='auth-form'>
+      <div class='auth-form__field'>
+        <label for='email' class='auth-form__label'>Почта</label>
+        <input
+          type='email'
+          id='email'
+          name='email'
+          class='auth-form__input'
+          placeholder='pochta@yandex.ru'
+          required
+          aria-required='true'
+          aria-describedby='email-error'
+        />
+        <small
+          id='email-error'
+          class='auth-form__validation-error hidden'
+        >Введите корректный адрес электронной почты</small>
+      </div>
+
+      <div class='auth-form__field'>
+        <label for='login' class='auth-form__label'>Логин</label>
+        <input
+          type='text'
+          id='login'
+          name='login'
+          class='auth-form__input'
+          placeholder='ivanivanov'
+          required
+          aria-required='true'
+          aria-describedby='login-error'
+        />
+        <small id='login-error' class='auth-form__validation-error hidden'>Логин
+          обязателен</small>
+      </div>
+
+      <div class='auth-form__field'>
+        <label for='first_name' class='auth-form__label'>Имя</label>
+        <input
+          type='text'
+          id='first_name'
+          name='first_name'
+          class='auth-form__input'
+          placeholder='ivan'
+          required
+          aria-required='true'
+          aria-describedby='first_name-error'
+        />
+        <small
+          id='first_name-error'
+          class='auth-form__validation-error hidden'
+        >Введите имя</small>
+      </div>
+
+      <div class='auth-form__field'>
+        <label for='second_name' class='auth-form__label'>Фамилия</label>
+        <input
+          type='text'
+          id='second_name'
+          name='second_name'
+          class='auth-form__input'
+          placeholder='ivanov'
+          required
+          aria-required='true'
+          aria-describedby='second_name-error'
+        />
+        <small
+          id='second_name-error'
+          class='auth-form__validation-error hidden'
+        >Введите фамилию</small>
+      </div>
+
+      <div class='auth-form__field'>
+        <label for='phone' class='auth-form__label'>Телефон</label>
+        <input
+          type='tel'
+          id='phone'
+          name='phone'
+          class='auth-form__input'
+          placeholder='+7-999-999-99-99'
+          required
+          aria-required='true'
+          aria-describedby='phone-error'
+        />
+        <small
+          id='phone-error'
+          class='auth-form__validation-error hidden'
+        >Введите телефон</small>
+      </div>
+      <div class='auth-form__field'>
+        <label for='password' class='auth-form__label'>Пароль</label>
+        <input
+          type='password'
+          id='password'
+          name='password'
+          class='auth-form__input'
+          placeholder='Пароль'
+          required
+          aria-required='true'
+          aria-describedby='password-error'
+          minlength='8'
+        />
+        <small
+          id='password-error'
+          class='auth-form__validation-error hidden'
+        >Пароль должен содержать не менее 8 символов</small>
+      </div>
+      <div class='auth-form__field'>
+        <label for='password_confirm' class='auth-form__label'>Пароль (еще раз)</label>
+        <input
+          type='password'
+          id='password_confirm'
+          name='password_confirm'
+          class='auth-form__input'
+          placeholder='Повторите пароль'
+          required
+          aria-required='true'
+          aria-describedby='password_confirm-error'
+        />
+        <small
+          id='password_confirm-error'
+          class='auth-form__validation-error hidden'
+        >Пароли должны совпадать</small>
+      </div>
+
+      <button
+        type='submit'
+        class='auth-form__button'
+      >Зарегистрироваться</button>
+    </form>
+    <a
+      href='/signin'
+      class='auth-form__link'
+      aria-label='Перейти к странице входа'
+    >Войти</a>
+  </section>
 </main>
