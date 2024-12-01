@@ -14,13 +14,15 @@ interface AppState {
   currentPage: string
 }
 
+const page = ''
+
 export default class App {
   private state: AppState
   private appElement: AppElement
 
   constructor() {
     this.state = {
-      currentPage: window.location.pathname
+      currentPage: page || window.location.pathname
     }
     this.appElement = document.getElementById('app')
   }
@@ -49,23 +51,6 @@ export default class App {
         })
         break
     }
-
-    this.attachEventListeners()
-  }
-
-  attachEventListeners(): void {
-    const links: NodeListOf<HTMLAnchorElement> = document.querySelectorAll('a')
-
-    links.forEach((link: HTMLAnchorElement) => {
-      link.addEventListener('click', (e: MouseEvent) => {
-        e.preventDefault()
-
-        const page = link.getAttribute('href')
-        if (page) {
-          this.changePage(page)
-        }
-      })
-    })
   }
 
   changePage(page: string): void {

@@ -1,5 +1,6 @@
 @import './home/home.css';
 @import './error/error.css';
+@import './chat/chat.css';
 
 .signin,
 .signup {
