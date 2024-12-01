@@ -1,6 +1,7 @@
 @import './home/home.css';
 @import './error/error.css';
 @import './chat/chat.css';
+@import './profile/profile.css';
 
 .signin,
 .signup {

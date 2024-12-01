@@ -2,5 +2,7 @@
   --primary-color: #4a90e2;
   --background-color: white;
   --text-color: black;
-  --error-color: red;
+  --red-color: red;
+  --light-gray-color: #f0f0f0;
+  --gray-color: #ddd;
 }
