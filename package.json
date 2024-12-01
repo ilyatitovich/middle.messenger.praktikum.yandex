@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "engines": {
-    "node": ">=16.0.0",
+    "node": ">=17.0.0",
     "npm": ">=7.0.0"
   },
   "devDependencies": {
