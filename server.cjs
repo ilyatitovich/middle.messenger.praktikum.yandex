@@ -1,7 +1,3 @@
-if (typeof globalThis.structuredClone !== 'function') {
-  globalThis.structuredClone = obj => JSON.parse(JSON.stringify(obj))
-}
-
 const express = require('express')
 const path = require('path')
 
