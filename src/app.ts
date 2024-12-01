@@ -14,15 +14,13 @@ interface AppState {
   currentPage: string
 }
 
-const page = ''
-
 export default class App {
   private state: AppState
   private appElement: AppElement
 
   constructor() {
     this.state = {
-      currentPage: page || window.location.pathname
+      currentPage: window.location.pathname
     }
     this.appElement = document.getElementById('app')
   }
