@@ -11,14 +11,15 @@
 
 Проект позволяет пользователям общаться через веб-интерфейс, обеспечивая быстрый и безопасный обмен текстовыми сообщениями.
 
-## Стек технологий
+## Список страниц
 
-- JavaScript/TypeScript;
-- CSS;
-- PostCSS;
-- Handlebars;
-- Vite;
-- Express.js.
+- [Домашняя страница](https://y-chat.netlify.app/)
+- [Страница входа](https://y-chat.netlify.app/signin)
+- [Страница регистрации](https://y-chat.netlify.app/signup)
+- [Профиль пользователя](https://y-chat.netlify.app/profile)
+- [404](https://y-chat.netlify.app/404)
+- [500](https://y-chat.netlify.app/500)
+- Чат (в разработке)
 
 ## Дизайн
 
