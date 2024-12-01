@@ -44,6 +44,12 @@ export default class App {
       case '/chat':
         this.showPage(chatPage)
         break
+      case '/500':
+        this.showPage(errorPage, {
+          title: '500',
+          description: 'Мы уже фиксим'
+        })
+        break
       default:
         this.showPage(errorPage, {
           title: '404',
