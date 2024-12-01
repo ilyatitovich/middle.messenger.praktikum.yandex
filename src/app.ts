@@ -64,6 +64,8 @@ export default class App {
 
   showPage(page: string, props: Record<string, string> = {}): void {
     const template = compile(page)
-    this.appElement!.innerHTML = template(props)
+    if (this.appElement) {
+      this.appElement.innerHTML = template(props)
+    }
   }
 }
