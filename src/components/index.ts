@@ -1,8 +1,8 @@
-import profileSidebar from './profile/sidebar'
 import profileAvatar from './profile/avatar'
-import userData from './profile/user-data'
 import changeUserData from './profile/change-data'
 import changeUserPassword from './profile/change-password'
+import profileSidebar from './profile/sidebar'
+import userData from './profile/user-data'
 import userFormField from './user-form-field'
 
 export {

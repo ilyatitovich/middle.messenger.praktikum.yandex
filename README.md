@@ -13,7 +13,7 @@
 
 - [Домашняя страница](https://y-chat.netlify.app/)
 - [Вход](https://y-chat.netlify.app/signin)
-- [Регистрации](https://y-chat.netlify.app/signup)
+- [Регистрация](https://y-chat.netlify.app/signup)
 - [Профиль пользователя](https://y-chat.netlify.app/profile)
 - [Изменить данные](https://y-chat.netlify.app/profile/change-data)
 - [Изменить пароль](https://y-chat.netlify.app/profile/change-password)

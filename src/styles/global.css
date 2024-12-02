@@ -1,5 +1,6 @@
 @import './theme.css';
 @import './form.css';
+@import './utils.css';
 
 *,
 *::before,
@@ -20,58 +21,36 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-a,
-button {
-  cursor: pointer;
-}
-
 a:focus-visible,
-button:focus-visible {
+button:focus-visible,
+input:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
 
 a:focus:not(:focus-visible),
-button:focus:not(:focus-visible) {
+button:focus:not(:focus-visible),
+input:focus:not(:focus-visible) {
   outline: none;
 }
 
 a {
   color: var(--primary-color);
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 button {
+  cursor: pointer;
   border: none;
   background-color: transparent;
-}
-
-main {
-  width: 100%;
-  height: 100%;
 }
 
 #app {
   width: 100%;
   height: 100%;
-}
-
-.is-hidden {
-  display: none;
-}
-
-.is-danger {
-  color: var(--red-color) !important;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  margin: 0 auto;
 }

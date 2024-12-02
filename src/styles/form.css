@@ -21,12 +21,12 @@
 
 .user-form__field {
   position: relative;
-  text-align: left;
+  text-align: start;
 }
 
 .user-form__label {
   display: block;
-  padding-left: 0.1em;
+  padding-inline-start: 0.1em;
   margin-bottom: 0.25em;
   font-size: 0.875rem;
   color: var(--gray-dark-color);
@@ -38,24 +38,19 @@
   border: 1px solid var(--gray-color);
   border-radius: 4px;
   font-size: 1rem;
-
-  &:focus {
-    outline: 2px solid var(--primary-color);
-    outline-offset: 2px;
-  }
 }
 
 .user-form__button {
   margin-top: 2em;
   background-color: var(--primary-color);
-  color: white;
+  color: #ffffff;
   padding: 0.75em;
   border-radius: 4px;
   font-size: 1rem;
   transition: opacity 0.2s;
 
   &:hover {
-    opacity: 0.9;
+    opacity: 90%;
   }
 
   &:active {
@@ -66,10 +61,6 @@
 .user-form__link {
   display: inline-block;
   margin-top: 1em;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .user-form__validation-error {
@@ -79,12 +70,12 @@
 .user-form__password-toggle {
   position: absolute;
   top: 56%;
-  right: 1em;
+  inset-inline-end: 1em;
   width: 20px;
   height: 20px;
 
   & svg {
     fill: var(--gray-dark-color);
-    fill-opacity: 0.7;
+    fill-opacity: 70%;
   }
 }
