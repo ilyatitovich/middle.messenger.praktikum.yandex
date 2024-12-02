@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.cjs",
     "preview": "vite preview",
+    "prepare": "husky",
     "test": "npm-run-all --parallel test:*",
     "format": "npm-run-all --parallel format:*",
     "test:js": "eslint .",
