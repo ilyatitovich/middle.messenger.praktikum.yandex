@@ -12,7 +12,7 @@
 ## Список страниц
 
 - [Домашняя страница](https://y-chat.netlify.app/)
-- [Входа](https://y-chat.netlify.app/signin)
+- [Вход](https://y-chat.netlify.app/signin)
 - [Регистрации](https://y-chat.netlify.app/signup)
 - [Профиль пользователя](https://y-chat.netlify.app/profile)
 - [Изменить данные](https://y-chat.netlify.app/profile/change-data)
