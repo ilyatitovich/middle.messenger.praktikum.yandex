@@ -1,7 +1,5 @@
-<main class='signup'>
-  <section class='user-form__card'>
-    <h1 id="signup-heading" class='user-form__title'>Регистрация</h1>
-    <form class='user-form' aria-labelledby="signup-heading">
+<section class='user-form__card'>
+  <form class='user-form' aria-labelledby="change-data-heading">
 
     {{>
       userFormField
@@ -27,6 +25,7 @@
       errorMessage='Введите логин'
     }}
 
+
     {{>
       userFormField
       label='Имя'
@@ -39,6 +38,7 @@
       errorMessage='Введите имя'
     }}
 
+
     {{>
       userFormField
       label='Фамилия'
@@ -49,6 +49,19 @@
       isRequired=true
       value=secondName
       errorMessage='Введите имя'
+    }}
+
+
+    {{>
+      userFormField
+      label='Имя в чате'
+      id='display_name'
+      name='display_name'
+      type='text'
+      placeholder='Имя в чате'
+      isRequired=true
+      value=displayName
+      errorMessage='Введите имя для отображения в чате'
     }}
 
     {{>
@@ -63,34 +76,6 @@
       errorMessage='Введите телефон'
     }}
 
-    {{>
-      userFormField
-      label='Пароль'
-      type='password'
-      id='password'
-      name='password'
-      placeholder='Пароль'
-      isRequired=true
-      errorMessage='Введите пароль'
-    }}
-
-    {{>
-      userFormField
-      label='Пароль (еще раз)'
-      type='password'
-      id='confirm-password'
-      name='confirmPassword'
-      placeholder='Пароль'
-      isRequired=true
-      errorMessage='Пароли не совпадают'
-    }}
-
-    <button type='submit' class='user-form__button'> Зарегистрироваться</button>
-    </form>
-    <a
-      href='/signin'
-      class='user-form__link'
-      aria-label='Перейти к странице входа'
-    >Войти</a>
-  </section>
-</main>
+    <button type='submit' class='user-form__button'>Сохранить</button>
+  </form>
+</section>

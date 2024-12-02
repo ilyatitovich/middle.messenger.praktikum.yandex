@@ -1,4 +1,4 @@
-import { compile } from 'handlebars'
+import Handlebars from 'handlebars'
 import {
   homePage,
   signInPage,
@@ -8,13 +8,41 @@ import {
   errorPage
 } from './pages'
 
+import {
+  profileAvatar,
+  profileSidebar,
+  userData,
+  changeUserData,
+  changeUserPassword,
+  userFormField
+} from './components'
+
+import { mockUser } from './utils/mock-data'
+
 type AppElement = HTMLElement | null
 
 interface AppState {
   currentPage: string
 }
 
-const page = ''
+Handlebars.registerPartial('profileSidebar', profileSidebar)
+Handlebars.registerPartial('profileAvatar', profileAvatar)
+Handlebars.registerPartial('userData', userData)
+Handlebars.registerPartial('changeUserData', changeUserData)
+Handlebars.registerPartial('changeUserPassword', changeUserPassword)
+Handlebars.registerPartial('userFormField', userFormField)
+
+Handlebars.registerHelper(
+  'ifEquals',
+  function (
+    this: Record<string, unknown>,
+    arg1: unknown,
+    arg2: unknown,
+    options: Handlebars.HelperOptions
+  ) {
+    return arg1 === arg2 ? options.fn(this) : options.inverse(this)
+  }
+)
 
 export default class App {
   private state: AppState
@@ -22,12 +50,20 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: page || window.location.pathname
+      currentPage: window.location.pathname
     }
     this.appElement = document.getElementById('app')
   }
 
   render(): void {
+    if (this.state.currentPage.startsWith('/profile')) {
+      this.showPage(profilePage, {
+        route: this.state.currentPage,
+        user: mockUser as unknown as string
+      })
+      return
+    }
+
     switch (this.state.currentPage) {
       case '/':
         this.showPage(homePage)
@@ -38,21 +74,18 @@ export default class App {
       case '/signup':
         this.showPage(signUpPage)
         break
-      case '/profile':
-        this.showPage(profilePage)
-        break
       case '/chat':
         this.showPage(chatPage)
         break
       case '/500':
         this.showPage(errorPage, {
-          title: '500',
+          code: '500',
           description: 'Мы уже фиксим'
         })
         break
       default:
         this.showPage(errorPage, {
-          title: '404',
+          code: '404',
           description: 'Не туда попали'
         })
         break
@@ -65,7 +98,9 @@ export default class App {
   }
 
   showPage(page: string, props: Record<string, string> = {}): void {
-    const template = compile(page)
-    this.appElement!.innerHTML = template(props)
+    const template = Handlebars.compile(page)
+    if (this.appElement) {
+      this.appElement.innerHTML = template(props)
+    }
   }
 }

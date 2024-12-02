@@ -1,6 +1,5 @@
 @import './theme.css';
 @import './form.css';
-@import '../pages/pages.css';
 
 *,
 *::before,
@@ -13,7 +12,6 @@
 html,
 body {
   width: 100vw;
-  height: 100vh;
   scroll-behavior: smooth;
   line-height: 1.5;
   color: var(--text-color);
@@ -39,7 +37,7 @@ button:focus:not(:focus-visible) {
 }
 
 a {
-  color: currentColor;
+  color: var(--primary-color);
   text-decoration: none;
 }
 
@@ -63,7 +61,7 @@ main {
 }
 
 .is-danger {
-  color: var(--red-color);
+  color: var(--red-color) !important;
 }
 
 .sr-only {

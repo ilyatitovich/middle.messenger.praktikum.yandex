@@ -9,8 +9,8 @@
   gap: 1em;
 }
 
-.error-page__title {
-  font-size: 3rem;
+.error-page__code {
+  font-size: 8rem;
 }
 
 .error-page__description {
@@ -18,6 +18,10 @@
 }
 
 .error-page__link {
-  margin-top: 2em;
+  margin-top: 1em;
   color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
