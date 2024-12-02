@@ -7,7 +7,7 @@
       <h1 class='profile__heading'>{{user.displayName}}</h1>
     </header>
     {{>
-      userInfo
+      userData
       email=user.email
       login=user.login
       firstName=user.firstName
@@ -24,7 +24,7 @@
       <main class='profile__main'>
         <header class='profile__header'>
           {{> profileAvatar isEditable=true imgSrc=user.avatar}}
-          <h1 class='profile__heading'>Изменить данные</h1>
+          <h1 id="change-data-heading" class='profile__heading'>Изменить данные</h1>
         </header>
         {{>
           changeUserData
@@ -43,7 +43,7 @@
       <main class='profile__main'>
         <header class='profile__header'>
           {{> profileAvatar imgSrc=user.avatar }}
-          <h1 class='profile__heading'>Изменить пароль</h1>
+          <h1 id="change-password-heading" class='profile__heading'>Изменить пароль</h1>
         </header>
         {{> changeUserPassword}}
     </main>

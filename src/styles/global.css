@@ -61,7 +61,7 @@ main {
 }
 
 .is-danger {
-  color: var(--red-color);
+  color: var(--red-color) !important;
 }
 
 .sr-only {

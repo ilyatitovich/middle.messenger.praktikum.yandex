@@ -1,10 +1,10 @@
 <main class='signup'>
-  <section class='auth-form__card'>
-    <h1 class='auth-form__title'>Регистрация</h1>
-    <form class='auth-form'>
+  <section class='user-form__card'>
+    <h1 id="signup-heading" class='user-form__title'>Регистрация</h1>
+    <form class='user-form' aria-labelledby="signup-heading">
 
     {{>
-      formField
+      userFormField
       label='Почта'
       id='email'
       name='email'
@@ -16,7 +16,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Логин'
       id='login'
       name='login'
@@ -28,7 +28,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Имя'
       id='first_name'
       name='first_name'
@@ -40,7 +40,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Фамилия'
       id='second_name'
       name='second_name'
@@ -52,7 +52,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Телефон'
       id='phone'
       name='phone'
@@ -64,7 +64,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Пароль'
       type='password'
       id='password'
@@ -75,7 +75,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Пароль (еще раз)'
       type='password'
       id='confirm-password'
@@ -85,11 +85,11 @@
       errorMessage='Пароли не совпадают'
     }}
 
-    <button type='submit' class='auth-form__button'> Зарегистрироваться</button>
+    <button type='submit' class='user-form__button'> Зарегистрироваться</button>
     </form>
     <a
       href='/signin'
-      class='auth-form__link'
+      class='user-form__link'
       aria-label='Перейти к странице входа'
     >Войти</a>
   </section>

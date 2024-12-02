@@ -1,15 +1,15 @@
 import profileSidebar from './profile/sidebar'
 import profileAvatar from './profile/avatar'
-import userInfo from './profile/user-info'
+import userData from './profile/user-data'
 import changeUserData from './profile/change-data'
 import changeUserPassword from './profile/change-password'
-import formField from './form-field'
+import userFormField from './user-form-field'
 
 export {
   profileAvatar,
   profileSidebar,
-  userInfo,
+  userData,
   changeUserData,
   changeUserPassword,
-  formField
+  userFormField
 }

@@ -1,8 +1,8 @@
-<section class='auth-form__card'>
-  <form class='auth-form'>
+<section class='user-form__card'>
+  <form class='user-form' aria-labelledby="change-data-heading">
 
     {{>
-      formField
+      userFormField
       label='Почта'
       id='email'
       name='email'
@@ -14,7 +14,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Логин'
       id='login'
       name='login'
@@ -27,7 +27,7 @@
 
 
     {{>
-      formField
+      userFormField
       label='Имя'
       id='first_name'
       name='first_name'
@@ -40,7 +40,7 @@
 
 
     {{>
-      formField
+      userFormField
       label='Фамилия'
       id='second_name'
       name='second_name'
@@ -53,7 +53,7 @@
 
 
     {{>
-      formField
+      userFormField
       label='Имя в чате'
       id='display_name'
       name='display_name'
@@ -65,7 +65,7 @@
     }}
 
     {{>
-      formField
+      userFormField
       label='Телефон'
       id='phone'
       name='phone'
@@ -76,6 +76,6 @@
       errorMessage='Введите телефон'
     }}
 
-    <button type='submit' class='auth-form__button'>Сохранить</button>
+    <button type='submit' class='user-form__button'>Сохранить</button>
   </form>
 </section>

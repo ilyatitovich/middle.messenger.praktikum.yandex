@@ -1,50 +1,51 @@
-.auth-form__card {
+.user-form__card {
   width: 100%;
   height: 100%;
   margin: 0 auto;
-  background-color: #fff;
   border-radius: 8px;
   padding: 1em 2em;
   max-width: 400px;
   text-align: center;
 }
 
-.auth-form {
+.user-form {
   display: flex;
   flex-direction: column;
   gap: 1.25em;
 }
 
-.auth-form__title {
+.user-form__title {
   font-size: 1.5rem;
   margin-bottom: 1em;
 }
 
-.auth-form__field {
+.user-form__field {
+  position: relative;
   text-align: left;
 }
 
-.auth-form__label {
+.user-form__label {
   display: block;
+  padding-left: 0.1em;
   margin-bottom: 0.25em;
   font-size: 0.875rem;
-  color: #555;
+  color: var(--gray-dark-color);
 }
 
-.auth-form__input {
+.user-form__input {
   width: 100%;
   padding: 0.75em;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gray-color);
   border-radius: 4px;
   font-size: 1rem;
 
   &:focus {
-    border-color: #007bff;
-    outline: none;
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
   }
 }
 
-.auth-form__button {
+.user-form__button {
   margin-top: 2em;
   background-color: var(--primary-color);
   color: white;
@@ -56,9 +57,13 @@
   &:hover {
     opacity: 0.9;
   }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
 
-.auth-form__link {
+.user-form__link {
   display: inline-block;
   margin-top: 1em;
 
@@ -67,6 +72,19 @@
   }
 }
 
-.auth-form__validation-error {
+.user-form__validation-error {
   color: var(--red-color);
+}
+
+.user-form__password-toggle {
+  position: absolute;
+  top: 56%;
+  right: 1em;
+  width: 20px;
+  height: 20px;
+
+  & svg {
+    fill: var(--gray-dark-color);
+    fill-opacity: 0.7;
+  }
 }

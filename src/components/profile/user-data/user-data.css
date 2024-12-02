@@ -14,7 +14,7 @@
 }
 
 .profile__action {
-  margin-top: 1em;
+  margin-top: 0.5em;
   display: block;
   font-size: inherit;
   color: var(--primary-color);

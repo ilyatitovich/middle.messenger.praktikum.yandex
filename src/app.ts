@@ -11,10 +11,10 @@ import {
 import {
   profileAvatar,
   profileSidebar,
-  userInfo,
+  userData,
   changeUserData,
   changeUserPassword,
-  formField
+  userFormField
 } from './components'
 
 import { mockUser } from './utils/mock-data'
@@ -27,10 +27,10 @@ interface AppState {
 
 Handlebars.registerPartial('profileSidebar', profileSidebar)
 Handlebars.registerPartial('profileAvatar', profileAvatar)
-Handlebars.registerPartial('userInfo', userInfo)
+Handlebars.registerPartial('userData', userData)
 Handlebars.registerPartial('changeUserData', changeUserData)
 Handlebars.registerPartial('changeUserPassword', changeUserPassword)
-Handlebars.registerPartial('formField', formField)
+Handlebars.registerPartial('userFormField', userFormField)
 
 Handlebars.registerHelper(
   'ifEquals',

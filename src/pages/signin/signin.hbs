@@ -1,10 +1,10 @@
 <main class='signin'>
-  <section class='auth-form__card'>
-    <h1 class='auth-form__title'>Вход</h1>
-    <form class='auth-form'>
+  <section class='user-form__card'>
+    <h1 id="signin-heading" class='user-form__title'>Вход</h1>
+    <form class='user-form' aria-labelledby="signin-heading">
 
       {{>
-        formField
+        userFormField
         label='Логин'
         id='login'
         name='login'
@@ -15,7 +15,7 @@
       }}
 
       {{>
-        formField
+        userFormField
         label='Пароль'
         type='password'
         id='password'
@@ -25,11 +25,11 @@
         errorMessage='Неверный логин или пароль'
       }}
 
-      <button type='submit' class='auth-form__button'>Войти</button>
+      <button type='submit' class='user-form__button'>Войти</button>
     </form>
     <a
       href='/signup'
-      class='auth-form__link'
+      class='user-form__link'
       aria-label='Перейти к странице регистрации'
     >Зарегистрироваться</a>
   </section>
