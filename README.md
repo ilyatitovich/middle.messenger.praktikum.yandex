@@ -58,4 +58,3 @@
 ## Live версия
 
 [Проект развернут на сервере Netlify](https://y-chat.netlify.app/)
-
