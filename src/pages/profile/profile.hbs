@@ -1,71 +1,51 @@
 <div class='profile'>
-  <aside class='profile__sidebar'>
-    <a href='/chat' class='profile__back-button' aria-label='Назад к чатам'>
-      <span class='sr-only'>Назад к чатам</span>
-      <svg
-        class='profile__back-icon'
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 448 512'
-        aria-hidden='true'
-      ><path
-          d='M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z'
-        /></svg>
-    </a>
-  </aside>
+  {{#ifEquals route '/profile'}}
+    {{> profileSidebar label="Назад к чатам" backUrl='/chat'}}
   <main class='profile__main'>
-
     <header class='profile__header'>
-      <button
-        type='button'
-        class='profile__avatar'
-        aria-label='Поменять аватар'
-      >
-        <img
-          src='https://robohash.org/username'
-          alt='Аватар пользователя'
-          class='profile__avatar-image'
-        />
-      </button>
-      <h1 class='profile__name'>Илья</h1>
+      {{> profileAvatar isEditable=true imgSrc=user.avatar}}
+      <h1 class='profile__heading'>{{user.displayName}}</h1>
     </header>
-
-    <section class='profile__details'>
-      <dl class='profile__info'>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Почта</dt>
-          <dd class='profile__info-value'>pochta@yandex.ru</dd>
-        </div>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Логин</dt>
-          <dd class='profile__info-value'>ilyatitov</dd>
-        </div>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Имя</dt>
-          <dd class='profile__info-value'>Илья</dd>
-        </div>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Фамилия</dt>
-          <dd class='profile__info-value'>Титов</dd>
-        </div>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Имя в чате</dt>
-          <dd class='profile__info-value'>ilya_titov</dd>
-        </div>
-        <div class='profile__info-row'>
-          <dt class='profile__info-label'>Телефон</dt>
-          <dd class='profile__info-value'>+7 (999) 999 99 99</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class='profile__actions'>
-      <button type='button' class='profile__action'>Изменить данные</button>
-      <button type='button' class='profile__action'>Изменить пароль</button>
-      <a
-        href='/signin'
-        class='profile__action is-danger'
-        aria-label='Выйти из профиля'
-      >Выйти</a>
-    </section>
+    {{>
+      userInfo
+      email=user.email
+      login=user.login
+      firstName=user.firstName
+      secondName=user.secondName
+      displayName=user.displayName
+      phone=user.phone
+    }}
   </main>
+  {{/ifEquals }}
+
+
+  {{#ifEquals route '/profile/change-data'}}
+    {{> profileSidebar label="Назад к профилю" backUrl='/profile'}}
+      <main class='profile__main'>
+        <header class='profile__header'>
+          {{> profileAvatar isEditable=true imgSrc=user.avatar}}
+          <h1 class='profile__heading'>Изменить данные</h1>
+        </header>
+        {{>
+          changeUserData
+          email=user.email
+          login=user.login
+          firstName=user.firstName
+          secondName=user.secondName
+          displayName=user.displayName
+          phone=user.phone
+        }}
+    </main>
+  {{/ifEquals }}
+
+  {{#ifEquals route '/profile/change-password'}}
+    {{> profileSidebar label="Назад к профилю" backUrl='/profile'}}
+      <main class='profile__main'>
+        <header class='profile__header'>
+          {{> profileAvatar imgSrc=user.avatar }}
+          <h1 class='profile__heading'>Изменить пароль</h1>
+        </header>
+        {{> changeUserPassword}}
+    </main>
+  {{/ifEquals }}
 </div>

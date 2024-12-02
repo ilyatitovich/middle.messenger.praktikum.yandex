@@ -1,7 +1,5 @@
-<main class='signup'>
-  <section class='auth-form__card'>
-    <h1 class='auth-form__title'>Регистрация</h1>
-    <form class='auth-form'>
+<section class='auth-form__card'>
+  <form class='auth-form'>
 
     {{>
       formField
@@ -27,6 +25,7 @@
       errorMessage='Введите логин'
     }}
 
+
     {{>
       formField
       label='Имя'
@@ -39,6 +38,7 @@
       errorMessage='Введите имя'
     }}
 
+
     {{>
       formField
       label='Фамилия'
@@ -49,6 +49,19 @@
       isRequired=true
       value=secondName
       errorMessage='Введите имя'
+    }}
+
+
+    {{>
+      formField
+      label='Имя в чате'
+      id='display_name'
+      name='display_name'
+      type='text'
+      placeholder='Имя в чате'
+      isRequired=true
+      value=displayName
+      errorMessage='Введите имя для отображения в чате'
     }}
 
     {{>
@@ -63,34 +76,6 @@
       errorMessage='Введите телефон'
     }}
 
-    {{>
-      formField
-      label='Пароль'
-      type='password'
-      id='password'
-      name='password'
-      placeholder='Пароль'
-      isRequired=true
-      errorMessage='Введите пароль'
-    }}
-
-    {{>
-      formField
-      label='Пароль (еще раз)'
-      type='password'
-      id='confirm-password'
-      name='confirmPassword'
-      placeholder='Пароль'
-      isRequired=true
-      errorMessage='Пароли не совпадают'
-    }}
-
-    <button type='submit' class='auth-form__button'> Зарегистрироваться</button>
-    </form>
-    <a
-      href='/signin'
-      class='auth-form__link'
-      aria-label='Перейти к странице входа'
-    >Войти</a>
-  </section>
-</main>
+    <button type='submit' class='auth-form__button'>Сохранить</button>
+  </form>
+</section>

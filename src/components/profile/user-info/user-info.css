@@ -1,0 +1,29 @@
+.profile__details {
+  width: 100%;
+}
+
+.profile__info {
+  width: 100%;
+}
+
+.profile__info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em 0;
+  border-bottom: 1px solid var(--light-gray-color);
+}
+
+.profile__action {
+  margin-top: 1em;
+  display: block;
+  font-size: inherit;
+  color: var(--primary-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+a.profile__action {
+  display: inline-block;
+}

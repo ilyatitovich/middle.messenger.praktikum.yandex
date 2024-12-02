@@ -1,0 +1,22 @@
+<div class="auth-form__field">
+  <label for="{{id}}" class="auth-form__label">{{label}}</label>
+  <input
+    type="{{type}}"
+    id="{{id}}"
+    name="{{name}}"
+    class="auth-form__input"
+    placeholder="{{placeholder}}"
+    {{#if value}}
+      value="{{value}}"
+    {{/if}}
+    {{#if isRequired}}
+      required
+      aria-required="true"
+    {{/if}}
+    aria-describedby="{{name}}-error"
+  />
+  <small id="{{name}}-error" class="auth-form__validation-error is-hidden">
+    {{errorMessage}}
+  </small>
+</div>
+

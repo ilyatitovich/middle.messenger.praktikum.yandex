@@ -1,0 +1,21 @@
+{{#if isEditable}}
+  <button
+    type='button'
+    class='profile-avatar__button'
+    aria-label='Поменять аватар'
+  >
+    <img
+      src={{imgSrc}}
+      alt='Аватар пользователя'
+      class='profile-avatar__image'
+    />
+  </button>
+{{else}}
+  <div class='profile-avatar'>
+    <img
+      src={{imgSrc}}
+      alt='Аватар пользователя'
+      class='profile-avatar__image'
+    />
+  </div>
+{{/if}}

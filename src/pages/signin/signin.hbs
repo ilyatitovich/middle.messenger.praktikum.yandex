@@ -1,40 +1,30 @@
 <main class='signin'>
-  <section class='auth-form__card' aria-labelledby='signin-title'>
-    <h1 id='signin-title' class='auth-form__title'>Вход</h1>
+  <section class='auth-form__card'>
+    <h1 class='auth-form__title'>Вход</h1>
     <form class='auth-form'>
-      <div class='auth-form__field'>
-        <label for='login' class='auth-form__label'>Логин</label>
-        <input
-          type='text'
-          id='login'
-          name='login'
-          class='auth-form__input'
-          placeholder='ivanivanov'
-          required
-          aria-required='true'
-          aria-describedby='login-error'
-        />
-        <small id='login-error' class='auth-form__validation-error hidden'>Логин
-          обязателен</small>
-      </div>
-      <div class='auth-form__field'>
-        <label for='password' class='auth-form__label'>Пароль</label>
-        <input
-          type='password'
-          id='password'
-          name='password'
-          class='auth-form__input'
-          placeholder='Пароль'
-          required
-          aria-required='true'
-          aria-describedby='password-error'
-          minlength='8'
-        />
-        <small
-          id='password-error'
-          class='auth-form__validation-error hidden'
-        >Введите пароль</small>
-      </div>
+
+      {{>
+        formField
+        label='Логин'
+        id='login'
+        name='login'
+        type='text'
+        placeholder='Логин'
+        isRequired=true
+        errorMessage='Введите логин'
+      }}
+
+      {{>
+        formField
+        label='Пароль'
+        type='password'
+        id='password'
+        name='password'
+        placeholder='Пароль'
+        isRequired=true
+        errorMessage='Неверный логин или пароль'
+      }}
+
       <button type='submit' class='auth-form__button'>Войти</button>
     </form>
     <a
