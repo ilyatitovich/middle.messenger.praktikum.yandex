@@ -1,0 +1,81 @@
+<section class='user-form__card'>
+  <form class='user-form' aria-labelledby="change-data-heading">
+
+    {{>
+      userFormField
+      label='Почта'
+      id='email'
+      name='email'
+      type='email'
+      placeholder='Ваш емаил'
+      isRequired=true
+      value=email
+      errorMessage='Введите почту'
+    }}
+
+    {{>
+      userFormField
+      label='Логин'
+      id='login'
+      name='login'
+      type='text'
+      placeholder='Логин'
+      isRequired=true
+      value=login
+      errorMessage='Введите логин'
+    }}
+
+
+    {{>
+      userFormField
+      label='Имя'
+      id='first_name'
+      name='first_name'
+      type='text'
+      placeholder='Ваше имя'
+      isRequired=true
+      value=firstName
+      errorMessage='Введите имя'
+    }}
+
+
+    {{>
+      userFormField
+      label='Фамилия'
+      id='second_name'
+      name='second_name'
+      type='text'
+      placeholder='Ваша фамилия'
+      isRequired=true
+      value=secondName
+      errorMessage='Введите имя'
+    }}
+
+
+    {{>
+      userFormField
+      label='Имя в чате'
+      id='display_name'
+      name='display_name'
+      type='text'
+      placeholder='Имя в чате'
+      isRequired=true
+      value=displayName
+      errorMessage='Введите имя для отображения в чате'
+    }}
+
+    {{>
+      userFormField
+      label='Телефон'
+      id='phone'
+      name='phone'
+      type='tel'
+      placeholder='+7 (999) 999 99 99'
+      isRequired=true
+      value=phone
+      errorMessage='Введите телефон'
+    }}
+
+    <button type='submit' class='user-form__button'>Сохранить</button>
+  </form>
+</section>

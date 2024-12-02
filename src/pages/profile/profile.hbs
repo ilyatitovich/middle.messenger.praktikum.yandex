@@ -1,0 +1,51 @@
+<div class='profile'>
+  {{#ifEquals route '/profile'}}
+    {{> profileSidebar label="Назад к чатам" backUrl='/chat'}}
+  <main class='profile__main'>
+    <header class='profile__header'>
+      {{> profileAvatar isEditable=true imgSrc=user.avatar}}
+      <h1 class='profile__heading'>{{user.displayName}}</h1>
+    </header>
+    {{>
+      userData
+      email=user.email
+      login=user.login
+      firstName=user.firstName
+      secondName=user.secondName
+      displayName=user.displayName
+      phone=user.phone
+    }}
+  </main>
+  {{/ifEquals }}
+
+
+  {{#ifEquals route '/profile/change-data'}}
+    {{> profileSidebar label="Назад к профилю" backUrl='/profile'}}
+      <main class='profile__main'>
+        <header class='profile__header'>
+          {{> profileAvatar isEditable=true imgSrc=user.avatar}}
+          <h1 id="change-data-heading" class='profile__heading'>Изменить данные</h1>
+        </header>
+        {{>
+          changeUserData
+          email=user.email
+          login=user.login
+          firstName=user.firstName
+          secondName=user.secondName
+          displayName=user.displayName
+          phone=user.phone
+        }}
+    </main>
+  {{/ifEquals }}
+
+  {{#ifEquals route '/profile/change-password'}}
+    {{> profileSidebar label="Назад к профилю" backUrl='/profile'}}
+      <main class='profile__main'>
+        <header class='profile__header'>
+          {{> profileAvatar imgSrc=user.avatar }}
+          <h1 id="change-password-heading" class='profile__heading'>Изменить пароль</h1>
+        </header>
+        {{> changeUserPassword}}
+    </main>
+  {{/ifEquals }}
+</div>

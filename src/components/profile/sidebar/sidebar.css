@@ -1,0 +1,26 @@
+.profile-sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-inline-end: 1px solid var(--gray-color);
+  background-color: var(--light-gray-color);
+}
+
+.profile-sidebar__back-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-color);
+  border-radius: 50%;
+}
+
+.profile-sidebar__back-icon {
+  width: 45%;
+  fill: var(--white-color);
+}
