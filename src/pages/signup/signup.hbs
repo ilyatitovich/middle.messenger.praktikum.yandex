@@ -1,0 +1,96 @@
+<main class='signup'>
+  <section class='user-form__card'>
+    <h1 id="signup-heading" class='user-form__title'>Регистрация</h1>
+    <form class='user-form' aria-labelledby="signup-heading">
+
+    {{>
+      userFormField
+      label='Почта'
+      id='email'
+      name='email'
+      type='email'
+      placeholder='Ваш емаил'
+      isRequired=true
+      value=email
+      errorMessage='Введите почту'
+    }}
+
+    {{>
+      userFormField
+      label='Логин'
+      id='login'
+      name='login'
+      type='text'
+      placeholder='Логин'
+      isRequired=true
+      value=login
+      errorMessage='Введите логин'
+    }}
+
+    {{>
+      userFormField
+      label='Имя'
+      id='first-name'
+      name='first_name'
+      type='text'
+      placeholder='Ваше имя'
+      isRequired=true
+      value=firstName
+      errorMessage='Введите имя'
+    }}
+
+    {{>
+      userFormField
+      label='Фамилия'
+      id='second-name'
+      name='second_name'
+      type='text'
+      placeholder='Ваша фамилия'
+      isRequired=true
+      value=secondName
+      errorMessage='Введите имя'
+    }}
+
+    {{>
+      userFormField
+      label='Телефон'
+      id='phone'
+      name='phone'
+      type='tel'
+      placeholder='+7 (999) 999 99 99'
+      isRequired=true
+      value=phone
+      errorMessage='Введите телефон'
+    }}
+
+    {{>
+      userFormField
+      label='Пароль'
+      type='password'
+      id='password'
+      name='password'
+      placeholder='Пароль'
+      isRequired=true
+      errorMessage='Введите пароль'
+    }}
+
+    {{>
+      userFormField
+      label='Пароль (еще раз)'
+      type='password'
+      id='confirm-password'
+      name='confirmPassword'
+      placeholder='Пароль'
+      isRequired=true
+      errorMessage='Пароли не совпадают'
+    }}
+
+    <button type='submit' class='user-form__button'>Зарегистрироваться</button>
+    </form>
+    <a
+      href='/signin'
+      class='user-form__link'
+      aria-label='Перейти к странице входа'
+    >Войти</a>
+  </section>
+</main>

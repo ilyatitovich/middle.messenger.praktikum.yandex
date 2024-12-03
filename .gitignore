@@ -1,7 +1,15 @@
-.vscode
-dist
-node_modules
-.editorconfig
-.prettierrc
-*.txt
+# build output
+dist/
+coverage/
 
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+*.txt
