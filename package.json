@@ -7,16 +7,33 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.cjs",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "npm-run-all --parallel test:*",
+    "format": "npm-run-all --parallel format:*",
+    "test:js": "eslint .",
+    "test:css": "stylelint **/*.css",
+    "format:stylelint": "stylelint --fix **/*.css",
+    "format:prettier": "prettier -w **/*.{js,ts,html,md,cjs,json} *.{js,json,md}"
   },
   "engines": {
     "node": ">=17.0.0",
     "npm": ">=7.0.0"
   },
   "devDependencies": {
+    "@stylistic/stylelint-config": "^2.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.17.0",
+    "@typescript-eslint/parser": "^8.17.0",
     "autoprefixer": "^10.4.20",
+    "eslint": "^9.16.0",
+    "eslint-plugin-perfectionist": "^4.1.2",
+    "husky": "^9.1.7",
+    "nano-staged": "^0.8.0",
+    "npm-run-all": "^4.1.5",
     "postcss": "^8.4.49",
     "postcss-nesting": "^13.0.1",
+    "prettier": "^3.4.1",
+    "stylelint": "^16.11.0",
+    "stylelint-use-logical": "^2.1.2",
     "typescript": "^5.7.2",
     "vite": "^6.0.0"
   },

@@ -12,12 +12,14 @@
 ## Список страниц
 
 - [Домашняя страница](https://y-chat.netlify.app/)
-- [Страница входа](https://y-chat.netlify.app/signin)
-- [Страница регистрации](https://y-chat.netlify.app/signup)
+- [Вход](https://y-chat.netlify.app/signin)
+- [Регистрация](https://y-chat.netlify.app/signup)
 - [Профиль пользователя](https://y-chat.netlify.app/profile)
+- [Изменить данные](https://y-chat.netlify.app/profile/change-data)
+- [Изменить пароль](https://y-chat.netlify.app/profile/change-password)
 - [404](https://y-chat.netlify.app/404)
 - [500](https://y-chat.netlify.app/500)
-- Чат (в разработке)
+- [Чат](https://y-chat.netlify.app/chat)
 
 ## Дизайн
 
@@ -46,7 +48,7 @@
 4. Запустите приложение:
 
    ```bash
-   npm start
+   npm run start
    ```
 
 5. Запуск в режиме разработки:

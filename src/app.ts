@@ -1,12 +1,4 @@
 import Handlebars from 'handlebars'
-import {
-  homePage,
-  signInPage,
-  signUpPage,
-  profilePage,
-  chatPage,
-  errorPage
-} from './pages'
 
 import {
   profileAvatar,
@@ -16,13 +8,20 @@ import {
   changeUserPassword,
   userFormField
 } from './components'
-
+import {
+  homePage,
+  signInPage,
+  signUpPage,
+  profilePage,
+  chatPage,
+  errorPage
+} from './pages'
 import { mockUser } from './utils/mock-data'
 
 type AppElement = HTMLElement | null
 
 interface AppState {
-  currentPage: string
+  route: string
 }
 
 Handlebars.registerPartial('profileSidebar', profileSidebar)
@@ -50,21 +49,13 @@ export default class App {
 
   constructor() {
     this.state = {
-      currentPage: window.location.pathname
+      route: window.location.pathname
     }
     this.appElement = document.getElementById('app')
   }
 
   render(): void {
-    if (this.state.currentPage.startsWith('/profile')) {
-      this.showPage(profilePage, {
-        route: this.state.currentPage,
-        user: mockUser as unknown as string
-      })
-      return
-    }
-
-    switch (this.state.currentPage) {
+    switch (this.state.route) {
       case '/':
         this.showPage(homePage)
         break
@@ -76,6 +67,24 @@ export default class App {
         break
       case '/chat':
         this.showPage(chatPage)
+        break
+      case '/profile':
+        this.showPage(profilePage, {
+          route: '/profile',
+          user: mockUser
+        })
+        break
+      case '/profile/change-password':
+        this.showPage(profilePage, {
+          route: '/profile/change-password',
+          user: mockUser
+        })
+        break
+      case '/profile/change-data':
+        this.showPage(profilePage, {
+          route: '/profile/change-data',
+          user: mockUser
+        })
         break
       case '/500':
         this.showPage(errorPage, {
@@ -92,12 +101,7 @@ export default class App {
     }
   }
 
-  changePage(page: string): void {
-    this.state.currentPage = page
-    this.render()
-  }
-
-  showPage(page: string, props: Record<string, string> = {}): void {
+  showPage(page: string, props: Record<string, unknown> = {}): void {
     const template = Handlebars.compile(page)
     if (this.appElement) {
       this.appElement.innerHTML = template(props)

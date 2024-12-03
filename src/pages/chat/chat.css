@@ -16,7 +16,7 @@
 .chat-sidebar {
   width: 25%;
   max-width: 360px;
-  border-right: 1px solid var(--gray-color);
+  border-inline-end: 1px solid var(--gray-color);
   padding: 0.75em;
 }
 

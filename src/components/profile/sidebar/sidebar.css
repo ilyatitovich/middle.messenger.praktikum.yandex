@@ -1,13 +1,12 @@
 .profile-sidebar {
   position: fixed;
   top: 0;
-  left: 0;
   bottom: 0;
   width: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-right: 1px solid var(--gray-color);
+  border-inline-end: 1px solid var(--gray-color);
   background-color: var(--light-gray-color);
 }
 
