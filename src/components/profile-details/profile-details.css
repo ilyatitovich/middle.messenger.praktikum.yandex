@@ -10,4 +10,8 @@
   margin-top: 0.5em;
   font-size: inherit;
   color: var(--primary-color);
+
+  &.is-danger {
+    color: var(--red-color);
+  }
 }

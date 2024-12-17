@@ -1,4 +1,4 @@
-import { isDeepEqual } from '@/utils/deep-equal'
+import { isDeepEqual } from '@/utils'
 
 import EventBus from './event-bus'
 
@@ -106,7 +106,11 @@ export abstract class Block<TProps extends BlockProps = BlockProps> {
     this.appendChildBlocks()
     this.appendListItems()
     this.addEvents()
-    this.dispatchComponentDidMount()
+
+    // Используем микро задержку, что бы убедиться, что элемент встроен в DOM
+    requestAnimationFrame(() => {
+      this.dispatchComponentDidMount()
+    })
   }
 
   protected render(): string {

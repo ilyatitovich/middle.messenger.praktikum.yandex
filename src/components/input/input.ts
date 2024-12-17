@@ -20,25 +20,17 @@ export class Input extends Block<InputProps> {
       className: props.className ?? 'user-form__input'
     })
 
-    this.props = props
     if (this.element instanceof HTMLInputElement) {
       const { type, name, placeholder, value, isRequired } = this.props
 
       Object.assign(this.element, {
         type,
-        id: name.toLocaleLowerCase(),
+        id: name.toLowerCase(),
         name,
         placeholder: placeholder ?? '',
         value: value ?? '',
         required: isRequired ?? false
       })
-    }
-
-    if (
-      this.props.type === 'password' &&
-      this.element instanceof HTMLInputElement
-    ) {
-      this.addPasswordToggle()
     }
   }
 
@@ -46,26 +38,33 @@ export class Input extends Block<InputProps> {
     const passwordToggle = new Button({
       type: 'button',
       className: 'user-form__password-toggle',
-      icon: ShowPasswordIconTemplate,
+      icon: HidePasswordIconTemplate,
       events: {
         click: () => this.togglePasswordVisibility(passwordToggle)
       }
     })
 
-    requestAnimationFrame(() => {
-      this.element!.after(passwordToggle.getContent()!)
-    })
+    this.element!.after(passwordToggle.getContent()!)
   }
 
   private togglePasswordVisibility(passwordToggle: Button): void {
     if (this.element instanceof HTMLInputElement) {
       if (this.element.type === 'password') {
         this.element.type = 'text'
-        passwordToggle.setProps<ButtonProps>({ icon: HidePasswordIconTemplate })
+        passwordToggle.setProps<ButtonProps>({ icon: ShowPasswordIconTemplate })
       } else {
         this.element.type = 'password'
-        passwordToggle.setProps<ButtonProps>({ icon: ShowPasswordIconTemplate })
+        passwordToggle.setProps<ButtonProps>({ icon: HidePasswordIconTemplate })
       }
+    }
+  }
+
+  protected componentDidMount(): void {
+    if (
+      this.props.type === 'password' &&
+      this.element instanceof HTMLInputElement
+    ) {
+      this.addPasswordToggle()
     }
   }
 

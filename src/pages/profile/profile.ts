@@ -17,7 +17,7 @@ type ProfilePageProps = BlockProps & {
 }
 
 export default class ProfilePage extends Block<ProfilePageProps> {
-  private modal: Block
+  private modal: Modal
 
   constructor(
     props: ProfilePageProps = {
@@ -32,7 +32,7 @@ export default class ProfilePage extends Block<ProfilePageProps> {
 
     const modal = new Modal({
       content: new FileUploadForm({
-        sendTo: '',
+        handleUploadFile: (file: File) => this.changeAvatar(file),
         handleCancel: () => this.handleCloseModal()
       })
     })
@@ -76,7 +76,11 @@ export default class ProfilePage extends Block<ProfilePageProps> {
     this.modal.hide()
   }
 
-  render(): string {
+  private changeAvatar(file: File): void {
+    console.table({ avatar: file })
+  }
+
+  protected render(): string {
     return getTemplate(ProfileTemplate, {
       backButtonLabel:
         this.props.route === '/profile' ? 'Назад к чатам' : 'Назад к профилю',

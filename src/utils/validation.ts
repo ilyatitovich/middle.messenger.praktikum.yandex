@@ -49,7 +49,7 @@ export function isValidName(name: string): ValidationResult {
   const regex = /^[A-ZА-Я][a-zа-я\-]*$/u
   return {
     isValid: regex.test(name),
-    message: '1 заглавная буква, без пробелов и цифр'
+    message: 'Первая заглавная буква, без пробелов и цифр'
   }
 }
 

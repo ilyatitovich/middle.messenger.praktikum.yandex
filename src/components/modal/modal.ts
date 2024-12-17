@@ -1,7 +1,7 @@
 import './modal.css'
 
-import { Block, type BlockProps } from '@/core/block'
-import { getTemplate } from '@/utils/get-template'
+import { Block, type BlockProps } from '@/core'
+import { getTemplate } from '@/utils'
 
 import ModalTemplate from './modal.hbs?raw'
 

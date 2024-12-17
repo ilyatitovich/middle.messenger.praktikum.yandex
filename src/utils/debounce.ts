@@ -1,3 +1,6 @@
+/* Функция - утилита, использование any оправдано,
+   т.к. аргументы функции могут быть любыми
+*/
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function debounce<T extends (...args: any[]) => void>(
   func: T,
