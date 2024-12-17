@@ -45,14 +45,9 @@ export class SignInForm extends Block<SignInFormProps> {
   private handleSubmit(event: SubmitEvent): void {
     event.preventDefault()
 
-    const fields = {
-      login: this.loginField.getValue(),
-      password: this.passwordField.getValue()
-    }
-
     const validations = {
-      login: isValidLogin(fields.login),
-      password: isValidPassword(fields.password)
+      login: this.loginField.validateValue(),
+      password: this.passwordField.validateValue()
     }
 
     this.loginField.setProps<UserFormFieldProps>({
@@ -62,8 +57,11 @@ export class SignInForm extends Block<SignInFormProps> {
       validationResult: validations.password
     })
 
-    if (validations.login.isValid && validations.password.isValid) {
-      console.table(fields)
+    if (Object.values(validations).every(value => value.isValid)) {
+      console.table({
+        login: this.loginField.getValue(),
+        password: this.passwordField.getValue()
+      })
     }
   }
 }
