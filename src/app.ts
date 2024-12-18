@@ -1,47 +1,19 @@
-import Handlebars from 'handlebars'
+import { Block } from '@/core'
 
 import {
-  profileAvatar,
-  profileSidebar,
-  userData,
-  changeUserData,
-  changeUserPassword,
-  userFormField
-} from './components'
-import {
-  homePage,
-  signInPage,
-  signUpPage,
-  profilePage,
-  chatPage,
-  errorPage
+  HomePage,
+  SignInPage,
+  SignUpPage,
+  ProfilePage,
+  ErrorPage,
+  ChatPage
 } from './pages'
-import { mockUser } from './utils/mock-data'
 
 type AppElement = HTMLElement | null
 
 interface AppState {
   route: string
 }
-
-Handlebars.registerPartial('profileSidebar', profileSidebar)
-Handlebars.registerPartial('profileAvatar', profileAvatar)
-Handlebars.registerPartial('userData', userData)
-Handlebars.registerPartial('changeUserData', changeUserData)
-Handlebars.registerPartial('changeUserPassword', changeUserPassword)
-Handlebars.registerPartial('userFormField', userFormField)
-
-Handlebars.registerHelper(
-  'ifEquals',
-  function (
-    this: Record<string, unknown>,
-    arg1: unknown,
-    arg2: unknown,
-    options: Handlebars.HelperOptions
-  ) {
-    return arg1 === arg2 ? options.fn(this) : options.inverse(this)
-  }
-)
 
 export default class App {
   private state: AppState
@@ -55,56 +27,48 @@ export default class App {
   }
 
   render(): void {
+    if (this.state.route.startsWith('/chat')) {
+      this.showPage(new ChatPage())
+      return
+    }
+
     switch (this.state.route) {
       case '/':
-        this.showPage(homePage)
+        this.showPage(new HomePage())
         break
       case '/signin':
-        this.showPage(signInPage)
+        this.showPage(new SignInPage())
         break
       case '/signup':
-        this.showPage(signUpPage)
-        break
-      case '/chat':
-        this.showPage(chatPage)
+        this.showPage(new SignUpPage())
         break
       case '/profile':
-        this.showPage(profilePage, {
-          route: '/profile',
-          user: mockUser
-        })
+        this.showPage(new ProfilePage())
         break
       case '/profile/change-password':
-        this.showPage(profilePage, {
-          route: '/profile/change-password',
-          user: mockUser
-        })
+        this.showPage(new ProfilePage())
         break
       case '/profile/change-data':
-        this.showPage(profilePage, {
-          route: '/profile/change-data',
-          user: mockUser
-        })
+        this.showPage(new ProfilePage())
         break
       case '/500':
-        this.showPage(errorPage, {
-          code: '500',
-          description: 'Мы уже фиксим'
-        })
+        this.showPage(
+          new ErrorPage({ code: 500, description: 'Мы уже фиксим' })
+        )
         break
       default:
-        this.showPage(errorPage, {
-          code: '404',
-          description: 'Не туда попали'
-        })
+        this.showPage(
+          new ErrorPage({ code: 404, description: 'Не туда попали' })
+        )
         break
     }
   }
 
-  showPage(page: string, props: Record<string, unknown> = {}): void {
-    const template = Handlebars.compile(page)
-    if (this.appElement) {
-      this.appElement.innerHTML = template(props)
+  showPage(Page: Block): void {
+    const pageContent = Page.getContent()
+
+    if (this.appElement && pageContent) {
+      this.appElement.appendChild(pageContent)
     }
   }
 }

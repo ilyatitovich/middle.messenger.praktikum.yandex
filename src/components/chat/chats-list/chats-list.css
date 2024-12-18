@@ -1,0 +1,8 @@
+.chats-list {
+  padding-bottom: 2em;
+  overflow-y: auto;
+}
+
+.chats-list::-webkit-scrollbar {
+  display: none;
+}

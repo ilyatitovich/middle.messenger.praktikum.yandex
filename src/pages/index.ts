@@ -1,8 +1,8 @@
-import chatPage from './chat'
-import errorPage from './error'
-import homePage from './home'
-import profilePage from './profile'
-import signInPage from './signin'
-import signUpPage from './signup'
+import ChatPage from './chat'
+import ErrorPage from './error'
+import HomePage from './home'
+import ProfilePage from './profile'
+import SignInPage from './signin'
+import SignUpPage from './signup'
 
-export { homePage, signInPage, profilePage, signUpPage, chatPage, errorPage }
+export { HomePage, SignInPage, ProfilePage, SignUpPage, ChatPage, ErrorPage }

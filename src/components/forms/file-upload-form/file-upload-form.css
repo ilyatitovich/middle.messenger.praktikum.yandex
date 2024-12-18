@@ -1,0 +1,44 @@
+.file-upload-form {
+  width: 50%;
+  max-width: 450px;
+  height: 50%;
+  background-color: var(--white-color);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5em;
+}
+
+.file-upload-form__title {
+  font-size: 1.5rem;
+  margin-bottom: 1em;
+}
+
+.file-upload-form__input {
+  position: absolute;
+  opacity: 0%;
+  width: 0;
+  height: 0;
+}
+
+.file-upload-form__link {
+  color: var(--primary-color);
+  text-decoration: underline;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.file-upload-form__file-name {
+  margin-top: 16px;
+  font-size: 0.8rem;
+}
+
+.file-upload-form__cancel-button {
+  margin-top: 1.5em;
+  font-size: 0.9rem;
+  color: var(--red-color);
+  text-decoration: underline;
+}

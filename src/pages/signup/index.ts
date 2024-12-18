@@ -1,2 +1,1 @@
-import './signup.css'
-export { default } from './signup.hbs?raw'
+export { default } from './signup'

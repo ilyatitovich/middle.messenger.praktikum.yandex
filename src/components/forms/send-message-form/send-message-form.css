@@ -1,0 +1,39 @@
+.message-form {
+  position: fixed;
+  bottom: 0;
+  width: 75%;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 2em 1em 1em;
+  background-color: var(--white-color);
+}
+
+.send-message-form__button {
+  width: 40px;
+  height: 40px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  svg {
+    height: 50%;
+    fill: var(--white-color);
+  }
+}
+
+.send-file__button {
+  width: 40px;
+  height: 44px;
+
+  svg {
+    height: 70%;
+    fill: var(--primary-color);
+  }
+}
