@@ -1,5 +1,3 @@
-import './action-menu.css'
-
 import { Block, type BlockProps } from '@/core'
 
 type ActionMenuProps = BlockProps
