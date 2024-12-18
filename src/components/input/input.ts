@@ -77,6 +77,10 @@ export class Input extends Block<InputProps> {
     } else {
       this.element!.classList.remove('is-danger')
     }
+
+    if (newProps.value) {
+      ;(this.element as HTMLInputElement).value = newProps.value
+    }
     return false
   }
 }

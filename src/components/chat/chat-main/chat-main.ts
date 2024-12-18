@@ -1,7 +1,7 @@
 import './chat-main.css'
 
 import { Modal } from '@/components'
-import { MessagesList } from '@/components/chat'
+import { MessagesList, UpdateChatsMenu } from '@/components/chat'
 import { SendMessageForm, FileUploadForm } from '@/components/forms'
 import { Block, type BlockProps } from '@/core'
 import { getTemplate, type Chat } from '@/utils'
@@ -32,9 +32,16 @@ export class ChatMain extends Block<ChatMainProps> {
       })
     })
 
+    const updateChatsMenu = new UpdateChatsMenu({})
+
     super('section', {
       ...props,
-      childBlocks: { messagesList, messageForm, sendFileModal },
+      childBlocks: {
+        messagesList,
+        messageForm,
+        sendFileModal,
+        updateChatsMenu
+      },
       className: 'chat-main'
     })
 
