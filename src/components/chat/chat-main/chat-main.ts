@@ -32,7 +32,7 @@ export class ChatMain extends Block<ChatMainProps> {
       })
     })
 
-    const updateChatsMenu = new UpdateChatsMenu({})
+    const updateChatsMenu = new UpdateChatsMenu()
 
     super('section', {
       ...props,

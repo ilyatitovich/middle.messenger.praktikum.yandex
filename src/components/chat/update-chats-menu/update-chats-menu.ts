@@ -8,17 +8,14 @@ import { getTemplate } from '@/utils'
 import UpdateChatsMenuIcon from './update-chats-menu-icon.hbs?raw'
 import UpdateChatsMenuTemplate from './update-chats-menu.hbs?raw'
 
-type UpdateChatsMenuProps = BlockProps & {
-  openAddChatModal: () => void
-  openDeleteChatModal: () => void
-}
+type UpdateChatsMenuProps = BlockProps
 
 export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
   private menu: ActionMenu
   private modal: Modal
   private form: UpdateChatsForm
 
-  constructor(props: UpdateChatsMenuProps) {
+  constructor(props: UpdateChatsMenuProps = {}) {
     const form = new UpdateChatsForm({
       type: 'add',
       handleUpdate: (chat: string) => this.addChat(chat),
