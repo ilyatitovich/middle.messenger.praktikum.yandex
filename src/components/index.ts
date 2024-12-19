@@ -1,15 +1,9 @@
-import profileAvatar from './profile/avatar'
-import changeUserData from './profile/change-data'
-import changeUserPassword from './profile/change-password'
-import profileSidebar from './profile/sidebar'
-import userData from './profile/user-data'
-import userFormField from './user-form-field'
-
-export {
-  profileAvatar,
-  profileSidebar,
-  userData,
-  changeUserData,
-  changeUserPassword,
-  userFormField
-}
+export * from './user-form-field'
+export * from './avatar'
+export * from './modal'
+export * from './button'
+export * from './error-message'
+export * from './input'
+export * from './profile-details'
+export * from './textarea'
+export * from './action-menu'

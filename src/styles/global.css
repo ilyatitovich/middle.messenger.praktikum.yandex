@@ -23,14 +23,16 @@ body {
 
 a:focus-visible,
 button:focus-visible,
-input:focus-visible {
+input:focus-visible,
+textarea:focus-visible {
   outline: 2px solid var(--primary-color);
   outline-offset: 2px;
 }
 
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible),
-input:focus:not(:focus-visible) {
+input:focus:not(:focus-visible),
+textarea:focus:not(:focus-visible) {
   outline: none;
 }
 
@@ -47,6 +49,10 @@ button {
   cursor: pointer;
   border: none;
   background-color: transparent;
+}
+
+li {
+  list-style: none;
 }
 
 #app {

@@ -1,1 +1,1 @@
-export { default } from './user-form-field.hbs?raw'
+export * from './user-form-field'

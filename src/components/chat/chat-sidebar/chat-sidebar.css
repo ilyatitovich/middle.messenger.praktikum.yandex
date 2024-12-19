@@ -1,0 +1,31 @@
+.chat-sidebar {
+  width: 25%;
+  max-width: 360px;
+  background-color: var(--sidebar-background-color);
+  border-inline-end: 1px solid var(--gray-color);
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  height: 100vh;
+}
+
+.chat-sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0.75em;
+}
+
+.chat-sidebar__nav-link-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.chat-sidebar__nav-link {
+  font-size: 0.9rem;
+  color: var(--gray-dark-color);
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
