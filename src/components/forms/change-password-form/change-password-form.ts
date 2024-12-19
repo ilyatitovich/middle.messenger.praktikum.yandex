@@ -1,4 +1,4 @@
-import { Button, UserFormField, type UserFormFieldProps } from '@/components'
+import { Button, UserFormField } from '@/components'
 import { Block, type BlockProps } from '@/core'
 import { isValidPassword, isPasswordConfirmed } from '@/utils'
 
@@ -63,29 +63,19 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
   private handleSubmit(event: SubmitEvent): void {
     event.preventDefault()
 
-    const fields = {
+    const fields: Record<string, string> = {
       oldPassword: this.oldPasswordField.getValue(),
       newPassword: this.newPasswordField.getValue()
     }
 
-    const validations = {
-      oldPassword: this.oldPasswordField.validateValue(),
-      newPassword: this.newPasswordField.validateValue(),
-      confirmPassword: this.confirmPasswordField.validateValue()
-    }
-
-    this.oldPasswordField.setProps<UserFormFieldProps>({
-      validationResult: validations.oldPassword
-    })
-    this.newPasswordField.setProps<UserFormFieldProps>({
-      validationResult: validations.newPassword
-    })
-    this.confirmPasswordField.setProps<UserFormFieldProps>({
-      validationResult: validations.confirmPassword
-    })
+    const validations: boolean[] = [
+      this.oldPasswordField.validateValue(),
+      this.newPasswordField.validateValue(),
+      this.confirmPasswordField.validateValue()
+    ]
 
     if (
-      Object.values(validations).every(value => value.isValid) &&
+      validations.every(value => value === true) &&
       fields.newPassword !== fields.oldPassword
     ) {
       console.table(fields)

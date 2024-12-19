@@ -5,7 +5,7 @@ type ChatSearchFormProps = BlockProps & {
   handleSearch: (e: Event) => void
 }
 
-export class ChatSearchForm extends Block {
+export class ChatSearchForm extends Block<ChatSearchFormProps> {
   constructor(props: ChatSearchFormProps) {
     const input = new Input({
       type: 'search',

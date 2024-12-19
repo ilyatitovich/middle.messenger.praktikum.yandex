@@ -1,7 +1,4 @@
 .message-form {
-  position: fixed;
-  bottom: 0;
-  width: 75%;
   display: flex;
   align-items: center;
   gap: 1em;
@@ -22,7 +19,7 @@
     transform: scale(0.98);
   }
 
-  svg {
+  & svg {
     height: 50%;
     fill: var(--white-color);
   }
@@ -32,7 +29,7 @@
   width: 40px;
   height: 44px;
 
-  svg {
+  & svg {
     height: 70%;
     fill: var(--primary-color);
   }

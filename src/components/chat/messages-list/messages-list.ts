@@ -18,10 +18,6 @@ export class MessagesList extends Block<MessagesListProps> {
       ),
       className: 'messages-list'
     })
-
-    requestAnimationFrame(() => {
-      this.scrollToBottom()
-    })
   }
 
   addMessage(message: Message): void {
@@ -33,5 +29,9 @@ export class MessagesList extends Block<MessagesListProps> {
 
   private scrollToBottom(): void {
     this.element!.scrollTop = this.element!.scrollHeight
+  }
+
+  protected componentDidMount(): void {
+    this.scrollToBottom()
   }
 }

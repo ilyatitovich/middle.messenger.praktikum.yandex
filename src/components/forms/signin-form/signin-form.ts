@@ -1,4 +1,4 @@
-import { Button, UserFormField, type UserFormFieldProps } from '@/components'
+import { Button, UserFormField } from '@/components'
 import { Block, type BlockProps } from '@/core'
 import { isValidLogin, isValidPassword } from '@/utils'
 
@@ -45,19 +45,12 @@ export class SignInForm extends Block<SignInFormProps> {
   private handleSubmit(event: SubmitEvent): void {
     event.preventDefault()
 
-    const validations = {
-      login: this.loginField.validateValue(),
-      password: this.passwordField.validateValue()
-    }
+    const validations: boolean[] = [
+      this.loginField.validateValue(),
+      this.passwordField.validateValue()
+    ]
 
-    this.loginField.setProps<UserFormFieldProps>({
-      validationResult: validations.login
-    })
-    this.passwordField.setProps<UserFormFieldProps>({
-      validationResult: validations.password
-    })
-
-    if (Object.values(validations).every(value => value.isValid)) {
+    if (validations.every(value => value === true)) {
       console.table({
         login: this.loginField.getValue(),
         password: this.passwordField.getValue()

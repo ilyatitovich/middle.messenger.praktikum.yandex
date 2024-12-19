@@ -18,7 +18,10 @@ export class SendMessageForm extends Block<SendMessageFormProps> {
       className: 'send-file__button',
       events: { click: props.handleOpenModal }
     })
-    const messageInput = new Textarea()
+    const messageInput = new Textarea({
+      name: 'message',
+      placeholder: 'Сообщение'
+    })
     const submitButton = new Button({
       type: 'submit',
       icon: SendMessageIcon,

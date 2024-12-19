@@ -25,7 +25,7 @@ export class FileUploadForm extends Block<FileUploadFormProps> {
       type: 'file',
       name: 'file',
       className: 'file-upload-form__input',
-      events: { change: (e: Event) => this.handleChange(e) }
+      events: { change: (e: Event) => this.handleChange(e as InputEvent) }
     })
     const errorMessage = new ErrorMessage({
       message: 'Нужно выбрать файл',
@@ -59,7 +59,7 @@ export class FileUploadForm extends Block<FileUploadFormProps> {
     this.fileName = null
   }
 
-  private handleChange(e: Event): void {
+  private handleChange(e: InputEvent): void {
     const file = (e.target as HTMLInputElement).files?.item(0)
     this.fileName = this.element?.querySelector('.file-upload-form__file-name')
 

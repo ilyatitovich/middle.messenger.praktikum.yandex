@@ -1,4 +1,4 @@
-import { Button, UserFormField, type UserFormFieldProps } from '@/components'
+import { Button, UserFormField } from '@/components'
 import { Block, type BlockProps } from '@/core'
 import {
   isValidLogin,
@@ -6,8 +6,7 @@ import {
   isValidName,
   isValidEmail,
   isValidPhone,
-  isPasswordConfirmed,
-  ValidationResult
+  isPasswordConfirmed
 } from '@/utils'
 
 type SignUpFormProps = BlockProps
@@ -112,21 +111,11 @@ export class SignUpForm extends Block<SignUpFormProps> {
   private handleSubmit(event: SubmitEvent): void {
     event.preventDefault()
 
-    const validations = this.fields.reduce<Record<string, ValidationResult>>(
-      (acc, field) => {
-        acc[field.getName()] = field.validateValue()
-        return acc
-      },
-      {}
+    const validations: boolean[] = this.fields.map(field =>
+      field.validateValue()
     )
 
-    this.fields.forEach(field => {
-      field.setProps<UserFormFieldProps>({
-        validationResult: validations[field.getName()]
-      })
-    })
-
-    if (Object.values(validations).every(value => value.isValid)) {
+    if (validations.every(value => value === true)) {
       const fields = this.fields.reduce<Record<string, string>>(
         (acc, field) => {
           const name = field.getName()

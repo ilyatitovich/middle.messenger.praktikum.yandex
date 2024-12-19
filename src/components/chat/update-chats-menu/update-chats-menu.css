@@ -38,6 +38,6 @@
   font-weight: bold;
 
   &:hover {
-    background-color: #e4edfd;
+    background-color: var(--current-item-background-color);
   }
 }
