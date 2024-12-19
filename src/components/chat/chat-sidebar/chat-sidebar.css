@@ -1,7 +1,7 @@
 .chat-sidebar {
   width: 25%;
   max-width: 360px;
-  background-color: #fbfbfb;
+  background-color: var(--sidebar-background-color);
   border-inline-end: 1px solid var(--gray-color);
   display: flex;
   flex-direction: column;

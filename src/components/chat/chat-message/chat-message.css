@@ -1,13 +1,11 @@
 .message {
   display: inline-block;
-  background-color: #f0f0f0;
+  background-color: var(--message-background-color);
   padding: 1em;
   border-radius: 8px;
-
+  width: fit-content;
   max-width: 400px;
   margin-top: 0.5em;
-  width: fit-content;
-
   font-size: 0.8rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;

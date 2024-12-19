@@ -49,7 +49,6 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
         })
       ],
       events: {
-        mouseenter: () => this.menu.show(),
         mouseleave: () => this.menu.hide()
       }
     })
@@ -88,12 +87,12 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
 
   private addChat(chat: string): void {
     console.table({ chat })
-    console.log(chat, 'added')
+    console.log(`Чат ${chat} добавлен!`)
   }
 
   private deleteChat(chat: string): void {
     console.table({ chat })
-    console.log(chat, 'deleted')
+    console.log(`Чат ${chat} удален!`)
   }
 
   private closeModal(): void {

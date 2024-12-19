@@ -58,8 +58,10 @@ export class UserFormField extends Block<UserFormFieldProps> {
     _oldProps: UserFormFieldProps,
     newProps: UserFormFieldProps
   ): boolean {
-    if (newProps.validationResult) {
-      const { isValid, message } = newProps.validationResult
+    const { validationResult } = newProps
+
+    if (validationResult) {
+      const { isValid, message } = validationResult
       this.updateValidationState(isValid, message)
     }
 
@@ -72,8 +74,7 @@ export class UserFormField extends Block<UserFormFieldProps> {
 
   private handleBlur(e: FocusEvent): void {
     if (!(e.relatedTarget instanceof HTMLButtonElement)) {
-      const { isValid, message } = this.validateValue()
-      this.updateValidationState(isValid, message)
+      this.validateValue()
     }
   }
 
@@ -93,8 +94,12 @@ export class UserFormField extends Block<UserFormFieldProps> {
     return this.value
   }
 
-  validateValue(): ValidationResult {
-    return this.validate(this.value)
+  validateValue(): boolean {
+    const res = this.validate(this.value)
+    this.setProps<UserFormFieldProps>({
+      validationResult: res
+    })
+    return res.isValid
   }
 
   protected render(): string {

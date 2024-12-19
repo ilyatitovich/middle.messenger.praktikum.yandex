@@ -1,4 +1,4 @@
-import { Button, UserFormField, type UserFormFieldProps } from '@/components'
+import { Button, UserFormField } from '@/components'
 import { Block, type BlockProps } from '@/core'
 import {
   isValidLogin,
@@ -6,7 +6,6 @@ import {
   isValidEmail,
   isValidPhone,
   isValidDisplayName,
-  type ValidationResult,
   type User
 } from '@/utils'
 
@@ -120,21 +119,11 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
   private handleSubmit(event: SubmitEvent): void {
     event.preventDefault()
 
-    const validations = this.fields.reduce<Record<string, ValidationResult>>(
-      (acc, field) => {
-        acc[field.getName()] = field.validateValue()
-        return acc
-      },
-      {}
+    const validations: boolean[] = this.fields.map(field =>
+      field.validateValue()
     )
 
-    this.fields.forEach(field => {
-      field.setProps<UserFormFieldProps>({
-        validationResult: validations[field.getName()]
-      })
-    })
-
-    if (Object.values(validations).every(value => value.isValid)) {
+    if (validations.every(value => value === true)) {
       const values = this.fields.reduce<Record<string, string>>(
         (acc, field) => {
           acc[field.getName()] = field.getValue()
@@ -145,6 +134,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       const updatedFields = this.getUpdatedFields(this.props.user, values)
       if (Object.values(updatedFields).length !== 0) {
         console.table(updatedFields)
+        console.log('Обновленные данные отправлены на сервер!')
       }
     }
   }

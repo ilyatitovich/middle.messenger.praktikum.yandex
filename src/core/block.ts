@@ -107,7 +107,7 @@ export abstract class Block<TProps extends BlockProps = BlockProps> {
     this.appendListItems()
     this.addEvents()
 
-    // Используем микро задержку, что бы убедиться, что элемент встроен в DOM
+    // Используем микро задержку, что бы убедиться, что элемент вмонтирован в DOM
     requestAnimationFrame(() => {
       this.dispatchComponentDidMount()
     })

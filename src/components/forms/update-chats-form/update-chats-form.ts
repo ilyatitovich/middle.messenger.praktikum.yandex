@@ -1,6 +1,6 @@
 import './update-chats-form.css'
 
-import { Button, UserFormField, type UserFormFieldProps } from '@/components'
+import { Button, UserFormField } from '@/components'
 import { Block, type BlockProps } from '@/core'
 import { getTemplate, isValidLogin } from '@/utils'
 
@@ -46,12 +46,9 @@ export class UpdateChatsForm extends Block<UpdateChatsFormProps> {
   private handleSubmit(e: SubmitEvent): void {
     e.preventDefault()
 
-    const validateChatLogin = this.chatField.validateValue()
-    this.chatField.setProps<UserFormFieldProps>({
-      validationResult: validateChatLogin
-    })
+    const isValidLogin = this.chatField.validateValue()
 
-    if (validateChatLogin.isValid) {
+    if (isValidLogin) {
       this.props.handleUpdate(this.chatField.getValue())
       ;(this.element as HTMLFormElement).reset()
     }

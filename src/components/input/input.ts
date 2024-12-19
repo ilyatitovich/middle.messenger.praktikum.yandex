@@ -72,15 +72,14 @@ export class Input extends Block<InputProps> {
     _oldProps: InputProps,
     newProps: InputProps
   ): boolean {
-    if (newProps.isValid === false) {
+    const { isValid } = newProps
+
+    if (isValid === false) {
       this.element!.classList.add('is-danger')
     } else {
       this.element!.classList.remove('is-danger')
     }
 
-    if (newProps.value) {
-      ;(this.element as HTMLInputElement).value = newProps.value
-    }
     return false
   }
 }
