@@ -8,10 +8,10 @@
     "build": "tsc && vite build",
     "start": "tsc && vite build && node server.cjs",
     "preview": "vite preview",
-    "test": "npm-run-all --parallel test:*",
+    "lint": "npm-run-all --parallel lint:*",
     "format": "npm-run-all --parallel format:*",
-    "test:js": "eslint .",
-    "test:css": "stylelint **/*.css",
+    "lint:js": "tsc --noEmit && eslint .",
+    "lint:css": "stylelint **/*.css",
     "format:stylelint": "stylelint --fix **/*.css",
     "format:prettier": "prettier -w **/*.{js,ts,html,md,cjs,json} *.{js,json,md}"
   },

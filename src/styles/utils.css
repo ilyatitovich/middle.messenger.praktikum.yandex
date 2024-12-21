@@ -1,10 +1,5 @@
 .is-hidden {
-  display: none;
-}
-
-.is-danger {
-  border-color: var(--red-color) !important;
-  color: var(--red-color) !important;
+  visibility: hidden;
 }
 
 .sr-only {
@@ -17,23 +12,4 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
-}
-
-.primary-button {
-  width: 100%;
-  max-width: 12em;
-  background-color: var(--primary-color);
-  color: var(--white-color);
-  padding: 0.75em;
-  border-radius: 6px;
-  font-size: 1rem;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 90%;
-  }
-
-  &:active {
-    transform: scale(0.98);
-  }
 }

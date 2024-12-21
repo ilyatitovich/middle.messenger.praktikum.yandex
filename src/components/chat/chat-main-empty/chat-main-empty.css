@@ -1,0 +1,8 @@
+.chat-main-empty {
+  min-width: 75%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray-dark-color);
+}

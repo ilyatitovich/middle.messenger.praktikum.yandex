@@ -10,7 +10,7 @@
 .user-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25em;
+  gap: 0.5em;
 }
 
 .user-form__title {
@@ -19,8 +19,10 @@
 }
 
 .user-form__field {
+  width: 100%;
   position: relative;
   text-align: start;
+  height: 94px;
 }
 
 .user-form__label {
@@ -39,7 +41,13 @@
   font-size: 1rem;
 }
 
+.user-form__input.is-danger {
+  outline: 2px solid var(--red-color);
+  outline-offset: 2px;
+}
+
 .user-form__button {
+  width: 100%;
   margin-top: 2em;
   background-color: var(--primary-color);
   color: #ffffff;
@@ -68,7 +76,7 @@
 
 .user-form__password-toggle {
   position: absolute;
-  top: 56%;
+  top: 38px;
   inset-inline-end: 1em;
   width: 20px;
   height: 20px;
