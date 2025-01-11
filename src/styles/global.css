@@ -51,6 +51,12 @@ button {
   background-color: transparent;
 }
 
+button:disabled {
+  background-color: var(--gray-color);
+  cursor: progress;
+  opacity: 80%;
+}
+
 li {
   list-style: none;
 }
