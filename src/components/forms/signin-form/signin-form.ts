@@ -1,5 +1,12 @@
-import { Button, UserFormField } from '@/components'
+import {
+  Button,
+  type ButtonProps,
+  UserFormField,
+  type UserFormFieldProps
+} from '@/components'
+import { authController } from '@/controllers/auth-controller'
 import { Block, type BlockProps } from '@/core'
+import { type AuthState, authStore } from '@/stores'
 import { isValidLogin, isValidPassword } from '@/utils'
 
 type SignInFormProps = BlockProps
@@ -7,6 +14,8 @@ type SignInFormProps = BlockProps
 export class SignInForm extends Block<SignInFormProps> {
   private loginField: UserFormField
   private passwordField: UserFormField
+  private submitButton: Button
+  private storeUnsubscribe: () => void
 
   constructor(props: SignInFormProps = {}) {
     const loginField = new UserFormField({
@@ -40,6 +49,25 @@ export class SignInForm extends Block<SignInFormProps> {
 
     this.loginField = loginField
     this.passwordField = passwordField
+    this.submitButton = submitButton
+
+    this.storeUnsubscribe = authStore.subscribe(state => {
+      const { status } = state as AuthState
+
+      if (status === 'loading') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: true })
+      }
+
+      if (status === 'error') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: false })
+        this.loginField.setProps<UserFormFieldProps>({
+          validationResult: { isValid: false, message: '' }
+        })
+        this.passwordField.setProps<UserFormFieldProps>({
+          validationResult: { isValid: false, message: '' }
+        })
+      }
+    })
   }
 
   private handleSubmit(event: SubmitEvent): void {
@@ -51,10 +79,14 @@ export class SignInForm extends Block<SignInFormProps> {
     ]
 
     if (validations.every(value => value === true)) {
-      console.table({
+      authController.login({
         login: this.loginField.getValue(),
         password: this.passwordField.getValue()
       })
     }
+  }
+
+  protected onUnmount(): void {
+    this.storeUnsubscribe()
   }
 }
