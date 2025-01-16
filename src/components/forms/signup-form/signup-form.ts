@@ -130,6 +130,7 @@ export class SignUpForm extends Block<SignUpFormProps> {
       }
 
       if (status === 'error') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: false })
         this.loginField.setProps<UserFormFieldProps>({
           validationResult: { isValid: false, message: '' }
         })
