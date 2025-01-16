@@ -1,6 +1,19 @@
-@import './theme.css';
 @import './form.css';
 @import './utils.css';
+
+:root {
+  --primary-color: #4a90e2;
+  --background-color: #ffffff;
+  --text-color: #000000;
+  --red-color: #ff0000;
+  --light-gray-color: #f0f0f0;
+  --gray-color: #ddd;
+  --gray-dark-color: #555;
+  --message-background-color: #f0f0f0;
+  --sidebar-background-color: #fbfbfb;
+  --current-item-background-color: #e4edfd;
+  --green-color: #15c915;
+}
 
 *,
 *::before,
