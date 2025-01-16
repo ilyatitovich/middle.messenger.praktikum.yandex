@@ -32,6 +32,12 @@ function queryStringify(data: QueryParams): string {
 }
 
 export class HTTPTransport {
+  private baseURL: string
+
+  constructor(baseURL: string) {
+    this.baseURL = baseURL
+  }
+
   get<TResponse = unknown>(
     url: string,
     options: Partial<RequestOptions<QueryParams>> = {}
@@ -74,18 +80,34 @@ export class HTTPTransport {
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
-      xhr.open(method as HTTPMethod, url)
+      xhr.open(method as HTTPMethod, `${this.baseURL}${url}`)
+      xhr.withCredentials = true
+      xhr.timeout = timeout
 
       Object.entries(headers).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value)
       })
 
       xhr.onload = () => {
-        try {
-          const response = JSON.parse(xhr.responseText) as TResponse
-          resolve(response)
-        } catch {
-          reject(new Error(`Ошибка при обработке ответа от ${url}`))
+        const status = xhr.status
+        const contentType = xhr.getResponseHeader('Content-Type')
+
+        if (status === 200) {
+          try {
+            let response: TResponse
+
+            if (contentType && contentType.includes('application/json')) {
+              response = JSON.parse(xhr.responseText) as TResponse
+            } else {
+              response = xhr.responseText as unknown as TResponse
+            }
+
+            resolve(response)
+          } catch {
+            reject(new Error(`Error parsing response from ${url}`))
+          }
+        } else {
+          reject({ status, message: `Request failed with status ${status}` })
         }
       }
 
@@ -97,13 +119,16 @@ export class HTTPTransport {
         reject(new Error(`Превышено время ожидания запроса на адрес ${url}`))
       }
 
-      xhr.timeout = timeout
-
       if (method === METHODS.GET || !data) {
         xhr.send()
+      } else if (data instanceof FormData) {
+        xhr.send(data as FormData)
       } else {
+        xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(data))
       }
     })
   }
 }
+
+export const http = new HTTPTransport('https://ya-praktikum.tech/api/v2')
