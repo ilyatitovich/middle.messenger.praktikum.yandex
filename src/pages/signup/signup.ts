@@ -1,5 +1,6 @@
 import './signup.css'
 
+import { Link } from '@/components'
 import { SignUpForm } from '@/components/forms'
 import { Block, type BlockProps } from '@/core'
 import { getTemplate } from '@/utils'
@@ -13,7 +14,14 @@ export default class SignUpPage extends Block<SignUpPageProps> {
     super('main', {
       ...props,
       className: 'signup',
-      childBlocks: { form: new SignUpForm() }
+      childBlocks: {
+        form: new SignUpForm(),
+        signInLink: new Link({
+          to: '/',
+          className: 'user-form__link',
+          content: 'Войти'
+        })
+      }
     })
   }
 
