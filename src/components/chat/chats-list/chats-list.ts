@@ -1,21 +1,36 @@
 import './chats-list.css'
 
 import { ChatsListItem } from '@/components/chat'
+import { chatsController } from '@/controllers/chats-controller'
 import { Block, type BlockProps } from '@/core'
-import type { Chat } from '@/utils'
+import { type ChatsState, type Chat, chatsStore } from '@/stores'
 
 export type ChatsListProps = BlockProps & {
-  chats: Chat[]
+  chats: Chat[] | null
 }
 
 export class ChatsList extends Block<ChatsListProps> {
-  constructor(props: ChatsListProps) {
+  private storeUnsubscribe: () => void
+
+  constructor(props: ChatsListProps = { chats: chatsStore.get().chatsList }) {
+    const childBlocksList = props.chats
+      ? props.chats.map(chat => {
+          return new ChatsListItem({ chat })
+        })
+      : undefined
     super('ul', {
       ...props,
       className: 'chats-list',
-      childBlocksList: props.chats.map(chat => {
-        return new ChatsListItem({ chat })
-      })
+      childBlocksList
+    })
+
+    if (!props.chats) {
+      chatsController.getChats()
+    }
+
+    this.storeUnsubscribe = chatsStore.subscribe(state => {
+      const { chatsList: chats } = state as ChatsState
+      this.setProps<ChatsListProps>({ chats })
     })
   }
 
@@ -23,16 +38,22 @@ export class ChatsList extends Block<ChatsListProps> {
     _oldProps: ChatsListProps,
     newProps: ChatsListProps
   ): boolean {
-    ;(this.childBlocksList as ChatsListItem[]).forEach(
-      (chatBlock: ChatsListItem) => {
-        if (newProps.chats.some(chat => chat.id === chatBlock.id)) {
-          chatBlock.show()
-        } else {
-          chatBlock.hide()
-        }
-      }
-    )
+    const { chats } = newProps
 
-    return false
+    if (!chats) {
+      return false
+    }
+
+    this.childBlocksList?.forEach(chat => chat.unmount())
+
+    this.childBlocksList = chats.map(chat => {
+      return new ChatsListItem({ chat })
+    })
+
+    return true
+  }
+
+  protected onUnmount(): void {
+    this.storeUnsubscribe()
   }
 }
