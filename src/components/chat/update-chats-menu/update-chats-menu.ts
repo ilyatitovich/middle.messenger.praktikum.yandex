@@ -1,9 +1,11 @@
 import './update-chats-menu.css'
 
 import { ActionMenu, Button, Modal } from '@/components'
-import { UpdateChatsForm, UpdateChatsFormProps } from '@/components/forms'
+import { UpdateChatsForm } from '@/components/forms'
+import { chatsController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
-import { getTemplate } from '@/utils'
+import { currentChatStore } from '@/stores'
+import { getTemplate, isValidLogin } from '@/utils'
 
 import UpdateChatsMenuIcon from './update-chats-menu-icon.hbs?raw'
 import UpdateChatsMenuTemplate from './update-chats-menu.hbs?raw'
@@ -12,28 +14,18 @@ type UpdateChatsMenuProps = BlockProps
 
 export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
   private menu: ActionMenu
-  private modal: Modal
-  private form: UpdateChatsForm
+  private modal: Modal | null = null
 
   constructor(props: UpdateChatsMenuProps = {}) {
-    const form = new UpdateChatsForm({
-      type: 'add',
-      handleUpdate: (chat: string) => this.addChat(chat),
-      handleCancel: () => this.closeModal()
-    })
-
-    const modal = new Modal({ content: form })
-
     const menu = new ActionMenu({
       className: 'update-chats-menu',
       childBlocksList: [
         new Button({
           className: 'update-chats-menu__action_button',
-          label: 'Добавить чат',
+          label: 'Добавить участника',
           events: {
             click: () => {
-              this.menu.hide()
-              this.openModal('add')
+              this.openModal()
             }
           }
         }),
@@ -41,10 +33,7 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
           className: 'update-chats-menu__action_button',
           label: 'Удалить чат',
           events: {
-            click: () => {
-              this.menu.hide()
-              this.openModal('delete')
-            }
+            click: () => this.deleteChat()
           }
         })
       ],
@@ -64,39 +53,47 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
             click: () => this.menu.show()
           }
         }),
-        menu,
-        modal
+        menu
       }
     })
 
-    this.form = form
-    this.modal = modal
     this.menu = menu
-    this.modal.hide()
     this.menu.hide()
   }
 
-  private openModal(formType: 'add' | 'delete'): void {
-    this.form.setProps<UpdateChatsFormProps>({
-      type: formType,
-      handleUpdate: formType === 'add' ? this.addChat : this.deleteChat
+  private openModal(): void {
+    this.menu.hide()
+    this.modal = new Modal({
+      content: new UpdateChatsForm({
+        title: 'Добавить участника',
+        inputLabel: 'Логин пользователя',
+        submitButtonLabel: 'Добавить',
+        validate: isValidLogin,
+        handleUpdate: login => this.addUser(login),
+        handleCancel: () => this.closeModal()
+      })
     })
 
-    this.modal.show()
-  }
+    const modalContent = this.modal.getContent()
 
-  private addChat(chat: string): void {
-    console.table({ chat })
-    console.log(`Чат ${chat} добавлен!`)
-  }
-
-  private deleteChat(chat: string): void {
-    console.table({ chat })
-    console.log(`Чат ${chat} удален!`)
+    if (modalContent) {
+      document.body.append(modalContent)
+    }
   }
 
   private closeModal(): void {
-    this.modal.hide()
+    if (this.modal) {
+      this.modal.unmount()
+    }
+  }
+
+  private async addUser(login: string): Promise<void> {
+    chatsController.addUser({ login })
+  }
+
+  private deleteChat(): void {
+    const { currentChatId } = currentChatStore.get()
+    chatsController.deleteChat({ chatId: currentChatId as number })
   }
 
   protected render(): string {
