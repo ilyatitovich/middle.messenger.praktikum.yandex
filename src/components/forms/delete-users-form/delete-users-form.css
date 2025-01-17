@@ -1,0 +1,85 @@
+.delete-users-form {
+  width: 50%;
+  max-width: 600px;
+  height: 70%;
+  background-color: var(--white-color);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 0 2em;
+}
+
+.delete-users-form__title {
+  font-size: 1.5rem;
+}
+
+.chat-users {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.chat-user {
+  padding: 1em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  border-bottom: 1px solid var(--gray-color);
+}
+
+.chat-user__left {
+  display: flex;
+  align-items: center;
+  gap: 0.2em;
+}
+
+.chat-user__avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--gray-color);
+  border-radius: 50%;
+  border: 1px solid var(--gray-color);
+  margin-inline-end: 0.75em;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  & img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+}
+
+.delete-users-form__submit-button {
+  width: 100%;
+  background-color: var(--primary-color);
+  color: var(--white-color);
+  padding: 0.75em;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 90%;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.delete-users-form__cancel-button {
+  font-size: 0.9rem;
+  color: var(--red-color);
+  text-decoration: underline;
+}
