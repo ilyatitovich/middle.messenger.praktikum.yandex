@@ -42,7 +42,6 @@ export class ChatsListItem extends Block<ChatsListItemProps> {
 
   render(): string {
     const { id, avatar, title, last_message, unread_count } = this.props.chat
-    console.log(this.props.chat)
     return getTemplate(ChatsListItemTemplate, {
       title,
       avatar: avatar ? getFilePath(avatar) : `https://robohash.org/${id}`,
