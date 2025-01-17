@@ -21,7 +21,7 @@ class RequestResult extends Block<RequestResultProps> {
   protected componentDidMount(): void {
     setTimeout(() => {
       this.unmount()
-    }, 3000)
+    }, 7000)
   }
 
   protected render(): string {
@@ -31,5 +31,6 @@ class RequestResult extends Block<RequestResultProps> {
 
 export function showRequestResult(isOk: boolean, message: string): void {
   const requestResult = new RequestResult({ isOk, message })
+  window.scrollTo({ top: 0 })
   document.body.append(requestResult.getContent()!)
 }
