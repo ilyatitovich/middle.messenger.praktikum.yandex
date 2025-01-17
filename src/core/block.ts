@@ -1,6 +1,5 @@
+import { EventBus } from '@/core'
 import { isDeepEqual } from '@/utils'
-
-import EventBus from './event-bus'
 
 type TagName = keyof HTMLElementTagNameMap
 
@@ -186,13 +185,41 @@ export abstract class Block<TProps extends BlockProps = BlockProps> {
 
   show(): void {
     if (this.element) {
-      this.element.style.display = 'block'
+      this.element.classList.remove('is-hidden')
     }
   }
 
   hide(): void {
     if (this.element) {
-      this.element.style.display = 'none'
+      this.element.classList.add('is-hidden')
     }
   }
+
+  unmount(): void {
+    this.onUnmount()
+    this.removeEvents()
+
+    if (this.childBlocks && Object.values(this.childBlocks).length > 0) {
+      Object.values(this.childBlocks).forEach(childBlock => {
+        childBlock.unmount()
+      })
+    }
+
+    if (this.childBlocksList && this.childBlocksList.length > 0) {
+      this.childBlocksList.forEach(childBlock => {
+        childBlock.unmount()
+      })
+    }
+
+    if (this.element && this.element.parentNode) {
+      this.element.parentNode.removeChild(this.element)
+    }
+
+    this.element = null
+    this.childBlocks = undefined
+    this.childBlocksList = undefined
+    this.events = undefined
+  }
+
+  protected onUnmount(): void {}
 }
