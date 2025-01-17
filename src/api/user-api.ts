@@ -1,6 +1,6 @@
 import type { User } from '@/stores'
 
-import { BaseAPI, type APIResponse } from './base-api'
+import { BaseAPI } from './base-api'
 
 export type UserData = Partial<User>
 
@@ -18,19 +18,19 @@ export class UserAPI extends BaseAPI {
     super()
   }
 
-  async changeData(data: UserData): Promise<APIResponse<User>> {
+  async changeData(data: UserData): Promise<User> {
     return this.http.put('/user/profile', { data })
   }
 
-  async changeAvatar(data: FormData): Promise<APIResponse<User>> {
+  async changeAvatar(data: FormData): Promise<User> {
     return this.http.put('/user/profile/avatar', { data })
   }
 
-  async changePassword(data: ChangePasswordData): Promise<APIResponse<null>> {
+  async changePassword(data: ChangePasswordData): Promise<void> {
     return this.http.put('/user/password', { data })
   }
 
-  async searchUser(data: SearchUserData): Promise<APIResponse<User[]>> {
+  async searchUser(data: SearchUserData): Promise<User[]> {
     return this.http.post('/user/search', { data })
   }
 }

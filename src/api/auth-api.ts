@@ -1,6 +1,6 @@
 import type { User } from '@/stores'
 
-import { BaseAPI, type APIResponse } from './base-api'
+import { BaseAPI } from './base-api'
 
 export type LoginData = {
   login: string
@@ -17,19 +17,19 @@ export type SignUpData = {
 }
 
 export class AuthAPI extends BaseAPI {
-  async login(data: LoginData): Promise<APIResponse<null>> {
+  async login(data: LoginData): Promise<void> {
     return this.http.post('/auth/signin', { data })
   }
 
-  async signup(data: SignUpData): Promise<APIResponse<{ id: number }>> {
+  async signup(data: SignUpData): Promise<{ id: number }> {
     return this.http.post('/auth/signup', { data })
   }
 
-  async logout(): Promise<APIResponse<null>> {
+  async logout(): Promise<void> {
     return this.http.post('/auth/logout')
   }
 
-  async getUser(): Promise<APIResponse<User>> {
+  async getUser(): Promise<User> {
     return this.http.get('/auth/user')
   }
 }

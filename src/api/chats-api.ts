@@ -1,6 +1,6 @@
-import type { Chat } from '@/stores'
+import type { Chat, ChatUser } from '@/stores'
 
-import { BaseAPI, type APIResponse } from './base-api'
+import { BaseAPI } from './base-api'
 
 export type CreateChatData = {
   title: string
@@ -10,7 +10,7 @@ export type DeleteChatData = {
   chatId: number
 }
 
-export type AddUserToChatData = {
+export type ChatUserData = {
   users: number[]
   chatId: number
 }
@@ -30,25 +30,31 @@ export class ChatsAPI extends BaseAPI {
     super()
   }
 
-  async getChats(): Promise<APIResponse<Chat[]>> {
+  async getChats(): Promise<Chat[]> {
     return this.http.get('/chats')
   }
 
-  async createChat(data: CreateChatData): Promise<APIResponse<{ id: number }>> {
+  async createChat(data: CreateChatData): Promise<{ id: number }> {
     return this.http.post('/chats', { data })
   }
 
-  async deleteChat(
-    data: DeleteChatData
-  ): Promise<APIResponse<DeleteChatResult>> {
+  async deleteChat(data: DeleteChatData): Promise<DeleteChatResult> {
     return this.http.delete('/chats', { data })
   }
 
-  async addUserToChat(data: AddUserToChatData): Promise<APIResponse<null>> {
+  async addUserToChat(data: ChatUserData): Promise<void> {
     return this.http.put('/chats/users', { data })
   }
 
-  async getChatToken(chatId: number): Promise<APIResponse<{ token: string }>> {
+  async getChatToken(chatId: number): Promise<{ token: string }> {
     return this.http.post(`/chats/token/${chatId}`)
+  }
+
+  async getChatUsers(chatId: number): Promise<ChatUser[]> {
+    return this.http.get(`/chats/${chatId}/users`)
+  }
+
+  async deleteChatUsers(data: ChatUserData): Promise<void> {
+    return this.http.delete('/chats/users', { data })
   }
 }
