@@ -8,7 +8,7 @@ import ChatMainEmptyTemplate from './chat-main-empty.hbs?raw'
 type ChatMainEmptyProps = BlockProps
 
 export class ChatMainEmpty extends Block<ChatMainEmptyProps> {
-  constructor(props: ChatMainEmptyProps) {
+  constructor(props: ChatMainEmptyProps = {}) {
     super('section', {
       ...props,
       className: 'chat-main-empty'
