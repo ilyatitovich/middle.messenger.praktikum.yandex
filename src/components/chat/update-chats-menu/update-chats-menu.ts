@@ -1,10 +1,10 @@
 import './update-chats-menu.css'
 
 import { ActionMenu, Button, Modal } from '@/components'
-import { UpdateChatsForm } from '@/components/forms'
+import { DeleteUsersForm, UpdateChatsForm } from '@/components/forms'
 import { chatsController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
-import { currentChatStore } from '@/stores'
+import { chatUsersStore, currentChatStore } from '@/stores'
 import { getTemplate, isValidLogin } from '@/utils'
 
 import UpdateChatsMenuIcon from './update-chats-menu-icon.hbs?raw'
@@ -18,17 +18,24 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
 
   constructor(props: UpdateChatsMenuProps = {}) {
     const menu = new ActionMenu({
-      className: 'update-chats-menu',
+      className: 'update-chats-menu is-hidden',
       childBlocksList: [
         new Button({
           className: 'update-chats-menu__action_button',
           label: 'Добавить участника',
           events: {
-            click: () => {
-              this.openModal()
-            }
+            click: () => this.openAddUserModal()
           }
         }),
+
+        new Button({
+          className: 'update-chats-menu__action_button',
+          label: 'Удалить участника',
+          events: {
+            click: () => this.openDeleteUserModal()
+          }
+        }),
+
         new Button({
           className: 'update-chats-menu__action_button',
           label: 'Удалить чат',
@@ -58,10 +65,9 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
     })
 
     this.menu = menu
-    this.menu.hide()
   }
 
-  private openModal(): void {
+  private openAddUserModal(): void {
     this.menu.hide()
     this.modal = new Modal({
       content: new UpdateChatsForm({
@@ -70,6 +76,22 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
         submitButtonLabel: 'Добавить',
         validate: isValidLogin,
         handleUpdate: login => this.addUser(login),
+        handleCancel: () => this.closeModal()
+      })
+    })
+
+    const modalContent = this.modal.getContent()
+
+    if (modalContent) {
+      document.body.append(modalContent)
+    }
+  }
+
+  private openDeleteUserModal(): void {
+    this.menu.hide()
+    this.modal = new Modal({
+      content: new DeleteUsersForm({
+        users: chatUsersStore.get().users,
         handleCancel: () => this.closeModal()
       })
     })
