@@ -4,6 +4,7 @@ import { HTTPTransport } from '@/utils'
 
 type APIError = {
   status: number
+  message: string
 }
 
 export abstract class BaseAPI {
@@ -11,12 +12,16 @@ export abstract class BaseAPI {
     'https://ya-praktikum.tech/api/v2'
   )
 
-  handleError(error: unknown, message: string, callback?: () => void): void {
-    const { status } = error as APIError
+  handleError(
+    error: unknown,
+    customMessage?: string,
+    callback?: () => void
+  ): void {
+    const { status, message } = error as APIError
 
     switch (status) {
       case 400:
-        showRequestResult(false, message)
+        showRequestResult(false, customMessage || 'Произошла ошибка')
         break
       case 401:
         showRequestResult(false, 'Вы не авторизованы')
@@ -31,7 +36,7 @@ export abstract class BaseAPI {
         appRouter.go('/500')
         break
       default:
-        showRequestResult(false, 'Произошла ошибка')
+        showRequestResult(false, message || 'Произошла ошибка')
         break
     }
 
