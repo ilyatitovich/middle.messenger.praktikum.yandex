@@ -12,10 +12,12 @@ export type User = {
 }
 
 export type UserState = {
+  status: 'idle' | 'loading' | 'success' | 'error'
   user: User | null
 }
 
 const initialUserState: UserState = {
+  status: 'idle',
   user: null
 }
 
