@@ -15,7 +15,6 @@ export class SignInForm extends Block<SignInFormProps> {
   private loginField: UserFormField
   private passwordField: UserFormField
   private submitButton: Button
-  private storeUnsubscribe: () => void
 
   constructor(props: SignInFormProps = {}) {
     const loginField = new UserFormField({
@@ -84,9 +83,5 @@ export class SignInForm extends Block<SignInFormProps> {
         password: this.passwordField.getValue()
       })
     }
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

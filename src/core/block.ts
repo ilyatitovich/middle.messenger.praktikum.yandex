@@ -18,6 +18,7 @@ export abstract class Block<TProps extends BlockProps = BlockProps> {
   private readonly eventBus: EventBus
   protected childBlocks?: TProps['childBlocks']
   protected childBlocksList?: TProps['childBlocksList']
+  protected storeUnsubscribe?: () => void
 
   static EVENTS = {
     INIT: 'init',
@@ -198,6 +199,10 @@ export abstract class Block<TProps extends BlockProps = BlockProps> {
   unmount(): void {
     this.onUnmount()
     this.removeEvents()
+
+    if (this.storeUnsubscribe) {
+      this.storeUnsubscribe()
+    }
 
     if (this.childBlocks && Object.values(this.childBlocks).length > 0) {
       Object.values(this.childBlocks).forEach(childBlock => {

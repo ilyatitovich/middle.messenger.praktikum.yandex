@@ -26,7 +26,6 @@ export class SignUpForm extends Block<SignUpFormProps> {
   private passwordField: UserFormField
   private confirmPasswordField: UserFormField
   private submitButton: Button
-  private storeUnsubscribe: () => void
 
   constructor(props: SignUpFormProps = {}) {
     const emailField = new UserFormField({
@@ -162,9 +161,5 @@ export class SignUpForm extends Block<SignUpFormProps> {
 
       authController.signup(fields as SignUpData)
     }
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

@@ -59,7 +59,7 @@ export class DeleteUsersForm extends Block<DeleteUsersFormProps> {
 
         try {
           this.submitButton.setProps<ButtonProps>({ isDisabled: true })
-          await chatsController.deletChatUsers(users)
+          await chatsController.deleteChatUsers(users)
           this.closeForm()
         } catch (error) {
           console.error(error)

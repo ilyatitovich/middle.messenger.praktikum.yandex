@@ -59,7 +59,7 @@ export class ChatSideBar extends Block<ChatSideBarProps> {
     const target = e.target as HTMLInputElement
     const filteredChatsList = chatsStore
       .get()
-      .chatsList.filter(chat =>
+      .chatsList!.filter(chat =>
         chat.title.toLowerCase().includes(target.value.trim().toLowerCase())
       )
     this.chatsList.setProps<ChatsListProps>({ chats: filteredChatsList })
@@ -68,6 +68,7 @@ export class ChatSideBar extends Block<ChatSideBarProps> {
   private openModal(): void {
     this.modal = new Modal({
       content: new UpdateChatsForm({
+        type: 'addChat',
         title: 'Новый чат',
         validate: isValidChatName,
         inputLabel: 'Название чата',

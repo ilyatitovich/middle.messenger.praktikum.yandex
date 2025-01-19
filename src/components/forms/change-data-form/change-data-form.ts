@@ -24,7 +24,6 @@ export type ChangeDataFormProps = BlockProps & {
 export class ChangeDataForm extends Block<ChangeDataFormProps> {
   private fields: UserFormField[]
   private submitButton: Button
-  private storeUnsubscribe: () => void
 
   constructor(props: ChangeDataFormProps) {
     const { user } = props
@@ -163,9 +162,5 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
         userController.updateData(values as UserData)
       }
     }
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

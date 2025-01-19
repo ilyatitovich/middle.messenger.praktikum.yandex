@@ -12,7 +12,6 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
   private newPasswordField: UserFormField
   private confirmPasswordField: UserFormField
   private submitButton: Button
-  private storeUnsubscribe: () => void
 
   constructor(props: ChangePasswordFormProps = {}) {
     const oldPasswordField = new UserFormField({
@@ -107,9 +106,5 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
     ) {
       userController.updatePassword(fields as ChangePasswordData)
     }
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

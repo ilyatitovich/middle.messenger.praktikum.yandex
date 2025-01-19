@@ -12,7 +12,6 @@ type ChatsListItemProps = BlockProps & {
 
 export class ChatsListItem extends Block<ChatsListItemProps> {
   private id: number
-  private storeUnsubscribe: () => void
 
   constructor(props: ChatsListItemProps) {
     super('li', {
@@ -49,9 +48,5 @@ export class ChatsListItem extends Block<ChatsListItemProps> {
       lastMessage: last_message ? last_message.content : '',
       unreadCount: unread_count
     })
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

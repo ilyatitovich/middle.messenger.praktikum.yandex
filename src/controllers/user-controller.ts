@@ -1,18 +1,9 @@
-import {
-  UserAPI,
-  type UserData,
-  type ChangePasswordData,
-  type APIError
-} from '@/api'
+import { UserAPI, type UserData, type ChangePasswordData } from '@/api'
 import { showRequestResult } from '@/components'
 import { userStore } from '@/stores'
 
 class UserController {
-  private userApi: UserAPI
-
-  constructor() {
-    this.userApi = new UserAPI()
-  }
+  private userApi: UserAPI = new UserAPI()
 
   async updateData(data: UserData): Promise<void> {
     userStore.set({ status: 'loading' })
@@ -22,10 +13,8 @@ class UserController {
       userStore.set({ status: 'success', user })
       showRequestResult(true, 'Данные обновлены')
     } catch (error) {
-      this.userApi.handleError(
-        error as APIError,
-        'Ошибка при обновлении данных',
-        () => userStore.set({ status: 'error' })
+      this.userApi.handleError(error, 'Ошибка при обновлении данных', () =>
+        userStore.set({ status: 'error' })
       )
     }
   }
@@ -38,10 +27,8 @@ class UserController {
       userStore.set({ status: 'success', user })
       showRequestResult(true, 'Аватар обновлен')
     } catch (error) {
-      this.userApi.handleError(
-        error as APIError,
-        'Ошибка при обновлении аватара',
-        () => userStore.set({ status: 'error' })
+      this.userApi.handleError(error, 'Ошибка при обновлении аватара', () =>
+        userStore.set({ status: 'error' })
       )
     }
   }
@@ -54,10 +41,8 @@ class UserController {
       userStore.set({ status: 'success' })
       showRequestResult(true, 'Пароль обновлен')
     } catch (error) {
-      this.userApi.handleError(
-        error as APIError,
-        'Ошибка при обновлении пароля',
-        () => userStore.set({ status: 'error' })
+      this.userApi.handleError(error, 'Ошибка при обновлении пароля', () =>
+        userStore.set({ status: 'error' })
       )
     }
   }

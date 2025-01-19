@@ -10,8 +10,6 @@ export type ChatsListProps = BlockProps & {
 }
 
 export class ChatsList extends Block<ChatsListProps> {
-  private storeUnsubscribe: () => void
-
   constructor(props: ChatsListProps = { chats: chatsStore.get().chatsList }) {
     const childBlocksList = props.chats
       ? props.chats.map(chat => {
@@ -51,9 +49,5 @@ export class ChatsList extends Block<ChatsListProps> {
     })
 
     return true
-  }
-
-  protected onUnmount(): void {
-    this.storeUnsubscribe()
   }
 }

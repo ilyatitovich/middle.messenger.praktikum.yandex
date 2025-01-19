@@ -12,6 +12,7 @@ import { getTemplate } from '@/utils'
 import FileUploadFormTemplate from './file-upload-form.hbs?raw'
 
 type FileUploadFormProps = BlockProps & {
+  accept?: string
   handleUploadFile: (file: File) => void
   handleCancel: () => void
 }
@@ -24,6 +25,7 @@ export class FileUploadForm extends Block<FileUploadFormProps> {
     const input = new Input({
       type: 'file',
       name: 'file',
+      accept: props.accept,
       className: 'file-upload-form__input',
       events: { change: (e: Event) => this.handleChange(e as InputEvent) }
     })
