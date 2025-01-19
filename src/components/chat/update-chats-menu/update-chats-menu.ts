@@ -1,10 +1,10 @@
 import './update-chats-menu.css'
 
-import { ActionMenu, Button, Modal } from '@/components'
+import { ActionMenu, Button, Modal, showRequestResult } from '@/components'
 import { DeleteUsersForm, UpdateChatsForm } from '@/components/forms'
 import { chatsController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
-import { chatUsersStore, currentChatStore } from '@/stores'
+import { chatUsersStore, currentChatStore, userStore } from '@/stores'
 import { getTemplate, isValidLogin } from '@/utils'
 
 import UpdateChatsMenuIcon from './update-chats-menu-icon.hbs?raw'
@@ -57,7 +57,7 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
           className: 'update-chats-menu__button',
           icon: UpdateChatsMenuIcon,
           events: {
-            click: () => this.menu.show()
+            click: () => this.doIfAdmin(() => this.menu.show())
           }
         }),
         menu
@@ -116,6 +116,30 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
   private deleteChat(): void {
     const { currentChatId } = currentChatStore.get()
     chatsController.deleteChat({ chatId: currentChatId as number })
+  }
+
+  private doIfAdmin(callback: () => void): void {
+    const { user } = userStore.get()
+    const { users: chatUsers } = chatUsersStore.get()
+
+    if (!user) {
+      console.error('Пользователь не найден')
+      return
+    }
+
+    const chatUser = chatUsers.find(({ id }) => id === user.id)
+
+    if (!chatUser) {
+      console.error('Пользователь не найден в чате')
+      return
+    }
+
+    if (chatUser.role !== 'admin') {
+      showRequestResult(false, 'Нет прав редактировать чат')
+      return
+    }
+
+    callback()
   }
 
   protected render(): string {
