@@ -14,9 +14,11 @@ export class ChatsListItem extends Block<ChatsListItemProps> {
   private id: number
 
   constructor(props: ChatsListItemProps) {
+    const { currentChatId } = currentChatStore.get()
+    const isCurrentChat = currentChatId === props.chat.id
     super('li', {
       ...props,
-      className: 'chat-list__item',
+      className: `chat-list__item ${isCurrentChat ? 'is-current' : ''}`,
       events: {
         click: () => this.setCurrentChat()
       }
