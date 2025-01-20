@@ -120,7 +120,8 @@ export class ChatMain extends Block<ChatMainProps> {
               messages: this.messages
             })
           } else {
-            if ((message as MessageResponse).type === 'message') {
+            const { type } = message as MessageResponse
+            if (type === 'message' || type === 'file') {
               this.messages.unshift(message as MessageResponse)
               this.messagesList.addMessage(message as MessageResponse)
             }
@@ -133,7 +134,7 @@ export class ChatMain extends Block<ChatMainProps> {
   private handleSubmit(e: SubmitEvent) {
     e.preventDefault()
 
-    const message = new FormData(this.form).get('message') as string
+    let message = new FormData(this.form).get('message') as string
 
     if (message) {
       this.webSocket.sendMessage({ content: message, type: 'message' })
@@ -164,11 +165,12 @@ export class ChatMain extends Block<ChatMainProps> {
 
   private async sendFile(file: File): Promise<void> {
     const formData = new FormData()
-    formData.append('fileMessage', file)
+    formData.append('resource', file)
     const id = await chatsController.uploadFile(formData)
 
     if (id) {
-      console.log(id)
+      this.webSocket.sendMessage({ content: String(id), type: 'file' })
+      this.hideSendFileModal()
     }
   }
 

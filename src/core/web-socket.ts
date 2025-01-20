@@ -20,7 +20,7 @@ export type FileMessage = {
 
 export type Message = {
   content: string
-  type: 'message' | 'get old'
+  type: 'message' | 'get old' | 'file'
 }
 
 export type MessageResponse = {
@@ -28,7 +28,7 @@ export type MessageResponse = {
   time: string
   user_id: number
   content: string
-  type: 'message'
+  type: 'message' | 'file'
   is_read?: boolean
   file?: FileMessage | null
 }
@@ -43,7 +43,6 @@ export class MessengerWebSocket {
     this.eventBus = new EventBus()
 
     this.socket.addEventListener(SocketEvents.Open, () => {
-      console.log('Соединение установлено')
       this.eventBus?.emit(SocketEvents.Open)
 
       this.pingInterval = setInterval(() => {
@@ -54,10 +53,9 @@ export class MessengerWebSocket {
     })
 
     this.socket.addEventListener(SocketEvents.Close, event => {
-      const message = event.wasClean
-        ? 'Соединение закрыто'
-        : 'Соединение прервано'
-      console.log(message)
+      if (!event.wasClean) {
+        showRequestResult(false, 'Соединение прервано')
+      }
       this.cleanupPing()
     })
 

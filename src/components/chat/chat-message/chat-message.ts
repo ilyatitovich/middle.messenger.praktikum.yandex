@@ -2,9 +2,10 @@ import './chat-message.css'
 
 import { Block, type BlockProps, type MessageResponse } from '@/core'
 import { userStore } from '@/stores'
-import { getTemplate } from '@/utils'
+import { getFilePath, getTemplate } from '@/utils'
 
-import MessageTemplate from './chat-message.hbs?raw'
+import ImageMessageTemplate from './chat-img-message.hbs?raw'
+import TextMessageTemplate from './chat-text-message.hbs?raw'
 
 export type ChatMessageProps = BlockProps & {
   message: MessageResponse
@@ -13,6 +14,7 @@ export type ChatMessageProps = BlockProps & {
 export class ChatMessage extends Block<ChatMessageProps> {
   constructor(props: ChatMessageProps) {
     const { user } = userStore.get()
+
     super('div', {
       ...props,
       className: `message ${props.message.user_id === user!.id ? 'right' : 'left'}`
@@ -20,6 +22,17 @@ export class ChatMessage extends Block<ChatMessageProps> {
   }
 
   protected render(): string {
-    return getTemplate(MessageTemplate, { text: this.props.message.content })
+    const { content, file } = this.props.message
+
+    if (file) {
+      return getTemplate(ImageMessageTemplate, {
+        imgSrc: getFilePath(file.path),
+        altText: file.filename
+      })
+    }
+
+    return getTemplate(TextMessageTemplate, {
+      text: content
+    })
   }
 }

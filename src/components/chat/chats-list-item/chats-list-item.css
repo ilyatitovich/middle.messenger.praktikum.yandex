@@ -73,7 +73,14 @@
   font-size: 0.7rem;
 }
 
+.chat-item__last-message-author {
+  font-size: 0.8rem;
+  color: var(--gray-dark-color);
+  font-weight: bold;
+}
+
 .chat-item__last-message {
+  height: 40px;
   font-size: 0.8rem;
   color: var(--gray-dark-color);
   width: 80%;

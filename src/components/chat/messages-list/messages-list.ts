@@ -4,17 +4,14 @@ import { ChatMessage } from '@/components/chat'
 import { Block, type BlockProps, type MessageResponse } from '@/core'
 
 export type MessagesListProps = BlockProps & {
-  messages: MessageResponse[]
+  messages?: MessageResponse[]
   message?: MessageResponse
 }
 
 export class MessagesList extends Block<MessagesListProps> {
-  constructor(props: MessagesListProps = { messages: [] }) {
+  constructor(props: MessagesListProps = {}) {
     super('div', {
       ...props,
-      childBlocksList: props.messages
-        .reverse()
-        .map(message => new ChatMessage({ message })),
       className: 'messages-list'
     })
   }
@@ -22,18 +19,40 @@ export class MessagesList extends Block<MessagesListProps> {
   addMessage(message: MessageResponse): void {
     const newMessage = new ChatMessage({ message })
     this.childBlocksList?.push(newMessage)
-    this.element?.appendChild(newMessage.getContent()!)
-    this.scrollToBottom()
+    this.element?.append(newMessage.getContent()!)
+
+    requestAnimationFrame(() => {
+      this.scrollToBottom()
+    })
   }
 
   private scrollToBottom(): void {
-    if (this.element) {
-      this.element.scrollTop = this.element!.scrollHeight
-    }
+    if (!this.element) return
+
+    const images = this.element.querySelectorAll('img')
+    const promises = Array.from(images).map(
+      img =>
+        new Promise<void>(resolve => {
+          if (img.complete) {
+            resolve()
+          } else {
+            img.onload = () => resolve()
+            img.onerror = () => resolve()
+          }
+        })
+    )
+
+    Promise.all(promises).then(() => {
+      this.element!.scrollTo({
+        top: this.element!.scrollHeight
+      })
+    })
   }
 
   protected componentDidMount(): void {
-    this.scrollToBottom()
+    requestAnimationFrame(() => {
+      this.scrollToBottom()
+    })
   }
 
   protected componentDidUpdate(

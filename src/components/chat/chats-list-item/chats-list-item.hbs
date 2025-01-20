@@ -7,7 +7,12 @@
       <span class='chat-item__name'>{{title}}</span>
       <span class='chat-item__time'>{{time}}</span>
     </div>
-    <div class='chat-item__last-message'>{{lastMessage}}</div>
+    <div class='chat-item__last-message'>
+      {{#if lastMessage}}
+        <span class='chat-item__last-message-author'>{{author}}:</span>
+        {{lastMessage}}
+      {{/if}}
+    </div>
   </div>
   {{#if unreadCount}}
     <div class='chat-badge'>{{unreadCount}}</div>

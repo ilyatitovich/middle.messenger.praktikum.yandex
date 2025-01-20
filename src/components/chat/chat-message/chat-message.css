@@ -13,6 +13,10 @@
   white-space: pre-wrap;
 }
 
+.image-message {
+  width: 200px;
+}
+
 .message.left {
   margin-inline-end: auto;
   border-start-start-radius: 0;
