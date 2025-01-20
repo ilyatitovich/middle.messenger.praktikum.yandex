@@ -92,7 +92,7 @@ export class HTTPTransport {
         const status = xhr.status
         const contentType = xhr.getResponseHeader('Content-Type')
 
-        if (status === 200) {
+        if (status >= 200 && status < 300) {
           try {
             let response: TResponse
 
@@ -104,19 +104,19 @@ export class HTTPTransport {
 
             resolve(response)
           } catch {
-            reject(new Error(`Error parsing response from ${url}`))
+            reject(new Error(`Ошибка при парсинге ответа от ${url}`))
           }
         } else {
-          reject({ status, message: `Request failed with status ${status}` })
+          reject({ status, message: `Запрос отклонен со статусом: ${status}` })
         }
       }
 
       xhr.onerror = () => {
-        reject(new Error(`Запрос на адрес ${url} отклонен`))
+        reject(new Error('Ошибка сети, проверьте подключение'))
       }
 
       xhr.ontimeout = () => {
-        reject(new Error(`Превышено время ожидания запроса на адрес ${url}`))
+        reject(new Error(`Превышено время ожидания запроса`))
       }
 
       if (method === METHODS.GET || !data) {

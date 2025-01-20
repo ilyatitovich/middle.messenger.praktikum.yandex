@@ -6,7 +6,7 @@ import {
 } from '@/components'
 import { authController } from '@/controllers/auth-controller'
 import { Block, type BlockProps } from '@/core'
-import { type AuthState, authStore } from '@/stores'
+import { userStore, type UserState } from '@/stores'
 import { isValidLogin, isValidPassword } from '@/utils'
 
 type SignInFormProps = BlockProps
@@ -50,8 +50,8 @@ export class SignInForm extends Block<SignInFormProps> {
     this.passwordField = passwordField
     this.submitButton = submitButton
 
-    this.storeUnsubscribe = authStore.subscribe(state => {
-      const { status } = state as AuthState
+    this.storeUnsubscribe = userStore.subscribe(state => {
+      const { status } = state as UserState
 
       if (status === 'loading') {
         this.submitButton.setProps<ButtonProps>({ isDisabled: true })
@@ -60,10 +60,10 @@ export class SignInForm extends Block<SignInFormProps> {
       if (status === 'error') {
         this.submitButton.setProps<ButtonProps>({ isDisabled: false })
         this.loginField.setProps<UserFormFieldProps>({
-          validationResult: { isValid: false, message: '' }
+          validationResult: { isValid: false, message: 'Провереть логин' }
         })
         this.passwordField.setProps<UserFormFieldProps>({
-          validationResult: { isValid: false, message: '' }
+          validationResult: { isValid: false, message: 'Проверьте пароль' }
         })
       }
     })

@@ -7,7 +7,7 @@ import {
 } from '@/components'
 import { authController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
-import { type AuthState, authStore } from '@/stores'
+import { type UserState, userStore } from '@/stores'
 import {
   isValidLogin,
   isValidPassword,
@@ -121,8 +121,8 @@ export class SignUpForm extends Block<SignUpFormProps> {
     this.confirmPasswordField = confirmPasswordField
     this.submitButton = submitButton
 
-    this.storeUnsubscribe = authStore.subscribe(state => {
-      const { status } = state as AuthState
+    this.storeUnsubscribe = userStore.subscribe(state => {
+      const { status } = state as UserState
 
       if (status === 'loading') {
         this.submitButton.setProps<ButtonProps>({ isDisabled: true })

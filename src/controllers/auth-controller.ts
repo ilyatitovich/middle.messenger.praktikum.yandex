@@ -1,38 +1,34 @@
 import { AuthAPI, type LoginData, type SignUpData } from '@/api'
 import { appRouter } from '@/app'
 import { removePreloader, showPreloader } from '@/components'
-import { authStore, userStore } from '@/stores'
+import { userStore } from '@/stores'
 
 class AuthController {
   private authAPI: AuthAPI = new AuthAPI()
 
   async login(data: LoginData): Promise<void> {
-    authStore.set({ status: 'loading' })
+    userStore.set({ status: 'loading' })
 
     try {
       await this.authAPI.login(data)
       await this.getUser()
-
-      authStore.set({ status: 'success' })
       appRouter.go('/messenger')
     } catch (error) {
       this.authAPI.handleError(error, 'Ошибка про авторизации', () =>
-        authStore.set({ status: 'error' })
+        userStore.set({ status: 'error' })
       )
     }
   }
 
   async signup(data: SignUpData): Promise<void> {
-    authStore.set({ status: 'loading' })
+    userStore.set({ status: 'loading' })
     try {
       await this.authAPI.signup(data)
       await this.getUser()
-
-      authStore.set({ status: 'success' })
       appRouter.go('/messenger')
     } catch (error) {
       this.authAPI.handleError(error, 'Ошибка про регистрации', () =>
-        authStore.set({ status: 'error' })
+        userStore.set({ status: 'error' })
       )
     }
   }
@@ -44,7 +40,7 @@ class AuthController {
       appRouter.go('/')
     } catch (error) {
       this.authAPI.handleError(error, 'Произошла ошибка', () =>
-        authStore.set({ status: 'error' })
+        userStore.set({ status: 'error' })
       )
     }
   }
@@ -52,10 +48,8 @@ class AuthController {
   async getUser(): Promise<void> {
     try {
       const user = await this.authAPI.getUser()
-      userStore.set({ user })
-    } catch (error) {
-      console.error(error)
-    }
+      userStore.set({ status: 'success', user })
+    } catch {}
   }
 
   checkAuth = async (): Promise<void> => {
