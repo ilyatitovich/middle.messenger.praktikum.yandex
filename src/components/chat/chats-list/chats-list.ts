@@ -37,7 +37,6 @@ export class ChatsList extends Block<ChatsListProps> {
   }
 
   private startChatsRefetch(): void {
-    console.log('start')
     if (this.refetchInterval) {
       clearInterval(this.refetchInterval)
     }
@@ -48,7 +47,6 @@ export class ChatsList extends Block<ChatsListProps> {
   }
 
   private stopChatsRefetch(): void {
-    console.log('stop ')
     if (this.refetchInterval) {
       clearInterval(this.refetchInterval)
       this.refetchInterval = null

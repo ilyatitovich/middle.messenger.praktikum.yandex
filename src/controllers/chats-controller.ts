@@ -69,13 +69,12 @@ class ChatsController {
     }
   }
 
-  async getChatToken(chatId: number): Promise<string> {
+  async getChatToken(chatId: number): Promise<string | undefined> {
     try {
       const { token } = await this.chatsAPI.getChatToken(chatId)
       return token
     } catch (error) {
       this.chatsAPI.handleError(error)
-      throw error
     }
   }
 
@@ -101,6 +100,15 @@ class ChatsController {
       showRequestResult(true, 'Пользователи удалены')
     } catch (error) {
       this.chatsAPI.handleError(error, 'Ошибка при удалении пользователей')
+    }
+  }
+
+  async uploadFile(data: FormData): Promise<number | undefined> {
+    try {
+      const { id } = await this.chatsAPI.uploadFile(data)
+      return id
+    } catch (error) {
+      this.chatsAPI.handleError(error)
     }
   }
 }

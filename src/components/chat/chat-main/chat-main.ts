@@ -34,7 +34,7 @@ type ChatMainProps = BlockProps & {
 export class ChatMain extends Block<ChatMainProps> {
   private form: HTMLFormElement
   private messagesList: MessagesList
-  private sendFileModal: Modal
+  private sendFileModal: Modal | null = null
   private currentChatData: CurrentChatData
   private webSocket: MessengerWebSocket = new MessengerWebSocket()
   private messages: MessageResponse[] = []
@@ -53,13 +53,6 @@ export class ChatMain extends Block<ChatMainProps> {
 
     const messagesList = new MessagesList()
 
-    const sendFileModal = new Modal({
-      content: new FileUploadForm({
-        handleUploadFile: (file: File) => this.sendFile(file),
-        handleCancel: () => this.hideSendFileModal()
-      })
-    })
-
     const updateChatsMenu = new UpdateChatsMenu()
 
     super('section', {
@@ -68,7 +61,6 @@ export class ChatMain extends Block<ChatMainProps> {
         currentChatData,
         messagesList,
         messageForm,
-        sendFileModal,
         updateChatsMenu
       },
       className: 'chat-main'
@@ -77,8 +69,6 @@ export class ChatMain extends Block<ChatMainProps> {
     this.currentChatData = currentChatData
     this.form = messageForm.getContent() as HTMLFormElement
     this.messagesList = messagesList
-    this.sendFileModal = sendFileModal
-    this.sendFileModal.hide()
 
     this.storeUnsubscribe = currentChatStore.subscribe(state => {
       const { currentChatId } = state as CurrentChatState
@@ -137,10 +127,7 @@ export class ChatMain extends Block<ChatMainProps> {
           }
         })
       }
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
+    } catch {}
   }
 
   private handleSubmit(e: SubmitEvent) {
@@ -155,15 +142,34 @@ export class ChatMain extends Block<ChatMainProps> {
   }
 
   private openSendFileModal(): void {
-    this.sendFileModal.show()
+    this.sendFileModal = new Modal({
+      content: new FileUploadForm({
+        handleUploadFile: (file: File) => this.sendFile(file),
+        handleCancel: () => this.hideSendFileModal()
+      })
+    })
+
+    const modalContent = this.sendFileModal.getContent()
+
+    if (modalContent) {
+      document.body.append(modalContent)
+    }
   }
 
   private hideSendFileModal(): void {
-    this.sendFileModal.hide()
+    if (this.sendFileModal) {
+      this.sendFileModal.unmount()
+    }
   }
 
-  private sendFile(file: File): void {
-    console.table({ message: file })
+  private async sendFile(file: File): Promise<void> {
+    const formData = new FormData()
+    formData.append('fileMessage', file)
+    const id = await chatsController.uploadFile(formData)
+
+    if (id) {
+      console.log(id)
+    }
   }
 
   protected onUnmount(): void {

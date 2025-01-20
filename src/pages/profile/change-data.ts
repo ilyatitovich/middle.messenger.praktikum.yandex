@@ -16,7 +16,7 @@ type ChangeDataPageProps = BlockProps
 
 export class ChangeDataPage extends Block<ChangeDataPageProps> {
   private avatar: Avatar
-  private modal: Modal
+  private modal: Modal | null = null
   private changeDataForm: ChangeDataForm
 
   constructor(props: ChangeDataPageProps = {}) {
@@ -26,14 +26,6 @@ export class ChangeDataPage extends Block<ChangeDataPageProps> {
       imgSrc: user ? user.avatar : null,
       handleOpenModal: () => this.handleOpenModal(),
       isEditable: true
-    })
-
-    const modal = new Modal({
-      content: new FileUploadForm({
-        accept: 'image/*',
-        handleUploadFile: (file: File) => this.changeAvatar(file),
-        handleCancel: () => this.handleCloseModal()
-      })
     })
 
     const changeDataForm = new ChangeDataForm({ user })
@@ -48,17 +40,14 @@ export class ChangeDataPage extends Block<ChangeDataPageProps> {
           icon: BackLinkIcon
         }),
         avatar,
-        modal,
         content: changeDataForm
       }
     })
 
     this.avatar = avatar
     this.changeDataForm = changeDataForm
-    this.modal = modal
-    this.modal.hide()
 
-    userStore.subscribe(state => {
+    this.storeUnsubscribe = userStore.subscribe(state => {
       const { user } = state as UserState
       if (!user) {
         return
@@ -69,24 +58,33 @@ export class ChangeDataPage extends Block<ChangeDataPageProps> {
   }
 
   private handleOpenModal(): void {
-    this.modal.show()
+    this.modal = new Modal({
+      content: new FileUploadForm({
+        accept: '.jpeg, .jpg, .png, .gif, .webp',
+        handleUploadFile: (file: File) => this.changeAvatar(file),
+        handleCancel: () => this.handleCloseModal()
+      })
+    })
+
+    const modalContent = this.modal.getContent()
+
+    if (modalContent) {
+      document.body.append(modalContent)
+    }
   }
 
   private handleCloseModal(): void {
-    this.modal.hide()
+    if (this.modal) {
+      this.modal.unmount()
+    }
   }
 
   private async changeAvatar(file: File): Promise<void> {
     const formData = new FormData()
     formData.append('avatar', file)
 
-    try {
-      await userController.updateAvatar(formData)
-      this.handleCloseModal()
-    } catch (error) {
-      console.log('error')
-      throw error
-    }
+    await userController.updateAvatar(formData)
+    this.handleCloseModal()
   }
 
   protected render(): string {

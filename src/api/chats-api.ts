@@ -57,4 +57,8 @@ export class ChatsAPI extends BaseAPI {
   async deleteChatUsers(data: ChatUserData): Promise<void> {
     return this.http.delete('/chats/users', { data })
   }
+
+  async uploadFile(data: FormData): Promise<{ id: number }> {
+    return this.http.post('/resources', { data })
+  }
 }
