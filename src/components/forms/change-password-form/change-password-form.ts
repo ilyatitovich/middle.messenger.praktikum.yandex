@@ -1,5 +1,8 @@
-import { Button, UserFormField } from '@/components'
+import { type ChangePasswordData } from '@/api'
+import { Button, type ButtonProps, UserFormField } from '@/components'
+import { userController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
+import { type UserState, userStore } from '@/stores'
 import { isValidPassword, isPasswordConfirmed } from '@/utils'
 
 type ChangePasswordFormProps = BlockProps
@@ -8,6 +11,7 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
   private oldPasswordField: UserFormField
   private newPasswordField: UserFormField
   private confirmPasswordField: UserFormField
+  private submitButton: Button
 
   constructor(props: ChangePasswordFormProps = {}) {
     const oldPasswordField = new UserFormField({
@@ -58,9 +62,31 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
     this.oldPasswordField = oldPasswordField
     this.newPasswordField = newPasswordField
     this.confirmPasswordField = confirmPasswordField
+    this.submitButton = submitButton
+
+    this.storeUnsubscribe = userStore.subscribe(state => {
+      const { status } = state as UserState
+
+      if (status === 'loading') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: true })
+        return
+      }
+
+      if (status === 'success') {
+        this.resetForm()
+      }
+
+      this.submitButton.setProps<ButtonProps>({ isDisabled: false })
+    })
   }
 
-  private handleSubmit(event: SubmitEvent): void {
+  private resetForm(): void {
+    this.oldPasswordField.resetValue()
+    this.newPasswordField.resetValue()
+    this.confirmPasswordField.resetValue()
+  }
+
+  private async handleSubmit(event: SubmitEvent): Promise<void> {
     event.preventDefault()
 
     const fields: Record<string, string> = {
@@ -78,7 +104,7 @@ export class ChangePasswordForm extends Block<ChangePasswordFormProps> {
       validations.every(value => value === true) &&
       fields.newPassword !== fields.oldPassword
     ) {
-      console.table(fields)
+      userController.updatePassword(fields as ChangePasswordData)
     }
   }
 }

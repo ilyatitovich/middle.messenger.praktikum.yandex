@@ -1,6 +1,6 @@
 .chats-list {
-  padding-bottom: 2em;
   overflow-y: auto;
+  height: 70%;
 }
 
 .chats-list::-webkit-scrollbar {

@@ -1,5 +1,13 @@
-import { Button, UserFormField } from '@/components'
+import { type SignUpData } from '@/api'
+import {
+  Button,
+  ButtonProps,
+  UserFormField,
+  UserFormFieldProps
+} from '@/components'
+import { authController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
+import { type UserState, userStore } from '@/stores'
 import {
   isValidLogin,
   isValidPassword,
@@ -13,8 +21,11 @@ type SignUpFormProps = BlockProps
 
 export class SignUpForm extends Block<SignUpFormProps> {
   private fields: UserFormField[]
+  private emailField: UserFormField
+  private loginField: UserFormField
   private passwordField: UserFormField
   private confirmPasswordField: UserFormField
+  private submitButton: Button
 
   constructor(props: SignUpFormProps = {}) {
     const emailField = new UserFormField({
@@ -104,8 +115,29 @@ export class SignUpForm extends Block<SignUpFormProps> {
       confirmPasswordField
     ]
 
+    this.emailField = emailField
+    this.loginField = loginField
     this.passwordField = passwordField
     this.confirmPasswordField = confirmPasswordField
+    this.submitButton = submitButton
+
+    this.storeUnsubscribe = userStore.subscribe(state => {
+      const { status } = state as UserState
+
+      if (status === 'loading') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: true })
+      }
+
+      if (status === 'error') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: false })
+        this.loginField.setProps<UserFormFieldProps>({
+          validationResult: { isValid: false, message: '' }
+        })
+        this.emailField.setProps<UserFormFieldProps>({
+          validationResult: { isValid: false, message: '' }
+        })
+      }
+    })
   }
 
   private handleSubmit(event: SubmitEvent): void {
@@ -127,7 +159,7 @@ export class SignUpForm extends Block<SignUpFormProps> {
         {}
       )
 
-      console.table(fields)
+      authController.signup(fields as SignUpData)
     }
   }
 }

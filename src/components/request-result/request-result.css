@@ -1,0 +1,39 @@
+.request-result {
+  position: absolute;
+  inset-inline-start: 50%;
+  transform: translateX(-50%);
+  padding: 1em 2em;
+  color: var(--white-color);
+  border-radius: 8px;
+  animation: slide-in-out 2s forwards;
+  z-index: 10;
+
+  &.is-danger {
+    background-color: var(--red-color);
+  }
+
+  &.is-success {
+    background-color: var(--green-color);
+  }
+}
+
+@keyframes slide-in-out {
+  0% {
+    top: -100px;
+    opacity: 0%;
+  }
+  25% {
+    top: 10%;
+    opacity: 100%;
+  }
+
+  75% {
+    top: 10%;
+    opacity: 100%;
+  }
+
+  100% {
+    top: -100px;
+    opacity: 0%;
+  }
+}

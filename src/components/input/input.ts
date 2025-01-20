@@ -11,6 +11,7 @@ export type InputProps = BlockProps & {
   value?: string
   isRequired?: boolean
   isValid?: boolean
+  accept?: string
 }
 
 export class Input extends Block<InputProps> {
@@ -21,7 +22,7 @@ export class Input extends Block<InputProps> {
     })
 
     if (this.element instanceof HTMLInputElement) {
-      const { type, name, placeholder, value, isRequired } = this.props
+      const { type, name, placeholder, value, isRequired, accept } = this.props
 
       Object.assign(this.element, {
         type,
@@ -29,7 +30,8 @@ export class Input extends Block<InputProps> {
         name,
         placeholder: placeholder ?? '',
         value: value ?? '',
-        required: isRequired ?? false
+        required: isRequired ?? false,
+        accept
       })
     }
   }
@@ -72,12 +74,16 @@ export class Input extends Block<InputProps> {
     _oldProps: InputProps,
     newProps: InputProps
   ): boolean {
-    const { isValid } = newProps
+    const { isValid, value } = newProps
 
     if (isValid === false) {
       this.element!.classList.add('is-danger')
     } else {
       this.element!.classList.remove('is-danger')
+    }
+
+    if (this.element instanceof HTMLInputElement && value !== undefined) {
+      this.element.value = value
     }
 
     return false

@@ -1,5 +1,6 @@
 import './signin.css'
 
+import { Link } from '@/components'
 import { SignInForm } from '@/components/forms'
 import { Block, type BlockProps } from '@/core'
 import { getTemplate } from '@/utils'
@@ -13,7 +14,14 @@ export default class SignInPage extends Block<SignInPageProps> {
     super('main', {
       ...props,
       className: 'signin',
-      childBlocks: { form: new SignInForm() }
+      childBlocks: {
+        form: new SignInForm(),
+        signUpLink: new Link({
+          to: '/sign-up',
+          className: 'user-form__link',
+          content: 'Зарегистрироваться'
+        })
+      }
     })
   }
 
