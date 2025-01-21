@@ -42,7 +42,7 @@ export class Route {
     const page = this.block.getContent()
 
     if (root && page) {
-      root.appendChild(page)
+      root.append(page)
     }
   }
 

@@ -36,7 +36,7 @@ class AuthController {
   async logout(): Promise<void> {
     try {
       await this.authAPI.logout()
-      userStore.set({ user: null })
+      userStore.reset()
       appRouter.go('/')
     } catch (error) {
       this.authAPI.handleError(error, 'Произошла ошибка', () =>
@@ -75,7 +75,10 @@ class AuthController {
   private handleAuthenticatedUser = (currentRoute: string): void => {
     removePreloader()
     if (currentRoute === '/' || currentRoute === '/sign-up') {
-      appRouter.go('/messenger')
+      requestAnimationFrame(() => {
+        console.log(userStore.get())
+        appRouter.go('/messenger')
+      })
     }
   }
 

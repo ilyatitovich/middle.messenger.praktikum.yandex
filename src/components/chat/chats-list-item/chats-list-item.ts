@@ -1,7 +1,12 @@
 import './chats-list-item.css'
 
 import { Block, type BlockProps } from '@/core'
-import { type CurrentChatState, currentChatStore, type Chat } from '@/stores'
+import {
+  type CurrentChatState,
+  currentChatStore,
+  type Chat,
+  userStore
+} from '@/stores'
 import { formatTimestamp, getFilePath, getTemplate } from '@/utils'
 
 import ChatsListItemTemplate from './chats-list-item.hbs?raw'
@@ -41,13 +46,26 @@ export class ChatsListItem extends Block<ChatsListItemProps> {
     currentChatStore.set({ currentChatId: this.id })
   }
 
-  render(): string {
+  protected render(): string {
     const { id, avatar, title, last_message, unread_count } = this.props.chat
+
+    const { user: currentUser } = userStore.get()
+
+    let lastMessage: string = ''
+    let author: string | undefined = ''
+
+    if (last_message) {
+      const { content, user } = last_message
+      author = currentUser?.login === user.login ? 'Вы' : user.login
+      lastMessage = isNaN(parseInt(content)) ? content : 'Файл'
+    }
+
     return getTemplate(ChatsListItemTemplate, {
       title,
       avatar: avatar ? getFilePath(avatar) : `https://robohash.org/${id}`,
       time: last_message ? formatTimestamp(last_message.time) : '',
-      lastMessage: last_message ? last_message.content : '',
+      author,
+      lastMessage,
       unreadCount: unread_count
     })
   }
