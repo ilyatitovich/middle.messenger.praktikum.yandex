@@ -1,11 +1,10 @@
 import './chat-message.css'
 
 import { Block, type BlockProps, type MessageResponse } from '@/core'
-import { userStore } from '@/stores'
-import { getFilePath, getTemplate } from '@/utils'
+import { chatUsersStore, userStore } from '@/stores'
+import { formatTimestamp, getFilePath, getTemplate } from '@/utils'
 
-import ImageMessageTemplate from './chat-img-message.hbs?raw'
-import TextMessageTemplate from './chat-text-message.hbs?raw'
+import MessageTemplate from './chat-message.hbs?raw'
 
 export type ChatMessageProps = BlockProps & {
   message: MessageResponse
@@ -22,17 +21,24 @@ export class ChatMessage extends Block<ChatMessageProps> {
   }
 
   protected render(): string {
-    const { content, file } = this.props.message
+    const { users: chatUsers } = chatUsersStore.get()
 
-    if (file) {
-      return getTemplate(ImageMessageTemplate, {
-        imgSrc: getFilePath(file.path),
-        altText: file.filename
-      })
-    }
+    const { user_id, content, file, time } = this.props.message
 
-    return getTemplate(TextMessageTemplate, {
-      text: content
+    const author = chatUsers.find(user => user.id === user_id)
+
+    const imgSrc = file ? getFilePath(file.path) : ''
+    const altText = file ? file.filename : ''
+
+    return getTemplate(MessageTemplate, {
+      avatar: author?.avatar
+        ? getFilePath(author.avatar)
+        : `https://robohash.org/${user_id}`,
+      userName: author?.display_name ? author.display_name : author?.login,
+      text: content,
+      time: formatTimestamp(time),
+      imgSrc,
+      altText
     })
   }
 }

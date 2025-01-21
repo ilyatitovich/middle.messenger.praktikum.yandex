@@ -93,7 +93,7 @@ export class ChatMain extends Block<ChatMainProps> {
   }
 
   private async connectToChat(chatId: number): Promise<void> {
-    chatsController.getChatUsers(chatId)
+    await chatsController.getChatUsers(chatId)
     this.webSocket.disconnect()
 
     this.messagesList.setProps<MessagesListProps>({

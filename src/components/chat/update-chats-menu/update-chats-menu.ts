@@ -37,7 +37,7 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
         }),
 
         new Button({
-          className: 'update-chats-menu__action_button',
+          className: 'update-chats-menu__action_button is-danger',
           label: 'Удалить чат',
           events: {
             click: () => this.deleteChat()

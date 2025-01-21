@@ -40,4 +40,8 @@
   &:hover {
     background-color: var(--current-item-background-color);
   }
+
+  &.is-danger {
+    color: var(--red-color);
+  }
 }
