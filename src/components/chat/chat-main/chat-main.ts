@@ -36,8 +36,7 @@ export class ChatMain extends Block<ChatMainProps> {
   private messagesList: MessagesList
   private sendFileModal: Modal | null = null
   private currentChatData: CurrentChatData
-  private webSocket: MessengerWebSocket = new MessengerWebSocket()
-  private messages: MessageResponse[] = []
+  private webSocket: MessengerWebSocket
 
   constructor(props: ChatMainProps = { chat: getCurrentChat() }) {
     const currentChatData = new CurrentChatData({
@@ -50,9 +49,7 @@ export class ChatMain extends Block<ChatMainProps> {
       handleOpenModal: () => this.openSendFileModal(),
       handleSubmit: e => this.handleSubmit(e as SubmitEvent)
     })
-
     const messagesList = new MessagesList()
-
     const updateChatsMenu = new UpdateChatsMenu()
 
     super('section', {
@@ -69,6 +66,7 @@ export class ChatMain extends Block<ChatMainProps> {
     this.currentChatData = currentChatData
     this.form = messageForm.getContent() as HTMLFormElement
     this.messagesList = messagesList
+    this.webSocket = new MessengerWebSocket()
 
     this.storeUnsubscribe = currentChatStore.subscribe(state => {
       const { currentChatId } = state as CurrentChatState
@@ -97,11 +95,12 @@ export class ChatMain extends Block<ChatMainProps> {
   private async connectToChat(chatId: number): Promise<void> {
     chatsController.getChatUsers(chatId)
     this.webSocket.disconnect()
-    this.messages = []
+
     this.messagesList.setProps<MessagesListProps>({
-      messages: this.messages
+      messages: []
     })
     const { user } = userStore.get()
+
     try {
       const chatToken = await chatsController.getChatToken(chatId)
       if (user) {
@@ -115,14 +114,13 @@ export class ChatMain extends Block<ChatMainProps> {
 
         this.webSocket.onMessage(message => {
           if (Array.isArray(message)) {
-            this.messages = message as MessageResponse[]
             this.messagesList.setProps<MessagesListProps>({
-              messages: this.messages
+              messages: message
             })
           } else {
             const { type } = message as MessageResponse
+
             if (type === 'message' || type === 'file') {
-              this.messages.unshift(message as MessageResponse)
               this.messagesList.addMessage(message as MessageResponse)
             }
           }
