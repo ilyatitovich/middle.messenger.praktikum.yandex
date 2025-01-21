@@ -44,7 +44,8 @@ export class MessagesList extends Block<MessagesListProps> {
 
     Promise.all(promises).then(() => {
       this.element!.scrollTo({
-        top: this.element!.scrollHeight
+        top: this.element!.scrollHeight,
+        behavior: 'smooth'
       })
     })
   }
