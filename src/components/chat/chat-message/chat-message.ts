@@ -2,7 +2,12 @@ import './chat-message.css'
 
 import { Block, type BlockProps, type MessageResponse } from '@/core'
 import { chatUsersStore, userStore } from '@/stores'
-import { formatTimestamp, getFilePath, getTemplate } from '@/utils'
+import {
+  formatTimestamp,
+  getDefaultAvatar,
+  getFilePath,
+  getTemplate
+} from '@/utils'
 
 import MessageTemplate from './chat-message.hbs?raw'
 
@@ -22,23 +27,26 @@ export class ChatMessage extends Block<ChatMessageProps> {
 
   protected render(): string {
     const { users: chatUsers } = chatUsersStore.get()
-
     const { user_id, content, file, time } = this.props.message
 
     const author = chatUsers.find(user => user.id === user_id)
 
-    const imgSrc = file ? getFilePath(file.path) : ''
-    const altText = file ? file.filename : ''
+    const fileProps = file
+      ? { imgSrc: getFilePath(file.path), altText: file.filename }
+      : { imgSrc: '', altText: '' }
 
-    return getTemplate(MessageTemplate, {
+    const authorProps = {
       avatar: author?.avatar
         ? getFilePath(author.avatar)
-        : `https://robohash.org/${user_id}`,
-      userName: author?.display_name ? author.display_name : author?.login,
+        : getDefaultAvatar(user_id),
+      userName: author?.display_name || author?.login || 'Unknown'
+    }
+
+    return getTemplate(MessageTemplate, {
+      ...authorProps,
       text: content,
       time: formatTimestamp(time),
-      imgSrc,
-      altText
+      ...fileProps
     })
   }
 }

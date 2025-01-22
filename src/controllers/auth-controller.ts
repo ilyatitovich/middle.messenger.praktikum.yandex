@@ -76,7 +76,6 @@ class AuthController {
     removePreloader()
     if (currentRoute === '/' || currentRoute === '/sign-up') {
       requestAnimationFrame(() => {
-        console.log(userStore.get())
         appRouter.go('/messenger')
       })
     }
