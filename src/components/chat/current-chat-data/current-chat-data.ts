@@ -1,6 +1,6 @@
 import { Block, type BlockProps } from '@/core'
 import { type ChatUsersState, chatUsersStore, userStore } from '@/stores'
-import { getFilePath, getTemplate } from '@/utils'
+import { getDefaultAvatar, getFilePath, getTemplate } from '@/utils'
 
 import CurrentChatDataTemplate from './current-chat-data.hbs?raw'
 
@@ -41,7 +41,7 @@ export class CurrentChatData extends Block<CurrentChatDataProps> {
   protected render(): string {
     const { id, avatar, title, userNames } = this.props
     return getTemplate(CurrentChatDataTemplate, {
-      avatar: avatar ? getFilePath(avatar) : `https://robohash.org/${id}`,
+      avatar: avatar ? getFilePath(avatar) : getDefaultAvatar(id),
       title,
       userNames
     })

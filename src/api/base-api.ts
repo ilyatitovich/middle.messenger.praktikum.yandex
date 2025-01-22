@@ -24,7 +24,7 @@ export abstract class BaseAPI {
         showRequestResult(false, customMessage || 'Произошла ошибка')
         break
       case 401:
-        showRequestResult(false, 'Вы не авторизованы')
+        showRequestResult(false, 'Ошибка входа')
         break
       case 409:
         showRequestResult(

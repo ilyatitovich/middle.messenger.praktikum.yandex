@@ -4,7 +4,7 @@ import { Button, ButtonProps } from '@/components'
 import { chatsController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
 import type { ChatUser } from '@/stores'
-import { getFilePath, getTemplate } from '@/utils'
+import { getDefaultAvatar, getFilePath, getTemplate } from '@/utils'
 
 import DeleteUsersFormTemplate from './delete-users-form.hbs?raw'
 
@@ -73,7 +73,7 @@ export class DeleteUsersForm extends Block<DeleteUsersFormProps> {
     const users = this.props.users.map(user => {
       const avatar = user.avatar
         ? getFilePath(user.avatar)
-        : `https://robohash.org/${user.first_name}`
+        : getDefaultAvatar(user.id)
 
       const isAdmin = user.role === 'admin'
 

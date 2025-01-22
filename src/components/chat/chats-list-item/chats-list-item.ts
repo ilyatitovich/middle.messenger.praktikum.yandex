@@ -7,7 +7,12 @@ import {
   type Chat,
   userStore
 } from '@/stores'
-import { formatTimestamp, getFilePath, getTemplate } from '@/utils'
+import {
+  formatTimestamp,
+  getDefaultAvatar,
+  getFilePath,
+  getTemplate
+} from '@/utils'
 
 import ChatsListItemTemplate from './chats-list-item.hbs?raw'
 
@@ -62,7 +67,7 @@ export class ChatsListItem extends Block<ChatsListItemProps> {
 
     return getTemplate(ChatsListItemTemplate, {
       title,
-      avatar: avatar ? getFilePath(avatar) : `https://robohash.org/${id}`,
+      avatar: avatar ? getFilePath(avatar) : getDefaultAvatar(id),
       time: last_message ? formatTimestamp(last_message.time) : '',
       author,
       lastMessage,

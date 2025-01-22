@@ -16,6 +16,13 @@ class ChatsController {
   async getChats(): Promise<void> {
     try {
       const chats = await this.chatsAPI.getChats()
+      const { currentChatId } = currentChatStore.get()
+
+      // Удаляем текущай чат если он был удален его создателем
+      if (currentChatId && !chats.some(chat => chat.id === currentChatId)) {
+        currentChatStore.set({ currentChatId: null })
+      }
+
       chatsStore.set({ chatsList: chats })
     } catch (error) {
       this.chatsAPI.handleError(error)

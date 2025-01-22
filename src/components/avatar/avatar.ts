@@ -2,7 +2,7 @@ import './avatar.css'
 
 import { Block, type BlockProps } from '@/core'
 import { type UserState, userStore } from '@/stores'
-import { getTemplate, getFilePath } from '@/utils'
+import { getTemplate, getFilePath, getDefaultAvatar } from '@/utils'
 
 import AvatarTemplate from './avatar.hbs?raw'
 
@@ -48,7 +48,7 @@ export class Avatar extends Block<AvatarProps> {
   protected render(): string {
     const imgFullPath = this.props.imgSrc
       ? getFilePath(this.props.imgSrc)
-      : 'https://robohash.org/avatar'
+      : getDefaultAvatar()
 
     return getTemplate(AvatarTemplate, {
       imgSrc: imgFullPath
