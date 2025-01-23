@@ -1,1 +1,12 @@
-<p>{{text}}</p>
+<div class='message-avatar'>
+  <img src={{avatar}} alt='Аватар автора сообщения' />
+</div>
+<div class='message__content'>
+  <p class='message__user-name'>{{userName}}</p>
+  {{#if imgSrc}}
+    <img src={{imgSrc}} alt={{altText}} class='image-message' />
+  {{else}}
+    <p>{{text}}</p>
+  {{/if}}
+  <small class='message__time'>{{time}}</small>
+</div>

@@ -1,29 +1,14 @@
 <aside class='profile-sidebar'>
   <nav>
-    <a
-      href='{{backButtonUrl}}'
-      class='profile-sidebar__back-button'
-      aria-label='{{backButtonLabel}}'
-    >
-      <span class='sr-only'>{{backButtonLabel}}</span>
-      <svg
-        class='profile-sidebar__back-icon'
-        xmlns='http://www.w3.org/2000/svg'
-        viewBox='0 0 448 512'
-        aria-hidden='true'
-      ><path
-          d='M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z'
-        /></svg>
-    </a>
+    <div data-block-id='backLink'></div>
   </nav>
 </aside>
 <main class='profile__main'>
   <header class='profile__header'>
     <div data-block-id='avatar'></div>
-    <h1 class='profile__heading'>{{heading}}</h1>
+    <h1 class='profile__heading'>{{title}}</h1>
   </header>
   <div class='profile__content'>
-    <div data-block-id='profileContent'></div>
+    <div data-block-id='content'></div>
   </div>
-  <div data-block-id='modal'></div>
 </main>

@@ -1,8 +1,16 @@
 import ChatPage from './chat'
-import ErrorPage from './error'
-import HomePage from './home'
-import ProfilePage from './profile'
+import { Error404Page, Error500Page } from './error'
+import { SettingsPage, ChangeDataPage, ChangePasswordPage } from './profile'
 import SignInPage from './signin'
 import SignUpPage from './signup'
 
-export { HomePage, SignInPage, ProfilePage, SignUpPage, ChatPage, ErrorPage }
+export {
+  SignInPage,
+  SignUpPage,
+  ChatPage,
+  Error404Page,
+  Error500Page,
+  SettingsPage,
+  ChangeDataPage,
+  ChangePasswordPage
+}

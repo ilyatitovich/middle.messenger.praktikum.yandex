@@ -58,11 +58,16 @@ export class UserFormField extends Block<UserFormFieldProps> {
     _oldProps: UserFormFieldProps,
     newProps: UserFormFieldProps
   ): boolean {
-    const { validationResult } = newProps
+    const { validationResult, value } = newProps
 
     if (validationResult) {
       const { isValid, message } = validationResult
       this.updateValidationState(isValid, message)
+    }
+
+    if (value !== undefined) {
+      this.value = value
+      this.input.setProps<InputProps>({ value })
     }
 
     return false
@@ -97,9 +102,14 @@ export class UserFormField extends Block<UserFormFieldProps> {
   validateValue(): boolean {
     const res = this.validate(this.value)
     this.setProps<UserFormFieldProps>({
-      validationResult: res
+      validationResult: res,
+      value: this.value
     })
     return res.isValid
+  }
+
+  resetValue(): void {
+    this.setProps<UserFormFieldProps>({ value: '' })
   }
 
   protected render(): string {

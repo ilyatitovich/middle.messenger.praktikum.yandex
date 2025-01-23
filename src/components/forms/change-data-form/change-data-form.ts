@@ -1,20 +1,29 @@
-import { Button, UserFormField } from '@/components'
+import { UserData } from '@/api'
+import {
+  Button,
+  type ButtonProps,
+  UserFormField,
+  type UserFormFieldProps
+} from '@/components'
+import { userController } from '@/controllers/user-controller'
 import { Block, type BlockProps } from '@/core'
+import { UserState, userStore, type User } from '@/stores'
 import {
   isValidLogin,
   isValidName,
   isValidEmail,
   isValidPhone,
   isValidDisplayName,
-  type User
+  isDeepEqual
 } from '@/utils'
 
-type ChangeDataFormProps = BlockProps & {
-  user: User
+export type ChangeDataFormProps = BlockProps & {
+  user: User | null
 }
 
 export class ChangeDataForm extends Block<ChangeDataFormProps> {
   private fields: UserFormField[]
+  private submitButton: Button
 
   constructor(props: ChangeDataFormProps) {
     const { user } = props
@@ -23,7 +32,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Почта',
       name: 'email',
       type: 'email',
-      value: user.email,
+      value: user ? user.email : '',
       validate: isValidEmail
     })
 
@@ -31,7 +40,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Логин',
       name: 'login',
       type: 'text',
-      value: user.login,
+      value: user ? user.login : '',
       validate: isValidLogin
     })
 
@@ -39,7 +48,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Имя',
       name: 'first_name',
       type: 'text',
-      value: user.first_name,
+      value: user ? user.first_name : '',
       validate: isValidName
     })
 
@@ -47,7 +56,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Фамилия',
       name: 'second_name',
       type: 'text',
-      value: user.second_name,
+      value: user ? user.second_name : '',
       validate: isValidName
     })
 
@@ -55,7 +64,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Имя в чате',
       name: 'display_name',
       type: 'text',
-      value: user.display_name,
+      value: user && user.display_name ? user.display_name : '',
       validate: isValidDisplayName
     })
 
@@ -63,7 +72,7 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       label: 'Телефон',
       name: 'phone',
       type: 'tel',
-      value: user.phone,
+      value: user ? user.phone : '',
       validate: isValidPhone
     })
 
@@ -98,22 +107,38 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
       displayNameField,
       phoneField
     ]
+
+    this.submitButton = submitButton
+
+    this.storeUnsubscribe = userStore.subscribe(state => {
+      const { status, user } = state as UserState
+
+      if (status === 'loading') {
+        this.submitButton.setProps<ButtonProps>({ isDisabled: true })
+        return
+      }
+
+      if (user) {
+        this.fields.forEach(field => {
+          const name = field.getName()
+          field.setProps<UserFormFieldProps>({
+            value: user[name as keyof User] as string
+          })
+        })
+      }
+
+      this.submitButton.setProps<ButtonProps>({ isDisabled: false })
+    })
   }
 
-  private getUpdatedFields(
-    current: User,
-    updated: Partial<User>
-  ): Partial<User> {
-    return Object.entries(updated).reduce<Partial<User>>(
-      (changes, [key, newValue]) => {
-        const oldValue = current[key as keyof User]
-        if (oldValue !== newValue) {
-          changes[key as keyof User] = newValue as User[keyof User]
-        }
-        return changes
-      },
-      {}
-    )
+  private isSameUserData(newData: Record<string, string>): boolean {
+    const { user: oldUserData } = userStore.get()
+    const newUserData = {
+      id: oldUserData?.id,
+      avatar: oldUserData?.avatar,
+      ...newData
+    }
+    return isDeepEqual(oldUserData!, newUserData)
   }
 
   private handleSubmit(event: SubmitEvent): void {
@@ -131,10 +156,10 @@ export class ChangeDataForm extends Block<ChangeDataFormProps> {
         },
         {}
       )
-      const updatedFields = this.getUpdatedFields(this.props.user, values)
-      if (Object.values(updatedFields).length !== 0) {
-        console.table(updatedFields)
-        console.log('Обновленные данные отправлены на сервер!')
+
+      if (Object.values(values).length !== 0) {
+        if (this.isSameUserData(values)) return
+        userController.updateData(values as UserData)
       }
     }
   }

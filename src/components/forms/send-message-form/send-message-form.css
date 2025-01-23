@@ -3,7 +3,8 @@
   align-items: center;
   gap: 1em;
   padding: 1em 2em 1em 1em;
-  background-color: var(--white-color);
+  border-top: 1px solid var(--gray-color);
+  background-color: var(--sidebar-background-color);
 }
 
 .send-message-form__button {

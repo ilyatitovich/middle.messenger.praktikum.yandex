@@ -51,15 +51,14 @@
 
 ## Список страниц
 
-- [Домашняя страница](https://y-chat.netlify.app/)
-- [Вход](https://y-chat.netlify.app/signin)
-- [Регистрация](https://y-chat.netlify.app/signup)
-- [Профиль пользователя](https://y-chat.netlify.app/profile)
-- [Изменить данные](https://y-chat.netlify.app/profile/change-data)
-- [Изменить пароль](https://y-chat.netlify.app/profile/change-password)
+- [Вход](https://y-chat.netlify.app/)
+- [Регистрация](https://y-chat.netlify.app/sign-up)
+- [Профиль пользователя](https://y-chat.netlify.app/settings)
+- [Изменить данные](https://y-chat.netlify.app/settings/change-data)
+- [Изменить пароль](https://y-chat.netlify.app/settings/change-password)
 - [404](https://y-chat.netlify.app/404)
 - [500](https://y-chat.netlify.app/500)
-- [Чат](https://y-chat.netlify.app/chat)
+- [Чат](https://y-chat.netlify.app/messenger)
 
 ## Дизайн
 

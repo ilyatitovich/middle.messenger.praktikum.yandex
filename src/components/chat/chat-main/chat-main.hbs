@@ -1,12 +1,5 @@
 <header class='chat-main__header'>
-  <div class='chat-main__header-left'>
-    <span class='chat-main__avatar'>
-      <img src={{chat.avatar}} alt='Аватар чата' />
-    </span>
-    <span class='chat-main__name'>
-      <h1>{{chat.name}}</h1>
-    </span>
-  </div>
+  <div data-block-id='currentChatData'></div>
   <div class='chat-main__header-right'>
     <div data-block-id='updateChatsMenu'></div>
   </div>
@@ -17,4 +10,3 @@
 <div class='chat-main__message-form'>
   <div data-block-id='messageForm'></div>
 </div>
-<div data-block-id='sendFileModal'></div>

@@ -1,6 +1,6 @@
-type Listener = (...args: unknown[]) => void
+export type Listener = (...args: unknown[]) => void
 
-export default class EventBus {
+export class EventBus {
   private listeners: Record<string, Listener[]>
 
   constructor() {

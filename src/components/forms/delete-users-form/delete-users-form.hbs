@@ -1,0 +1,30 @@
+<h1 class='delete-users-form__title'>Удалить участников</h1>
+<div class='chat-users'>
+  {{#each users}}
+    <label class='chat-user'>
+      <span class='chat-user__left'>
+        <div class='chat-user__avatar'>
+          <img src={{this.avatar}} alt='Аватар участника чата' />
+        </div>
+        <span>
+          {{#if this.display_name}}
+            <p>
+              {{this.display_name}}
+            </p>
+          {{else}}
+            <p>
+              {{this.login}}
+            </p>
+          {{/if}}
+        </span>
+      </span>
+      {{#if this.isAdmin}}
+        <span>
+          <p>Admin</p>
+        </span>
+      {{else}}
+        <input type='checkbox' name='user' value={{this.id}} />
+      {{/if}}
+    </label>
+  {{/each}}
+</div>

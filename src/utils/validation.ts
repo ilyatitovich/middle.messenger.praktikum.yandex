@@ -110,3 +110,15 @@ export function isValidDisplayName(name: string): ValidationResult {
     message: ''
   }
 }
+
+export function isValidChatName(chatName: string): ValidationResult {
+  if (chatName === '') {
+    return { isValid: false, message: 'Это поле обязательно' }
+  }
+
+  const regex = /^[\p{L}\p{N}\s]+$/u
+  return {
+    isValid: regex.test(chatName),
+    message: 'Только буквы и цифры'
+  }
+}
