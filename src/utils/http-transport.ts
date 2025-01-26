@@ -1,19 +1,23 @@
-const METHODS = {
-  GET: 'GET',
-  POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE'
-} as const
-
-type HTTPMethod = (typeof METHODS)[keyof typeof METHODS]
+enum RequestMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  DELETE = 'DELETE'
+}
 
 type RequestOptions<TData = unknown> = {
-  method: HTTPMethod
+  method: RequestMethod
   headers?: Record<string, string>
   data?: TData
 }
 
 type QueryParams = Record<string, string | number | boolean>
+
+type HTTPMethod = <TResponse = unknown, TData = unknown>(
+  url: string,
+  options?: Partial<RequestOptions<TData>>,
+  timeout?: number
+) => Promise<TResponse>
 
 function queryStringify(data: QueryParams): string {
   if (!data || typeof data !== 'object') {
@@ -38,49 +42,33 @@ export class HTTPTransport {
     this.baseURL = baseURL
   }
 
-  get<TResponse = unknown>(
-    url: string,
-    options: Partial<RequestOptions<QueryParams>> = {}
-  ): Promise<TResponse> {
+  get: HTTPMethod = (url, options = {}) => {
     const { data, ...restOptions } = options
     const urlWithParams = data ? `${url}${queryStringify(data)}` : url
-    return this.request<TResponse>(urlWithParams, {
+    return this.request(urlWithParams, {
       ...restOptions,
-      method: METHODS.GET
+      method: RequestMethod.GET
     })
   }
 
-  post<TResponse = unknown, TData = unknown>(
-    url: string,
-    options: Partial<RequestOptions<TData>> = {}
-  ): Promise<TResponse> {
-    return this.request<TResponse>(url, { ...options, method: METHODS.POST })
+  post: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: RequestMethod.POST })
   }
 
-  put<TResponse = unknown, TData = unknown>(
-    url: string,
-    options: Partial<RequestOptions<TData>> = {}
-  ): Promise<TResponse> {
-    return this.request<TResponse>(url, { ...options, method: METHODS.PUT })
+  put: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: RequestMethod.PUT })
   }
 
-  delete<TResponse = unknown>(
-    url: string,
-    options: Partial<RequestOptions> = {}
-  ): Promise<TResponse> {
-    return this.request<TResponse>(url, { ...options, method: METHODS.DELETE })
+  delete: HTTPMethod = (url, options = {}) => {
+    return this.request(url, { ...options, method: RequestMethod.DELETE })
   }
 
-  request<TResponse = unknown>(
-    url: string,
-    options: Partial<RequestOptions>,
-    timeout = 5000
-  ): Promise<TResponse> {
+  private request: HTTPMethod = (url, options = {}, timeout = 5000) => {
     const { method, headers = {}, data } = options
 
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
-      xhr.open(method as HTTPMethod, `${this.baseURL}${url}`)
+      xhr.open(method as RequestMethod, `${this.baseURL}${url}`)
       xhr.withCredentials = true
       xhr.timeout = timeout
 
@@ -94,12 +82,12 @@ export class HTTPTransport {
 
         if (status >= 200 && status < 300) {
           try {
-            let response: TResponse
+            let response
 
             if (contentType && contentType.includes('application/json')) {
-              response = JSON.parse(xhr.responseText) as TResponse
+              response = JSON.parse(xhr.responseText)
             } else {
-              response = xhr.responseText as unknown as TResponse
+              response = xhr.responseText
             }
 
             resolve(response)
@@ -119,7 +107,7 @@ export class HTTPTransport {
         reject(new Error(`Превышено время ожидания запроса`))
       }
 
-      if (method === METHODS.GET || !data) {
+      if (method === RequestMethod.GET || !data) {
         xhr.send()
       } else if (data instanceof FormData) {
         xhr.send(data as FormData)
@@ -130,5 +118,3 @@ export class HTTPTransport {
     })
   }
 }
-
-export const http = new HTTPTransport('https://ya-praktikum.tech/api/v2')
