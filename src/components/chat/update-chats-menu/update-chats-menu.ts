@@ -1,7 +1,11 @@
 import './update-chats-menu.css'
 
 import { ActionMenu, Button, Modal, showRequestResult } from '@/components'
-import { DeleteUsersForm, UpdateChatsForm } from '@/components/forms'
+import {
+  DeleteUsersForm,
+  UpdateChatsForm,
+  FileUploadForm
+} from '@/components/forms'
 import { chatsController } from '@/controllers'
 import { Block, type BlockProps } from '@/core'
 import { chatUsersStore, currentChatStore, userStore } from '@/stores'
@@ -33,6 +37,14 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
           label: 'Удалить участника',
           events: {
             click: () => this.openDeleteUserModal()
+          }
+        }),
+
+        new Button({
+          className: 'update-chats-menu__action_button',
+          label: 'Обновить аватар чата',
+          events: {
+            click: () => this.openUpdateChatAvatarModal()
           }
         }),
 
@@ -103,6 +115,23 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
     }
   }
 
+  private openUpdateChatAvatarModal(): void {
+    this.menu.hide()
+    this.modal = new Modal({
+      content: new FileUploadForm({
+        title: 'Загрузите аватар',
+        handleCancel: () => this.closeModal(),
+        handleUploadFile: (file: File) => this.updateChatAvatar(file)
+      })
+    })
+
+    const modalContent = this.modal.getContent()
+
+    if (modalContent) {
+      document.body.append(modalContent)
+    }
+  }
+
   private closeModal(): void {
     if (this.modal) {
       this.modal.unmount()
@@ -140,6 +169,17 @@ export class UpdateChatsMenu extends Block<UpdateChatsMenuProps> {
     }
 
     callback()
+  }
+
+  private async updateChatAvatar(file: File): Promise<void> {
+    const formData = new FormData()
+    const { currentChatId } = currentChatStore.get()
+
+    formData.append('chatId', String(currentChatId))
+    formData.append('avatar', file)
+
+    await chatsController.updateChatAvatar(formData)
+    this.closeModal()
   }
 
   protected render(): string {
