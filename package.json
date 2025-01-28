@@ -15,7 +15,13 @@
     "format:stylelint": "stylelint --fix **/*.css",
     "format:prettier": "prettier -w **/*.{js,ts,html,md,cjs,json} *.{js,json,md}",
     "test": "mocha",
-    "prepare": "husky"
+    "prepare": "husky install",
+    "pre-commit": "npm-run-all test lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "nano-staged --config ./nano-staged.json && npm run test"
+    }
   },
   "engines": {
     "node": ">=17.0.0",
@@ -34,7 +40,7 @@
     "chai": "5.1.2",
     "eslint": "^9.16.0",
     "eslint-plugin-perfectionist": "^4.1.2",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "jsdom": "^26.0.0",
     "mocha": "11.1.0",
     "nano-staged": "^0.8.0",
