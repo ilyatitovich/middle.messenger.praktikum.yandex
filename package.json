@@ -15,8 +15,7 @@
     "format:stylelint": "stylelint --fix **/*.css",
     "format:prettier": "prettier -w **/*.{js,ts,html,md,cjs,json} *.{js,json,md}",
     "test": "mocha",
-    "prepare": "husky install",
-    "pre-commit": "nano-staged --config ./nano-staged.json && npm run test"
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">=17.0.0",
