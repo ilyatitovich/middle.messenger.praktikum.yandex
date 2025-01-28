@@ -14,13 +14,8 @@
     "lint:css": "stylelint **/*.css",
     "format:stylelint": "stylelint --fix **/*.css",
     "format:prettier": "prettier -w **/*.{js,ts,html,md,cjs,json} *.{js,json,md}",
-    "test": "mocha"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "",
-      "pre-push": ""
-    }
+    "test": "mocha",
+    "prepare": "husky"
   },
   "engines": {
     "node": ">=17.0.0",
