@@ -53,7 +53,7 @@ class TestBlock extends Block<TestBlockProps> {
   }
 }
 
-describe('Block test', () => {
+describe('Block tests', () => {
   it('should initialize with the correct default tagName and props', () => {
     const testBlock = new TestBlock()
 
@@ -93,11 +93,11 @@ describe('Block test', () => {
 
   it('should update props and re-render', () => {
     const testBlock = new TestBlock()
-    const renderSpy = sinon.spy(testBlock as any, 'render')
+    const spy = sinon.spy(testBlock as any, 'render')
 
     testBlock.setProps<TestBlockProps>({ text: 'new text' })
 
-    expect(renderSpy.calledOnce).to.be.true
+    expect(spy.calledOnce).to.be.true
     expect(testBlock.getProps().text).to.equal('new text')
   })
 
