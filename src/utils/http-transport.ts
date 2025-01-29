@@ -15,8 +15,7 @@ type QueryParams = Record<string, string | number | boolean>
 
 type HTTPMethod = <TResponse = unknown, TData = unknown>(
   url: string,
-  options?: Partial<RequestOptions<TData>>,
-  timeout?: number
+  options?: Partial<RequestOptions<TData>>
 ) => Promise<TResponse>
 
 function queryStringify(data: QueryParams): string {
