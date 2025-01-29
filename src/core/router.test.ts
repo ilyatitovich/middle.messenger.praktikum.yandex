@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect } from 'chai'
-import sinon, { SinonSandbox } from 'sinon'
+import sinon from 'sinon'
 
 import { Block, type BlockProps } from './block'
 import { Route, Router } from './router'
@@ -79,14 +78,17 @@ describe('Route tests', () => {
 
 describe('Router tests', () => {
   const checkAuth = sinon.fake.resolves(undefined)
-  const router = new Router('app', checkAuth)
+  const spySandbox = sinon.createSandbox()
 
-  let spySandbox: SinonSandbox
-
-  router.use('/', Page).use('/home', Page).use('/about', Page).use('/404', Page)
+  let router: Router
 
   beforeEach(() => {
-    spySandbox = sinon.createSandbox()
+    router = new Router('app', checkAuth)
+    router
+      .use('/', Page)
+      .use('/home', Page)
+      .use('/about', Page)
+      .use('/404', Page)
   })
 
   afterEach(() => {
@@ -99,49 +101,50 @@ describe('Router tests', () => {
     expect(router.getRoute('/home')).to.be.instanceOf(Route)
     expect(router.getRoute('/about')).to.be.instanceOf(Route)
     expect(router.getRoute('/404')).to.be.instanceOf(Route)
-    expect((router as any).routes.length).to.equal(4)
   })
 
-  it('should call checkAuth() if provided', () => {
+  it('should call checkAuth()', () => {
     router.go('/about')
+
     expect(checkAuth.called).to.be.true
   })
 
   it('should navigate with go()', () => {
-    const spy = spySandbox.spy(router as any, '_onRoute')
+    expect(router.getCurrentRoute()).equal('/')
+
     router.go('/home')
-    expect(spy.calledWith('/home')).to.be.true
+    expect(router.getCurrentRoute()).equal('/home')
 
     router.go('/about')
-    expect(spy.calledWith('/about')).to.be.true
+    expect(router.getCurrentRoute()).equal('/about')
   })
 
-  it('should call _onRoute when navigating', () => {
-    const spy = spySandbox.spy(router as any, '_onRoute')
-    router.go('/home')
-    expect(spy.calledOnce).to.be.true
-  })
+  it('should call window.history.back()', () => {
+    const spy = spySandbox.spy(window.history, 'back')
 
-  it('should call back()', () => {
-    const spy = spySandbox.spy((router as any).history, 'back')
     router.back()
+
     expect(spy.calledOnce).to.be.true
   })
 
-  it('should call forward()', () => {
-    const spy = spySandbox.spy((router as any).history, 'forward')
+  it('should call window.history.forward()', () => {
+    const spy = spySandbox.spy(window.history, 'forward')
+
     router.forward()
+
     expect(spy.calledOnce).to.be.true
   })
 
   it('should return the current route', () => {
     router.go('/home')
+
     expect(router.getCurrentRoute()).to.equal('/home')
   })
 
   it('should handle unknown routes by redirecting to /404', () => {
-    const spy = spySandbox.spy(router as any, '_onRoute')
+    router.go('/home')
     router.go('/unknown')
-    expect(spy.calledWith('/404')).to.be.true
+
+    expect(router.getCurrentRoute()).equal('/404')
   })
 })
