@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect } from 'chai'
-import sinon from 'sinon'
+import { createSandbox } from 'sinon'
 
 import { Block, type BlockProps } from './block'
 
@@ -54,25 +52,50 @@ class TestBlock extends Block<TestBlockProps> {
 }
 
 describe('Block tests', () => {
-  it('should initialize with the correct default tagName and props', () => {
-    const testBlock = new TestBlock()
+  const sandbox = createSandbox()
+  let testBlock: TestBlock
 
-    expect(testBlock).to.be.an.instanceOf(Block)
-
-    const content = testBlock.getContent()
-    expect(content).to.be.an.instanceOf(HTMLElement)
-    expect(content!.tagName).to.equal('DIV')
-    expect(content!.className).to.equal('')
-
-    expect(testBlock.getChildBlocks()).to.deep.equal({})
-    expect(testBlock.getChildBlocksList()).to.deep.equal([])
-    expect(testBlock.getEvents()).to.deep.equal({})
+  beforeEach(() => {
+    testBlock = new TestBlock()
   })
 
-  it('should create an element with custom props', () => {
-    function onClick(): void {
-      console.log('hi!')
-    }
+  afterEach(() => {
+    sandbox.restore()
+    testBlock.unmount()
+  })
+
+  describe('Initialization with default props', () => {
+    it('should be an instance of Block', () => {
+      expect(testBlock).to.be.an.instanceOf(Block)
+    })
+
+    it('should initialize content as an instance of HTMLElement', () => {
+      expect(testBlock.getContent()).to.be.an.instanceOf(HTMLElement)
+    })
+
+    it('should have a default tagName of DIV', () => {
+      expect(testBlock.getContent()!.tagName).to.equal('DIV')
+    })
+
+    it('should have an empty default className', () => {
+      expect(testBlock.getContent()!.className).to.equal('')
+    })
+
+    it('should initialize with no child blocks', () => {
+      expect(testBlock.getChildBlocks()).to.deep.equal({})
+    })
+
+    it('should initialize with an empty child blocks list', () => {
+      expect(testBlock.getChildBlocksList()).to.deep.equal([])
+    })
+
+    it('should initialize with no events', () => {
+      expect(testBlock.getEvents()).to.deep.equal({})
+    })
+  })
+
+  describe('Innitialization with custom props', () => {
+    function onClick(): void {}
 
     const testBlock = new TestBlock({
       htmlElement: 'button',
@@ -81,64 +104,82 @@ describe('Block tests', () => {
       className: 'my-button'
     })
 
-    const content = testBlock.getContent()
-    expect(content).to.be.an.instanceOf(HTMLElement)
-    expect(content!.tagName).to.equal('BUTTON')
-    expect(content!.className).to.equal('my-button')
+    it('should have a tagName of BUTTON', () => {
+      expect(testBlock.getContent()!.tagName).to.equal('BUTTON')
+    })
 
-    expect(testBlock.getChildBlocks()).to.deep.equal({})
-    expect(testBlock.getChildBlocksList()).to.deep.equal([])
-    expect(testBlock.getEvents()).to.deep.equal({ click: onClick })
+    it('should have custom className', () => {
+      expect(testBlock.getContent()!.className).to.equal('my-button')
+    })
+
+    it('should have an click event listener', () => {
+      expect(testBlock.getEvents()).to.deep.equal({ click: onClick })
+    })
+
+    it('should have textContent from props', () => {
+      expect(testBlock.getContent()!.textContent).to.equal('Click me!')
+    })
   })
 
-  it('should update props and re-render', () => {
-    const testBlock = new TestBlock()
-    const spy = sinon.spy(testBlock as any, 'render')
+  it('should update props', () => {
+    expect(testBlock.getProps().text).to.equal(undefined)
 
     testBlock.setProps<TestBlockProps>({ text: 'new text' })
 
-    expect(spy.calledOnce).to.be.true
     expect(testBlock.getProps().text).to.equal('new text')
   })
 
-  it('should call lifecycle methods during mounting and updating', () => {
-    const testBlock = new TestBlock()
+  it('should re-render when props updated', () => {
+    const spy = sandbox.spy(testBlock, 'render' as keyof typeof testBlock)
 
-    const componentDidMountSpy = sinon.spy(
-      testBlock as any,
-      'componentDidMount'
+    testBlock.setProps<TestBlockProps>({ text: 'new text' })
+
+    expect(spy.calledOnce).to.equal(true)
+  })
+
+  it('should call lifecycle methods during mounting and updating', () => {
+    const componentDidMountSpy = sandbox.spy(
+      testBlock,
+      'componentDidMount' as keyof typeof testBlock
     )
-    const componentDidUpdateSpy = sinon.spy(
-      testBlock as any,
-      'componentDidUpdate'
+    const componentDidUpdateSpy = sandbox.spy(
+      testBlock,
+      'componentDidUpdate' as keyof typeof testBlock
     )
 
     testBlock.dispatchComponentDidMount()
-    expect(componentDidMountSpy.calledOnce).to.be.true
+    expect(componentDidMountSpy.calledOnce).to.equal(true)
 
     testBlock.setProps<TestBlockProps>({ text: 'new text' })
-    expect(componentDidUpdateSpy.calledOnce).to.be.true
+    expect(componentDidUpdateSpy.calledOnce).to.equal(true)
   })
 
-  it('should correctly add and remove event listeners', () => {
-    const onClick = sinon.spy()
+  it('should remove and add event listeners when re-render', () => {
+    function onClick(): void {}
 
     const testBlock = new TestBlock({
       htmlElement: 'button',
       handleClick: onClick
     })
 
-    testBlock.getContent()?.click()
-    expect(onClick.calledOnce).to.be.true
+    const removeEventsSpy = sandbox.spy(
+      testBlock,
+      'removeEvents' as keyof typeof testBlock
+    )
 
-    testBlock.unmount()
-    expect(onClick.calledOnce).to.be.true
+    const addEventsSpy = sandbox.spy(
+      testBlock,
+      'addEvents' as keyof typeof testBlock
+    )
+
+    testBlock.setProps<TestBlockProps>({ text: 'new text' })
+
+    expect(removeEventsSpy.calledOnce).to.equal(true)
+    expect(addEventsSpy.calledOnce).to.equal(true)
   })
 
-  it('should correctly handle child blocks', () => {
-    function onClick(): void {
-      console.log('hi!')
-    }
+  describe('Correct handling child blocks', () => {
+    const onClick = sandbox.spy()
 
     const testChildBlock = new TestBlock({
       htmlElement: 'button',
@@ -150,48 +191,88 @@ describe('Block tests', () => {
       childBlocks: { childBlock: testChildBlock }
     })
 
-    expect(testParrentBlock.getChildBlocks()).to.deep.equal({
-      childBlock: testChildBlock
+    it('should has child block in childBlocks object', () => {
+      expect(testParrentBlock.getChildBlocks()).to.deep.equal({
+        childBlock: testChildBlock
+      })
     })
 
-    const childBlockContent = testParrentBlock
-      .getChildBlocks()
-      ['childBlock'].getContent()
+    it('should child block content be an instance of HTMLElement', () => {
+      expect(
+        testParrentBlock.getChildBlocks()['childBlock'].getContent()
+      ).to.be.an.instanceOf(HTMLElement)
+    })
 
-    expect(childBlockContent).to.be.an.instanceOf(HTMLElement)
-    expect(childBlockContent?.tagName).to.equal('BUTTON')
+    it('should child block has a tagNmae of BUTTON', () => {
+      expect(
+        testParrentBlock.getChildBlocks()['childBlock'].getContent()?.tagName
+      ).to.equal('BUTTON')
+    })
 
-    expect(
-      (testParrentBlock.getChildBlocks()['childBlock'] as TestBlock).getEvents()
-    ).to.deep.equal({ click: onClick })
+    it('should child block has a click event listener', () => {
+      const childBlock = testParrentBlock.getChildBlocks()[
+        'childBlock'
+      ] as TestBlock
+
+      expect(childBlock.getEvents()).to.deep.equal({ click: onClick })
+
+      childBlock.getContent()?.click()
+      expect(onClick.calledOnce).to.equal(true)
+    })
   })
 
-  it('should unmount and clean up properly', () => {
-    function onClick(): void {
-      console.log('hi!')
-    }
+  describe('Unmount', () => {
+    let testChildBlock: TestBlock
+    let testParrentBlock: TestBlock
 
-    const testBlock = new TestBlock({
-      htmlElement: 'button',
-      handleClick: onClick
+    beforeEach(() => {
+      testChildBlock = new TestBlock({
+        htmlElement: 'button',
+        text: 'Click me!'
+      })
+
+      testParrentBlock = new TestBlock({
+        childBlocks: { childBlock: testChildBlock }
+      })
     })
 
-    const unmountSpy = sinon.spy(testBlock as any, 'onUnmount')
-    const removeEventsSpy = sinon.spy(testBlock as any, 'removeEvents')
+    it('should remove event listeners', () => {
+      const removeEventsSpy = sandbox.spy(
+        testParrentBlock,
+        'removeEvents' as keyof typeof testParrentBlock
+      )
 
-    const content = testBlock.getContent()
-    expect(content).to.be.an.instanceOf(HTMLElement)
-    expect(content!.tagName).to.equal('BUTTON')
-    expect(testBlock.getEvents()).to.deep.equal({ click: onClick })
+      testParrentBlock.unmount()
 
-    testBlock.unmount()
+      expect(removeEventsSpy.calledOnce).to.equal(true)
+    })
 
-    expect(unmountSpy.calledOnce).to.be.true
-    expect(removeEventsSpy.calledOnce).to.be.true
+    it('should call onUnmount()', () => {
+      const onUnmountSpy = sandbox.spy(
+        testParrentBlock,
+        'onUnmount' as keyof typeof testParrentBlock
+      )
 
-    expect(testBlock.getContent()).to.be.null
-    expect(testBlock.getChildBlocks()).to.equal(undefined)
-    expect(testBlock.getChildBlocksList()).to.equal(undefined)
-    expect(testBlock.getEvents()).to.equal(undefined)
+      testParrentBlock.unmount()
+
+      expect(onUnmountSpy.calledOnce).to.equal(true)
+    })
+
+    it('shoult call unmount() on child blocks', () => {
+      const childUnmountSpy = sandbox.spy(testChildBlock, 'unmount')
+
+      testParrentBlock.unmount()
+
+      expect(childUnmountSpy.calledOnce).to.equal(true)
+    })
+
+    it('should clean up props', () => {
+      testParrentBlock.unmount()
+
+      expect(testParrentBlock.getContent()).to.equal(null)
+      expect(testParrentBlock.getChildBlocks()).to.equal(undefined)
+      expect(testParrentBlock.getChildBlocksList()).to.equal(undefined)
+      expect(testParrentBlock.getEvents()).to.equal(undefined)
+    })
   })
 })

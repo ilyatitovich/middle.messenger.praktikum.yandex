@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { expect } from 'chai'
-import sinon from 'sinon'
+import { createSandbox, fake } from 'sinon'
 
 import { Block, type BlockProps } from './block'
 import { Route, Router } from './router'
@@ -16,6 +15,7 @@ class Page extends Block<BlockProps> {
 }
 
 describe('Route tests', () => {
+  const sandbox = createSandbox()
   let route: Route
 
   beforeEach(() => {
@@ -23,6 +23,7 @@ describe('Route tests', () => {
   })
 
   afterEach(() => {
+    sandbox.restore()
     const page = document.getElementById('page')
 
     if (page) {
@@ -35,26 +36,26 @@ describe('Route tests', () => {
   })
 
   it('should match the correct pathname', () => {
-    expect(route.match('/home')).to.be.true
-    expect(route.match('/about')).to.be.false
+    expect(route.match('/home')).to.equal(true)
+    expect(route.match('/about')).to.equal(false)
   })
 
   it('should navigate and render if the pathname matches', () => {
-    const renderSpy = sinon.spy(route, 'render')
+    const renderSpy = sandbox.spy(route, 'render')
 
     route.navigate('/home')
 
     expect(route.getPathname()).to.equal('/home')
-    expect(renderSpy.calledOnce).to.be.true
+    expect(renderSpy.calledOnce).to.equal(true)
   })
 
   it('should not navigate if the pathname does not match', () => {
-    const renderSpy = sinon.spy(route, 'render')
+    const renderSpy = sandbox.spy(route, 'render')
 
     route.navigate('/about')
 
     expect(route.getPathname()).to.equal('/home')
-    expect(renderSpy.called).to.be.false
+    expect(renderSpy.called).to.equal(false)
   })
 
   it('should render block correctly', () => {
@@ -68,17 +69,17 @@ describe('Route tests', () => {
   it('should call unmount when leaving', () => {
     route.render()
     const block = route['block']
-    const unmountSpy = sinon.spy(block!, 'unmount')
+    const unmountSpy = sandbox.spy(block!, 'unmount')
 
     route.leave()
 
-    expect(unmountSpy.calledOnce).to.be.true
+    expect(unmountSpy.calledOnce).to.equal(true)
   })
 })
 
 describe('Router tests', () => {
-  const checkAuth = sinon.fake.resolves(undefined)
-  const spySandbox = sinon.createSandbox()
+  const checkAuth = fake.resolves(undefined)
+  const spySandbox = createSandbox()
 
   let router: Router
 
@@ -106,17 +107,17 @@ describe('Router tests', () => {
   it('should call checkAuth()', () => {
     router.go('/about')
 
-    expect(checkAuth.called).to.be.true
+    expect(checkAuth.called).to.equal(true)
   })
 
   it('should navigate with go()', () => {
-    expect(router.getCurrentRoute()).equal('/')
+    expect(router.getCurrentRoute()).to.equal('/')
 
     router.go('/home')
-    expect(router.getCurrentRoute()).equal('/home')
+    expect(router.getCurrentRoute()).to.equal('/home')
 
     router.go('/about')
-    expect(router.getCurrentRoute()).equal('/about')
+    expect(router.getCurrentRoute()).to.equal('/about')
   })
 
   it('should call window.history.back()', () => {
@@ -124,7 +125,7 @@ describe('Router tests', () => {
 
     router.back()
 
-    expect(spy.calledOnce).to.be.true
+    expect(spy.calledOnce).to.equal(true)
   })
 
   it('should call window.history.forward()', () => {
@@ -132,7 +133,7 @@ describe('Router tests', () => {
 
     router.forward()
 
-    expect(spy.calledOnce).to.be.true
+    expect(spy.calledOnce).to.equal(true)
   })
 
   it('should return the current route', () => {
@@ -145,6 +146,6 @@ describe('Router tests', () => {
     router.go('/home')
     router.go('/unknown')
 
-    expect(router.getCurrentRoute()).equal('/404')
+    expect(router.getCurrentRoute()).to.equal('/404')
   })
 })
