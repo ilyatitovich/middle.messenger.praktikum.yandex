@@ -61,4 +61,8 @@ export class ChatsAPI extends BaseAPI {
   async uploadFile(data: FormData): Promise<{ id: number }> {
     return this.http.post('/resources', { data })
   }
+
+  async updateChatAvatar(data: FormData): Promise<Chat> {
+    return this.http.put('/chats/avatar', { data })
+  }
 }

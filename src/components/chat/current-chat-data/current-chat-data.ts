@@ -1,5 +1,11 @@
 import { Block, type BlockProps } from '@/core'
-import { type ChatUsersState, chatUsersStore, userStore } from '@/stores'
+import {
+  chatsStore,
+  type ChatUsersState,
+  chatUsersStore,
+  getCurrentChat,
+  userStore
+} from '@/stores'
 import { getDefaultAvatar, getFilePath, getTemplate } from '@/utils'
 
 import CurrentChatDataTemplate from './current-chat-data.hbs?raw'
@@ -12,8 +18,13 @@ export type CurrentChatDataProps = BlockProps & {
 }
 
 export class CurrentChatData extends Block<CurrentChatDataProps> {
+  private currentAvatar: string | null | undefined
+  private chatsStoreUnsubscribe: () => void
+
   constructor(props: CurrentChatDataProps) {
     super('div', { ...props, className: 'chat-main__header-left' })
+
+    this.currentAvatar = props.avatar
 
     this.storeUnsubscribe = chatUsersStore.subscribe(state => {
       const { user: currentUser } = userStore.get()
@@ -36,6 +47,15 @@ export class CurrentChatData extends Block<CurrentChatDataProps> {
 
       this.setProps<CurrentChatDataProps>({ userNames })
     })
+
+    this.chatsStoreUnsubscribe = chatsStore.subscribe(() => {
+      const chat = getCurrentChat()
+
+      if (chat && this.currentAvatar !== chat.avatar) {
+        this.setProps<CurrentChatDataProps>({ avatar: chat.avatar })
+        this.currentAvatar = chat.avatar
+      }
+    })
   }
 
   protected render(): string {
@@ -45,5 +65,9 @@ export class CurrentChatData extends Block<CurrentChatDataProps> {
       title,
       userNames
     })
+  }
+
+  protected onUnmount(): void {
+    this.chatsStoreUnsubscribe()
   }
 }
