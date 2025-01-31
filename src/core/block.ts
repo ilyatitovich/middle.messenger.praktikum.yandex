@@ -1,5 +1,5 @@
-import { EventBus } from '@/core'
-import { isDeepEqual } from '@/utils'
+import { isDeepEqual } from '../../src/utils/deep-equal'
+import { EventBus } from './event-bus'
 
 type TagName = keyof HTMLElementTagNameMap
 

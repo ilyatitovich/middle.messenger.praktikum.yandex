@@ -118,6 +118,16 @@ class ChatsController {
       this.chatsAPI.handleError(error)
     }
   }
+
+  async updateChatAvatar(data: FormData): Promise<void> {
+    try {
+      await this.chatsAPI.updateChatAvatar(data)
+      await this.getChats()
+      showRequestResult(true, 'Аватар чата обновлен')
+    } catch (error) {
+      this.chatsAPI.handleError(error)
+    }
+  }
 }
 
 export const chatsController = new ChatsController()

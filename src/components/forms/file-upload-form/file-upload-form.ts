@@ -13,6 +13,7 @@ import { getTemplate } from '@/utils'
 import FileUploadFormTemplate from './file-upload-form.hbs?raw'
 
 type FileUploadFormProps = BlockProps & {
+  title?: string
   accept?: string
   handleUploadFile: (file: File) => Promise<void>
   handleCancel: () => void
@@ -107,6 +108,8 @@ export class FileUploadForm extends Block<FileUploadFormProps> {
   }
 
   protected render(): string {
-    return getTemplate(FileUploadFormTemplate)
+    return getTemplate(FileUploadFormTemplate, {
+      title: this.props.title ?? 'Загрузите изображение'
+    })
   }
 }
