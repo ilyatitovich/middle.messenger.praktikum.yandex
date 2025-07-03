@@ -1,6 +1,6 @@
 # Y-CHAT
 
-**Y-CHAT** is a web messenger built using JavaScript, TypeScript, CSS, and browser APIs.
+**Y-CHAT** is a portfolio project — a web messenger built using JavaScript, TypeScript, CSS, and browser APIs.
 
 ## Key Features
 
