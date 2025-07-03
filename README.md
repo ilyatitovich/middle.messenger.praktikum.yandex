@@ -1,114 +1,113 @@
 # Y-CHAT
 
-**Y-CHAT** — это веб-мессенджер, разработанный с использованием JavaScript, TypeScript, CSS и API браузера.
+**Y-CHAT** is a web messenger built using JavaScript, TypeScript, CSS, and browser APIs.
 
-## Основные возможности
+## Key Features
 
-- **Регистрация**: создание нового аккаунта;
-- **Авторизация**: вход в систему;
-- **Список чатов**: отображение всех доступных чатов и возможность перехода в нужный;
-- **Обмен сообщениями**: отправка и получение сообщений в реальном времени.
+* **Registration**: Create a new account;
+* **Authentication**: Log in to the system;
+* **Chat List**: View all available chats and navigate to the desired one;
+* **Messaging**: Send and receive messages in real-time.
 
-## Дизайн
+## Live Version
 
-[Дизайн приложения выполнен в редакторе Figma](https://www.figma.com/design/zfqizT8NEYCLaOUsm95N1k/middle.messenger.praktikum.yandex?node-id=0-1&t=WvK4MT1XLEpIoF7J-1)
+[The project is deployed on Netlify](https://y-chat.netlify.app/)
 
-## Live версия
+## Page List
 
-[Проект развернут на сервере Netlify](https://y-chat.netlify.app/)
+* [Login](https://y-chat.netlify.app/)
+* [Sign Up](https://y-chat.netlify.app/sign-up)
+* [User Profile](https://y-chat.netlify.app/settings)
+* [Edit Profile Data](https://y-chat.netlify.app/settings/change-data)
+* [Change Password](https://y-chat.netlify.app/settings/change-password)
+* [404 Page](https://y-chat.netlify.app/404)
+* [500 Page](https://y-chat.netlify.app/500)
+* [Chat](https://y-chat.netlify.app/messenger)
 
-## Список страниц
+## Technologies Used
 
-- [Вход](https://y-chat.netlify.app/)
-- [Регистрация](https://y-chat.netlify.app/sign-up)
-- [Профиль пользователя](https://y-chat.netlify.app/settings)
-- [Изменить данные](https://y-chat.netlify.app/settings/change-data)
-- [Изменить пароль](https://y-chat.netlify.app/settings/change-password)
-- [404](https://y-chat.netlify.app/404)
-- [500](https://y-chat.netlify.app/500)
-- [Чат](https://y-chat.netlify.app/messenger)
+### Core Dependencies
 
-## Используемые технологии
+* **Express**: Used to run the server;
+* **Handlebars**: Templating engine for rendering pages.
 
-### Основные зависимости
+### Development Tools
 
-- **Express**: Используется для запуска сервера;
-- **Handlebars**: Шаблонизатор для верстки страниц.
+* **TypeScript**: Statically typed superset of JavaScript for safer and more efficient development;
+* **Vite**: Fast build tool for development and production.
 
-### Инструменты для разработки
+#### Code Linting and Formatting
 
-- **TypeScript**: Статическая типизация для JavaScript, обеспечивающая безопасность кода и улучшенную разработку;
-- **Vite**: Быстрый инструмент для разработки и сборки проекта.
+* **ESLint**: Linter for JavaScript and TypeScript to enforce coding standards;
 
-#### Линтинг и форматирование кода
+  * **@typescript-eslint** plugin: Rules for TypeScript;
+  * **eslint-plugin-perfectionist**: Sorts objects and imports for better readability;
+* **Prettier**: Code formatter for consistent style.
 
-- **ESLint**: Линтер для JavaScript и TypeScript, помогает соблюдать правила кодирования;
-  - Плагин **@typescript-eslint**: Правила для TypeScript;
-  - Плагин **eslint-plugin-perfectionist**: Упорядочивание объектов и импортов;
-- **Prettier**: Форматирование кода.
+#### Style Linting
 
-#### Линтинг стилей
+* **Stylelint**: Linter for CSS and PostCSS;
 
-- **Stylelint**: Линтер для CSS и PostCSS;
-  - Конфигурация **@stylistic/stylelint-config**: Предустановленные правила Stylelint;
-  - Плагин **stylelint-use-logical**: Для работы с логическими свойствами CSS.
+  * **@stylistic/stylelint-config**: Predefined stylelint rules;
+  * **stylelint-use-logical**: Promotes the use of logical CSS properties.
 
-#### Постобработка CSS
+#### CSS Post-processing
 
-- **PostCSS**: Инструмент для работы с CSS;
-  - Плагин **autoprefixer**: Добавляет вендорные префиксы для поддержки браузеров;
-  - Плагин **postcss-nesting**: Поддержка вложенных селекторов в CSS.
+* **PostCSS**: Tool for transforming CSS;
 
-#### Инструменты для работы с Git
+  * **autoprefixer** plugin: Adds vendor prefixes for browser compatibility;
+  * **postcss-nesting** plugin: Enables nested selectors in CSS.
 
-- **Husky**: Управление Git-хуками для запуска проверок перед коммитом;
-- **Nano Staged**: Легковесный инструмент для запуска проверок на стейдженных файлах.
+#### Git Workflow Tools
 
-#### Сценарии и управление задачами
+* **Husky**: Manages Git hooks to run checks before commits;
+* **Nano Staged**: Lightweight tool for running checks on staged files.
 
-- **npm-run-all**: Утилита для выполнения нескольких npm-скриптов.
+#### Task Running
 
-#### Тестирование
+* **npm-run-all**: Utility for running multiple npm scripts.
 
-- **Mocha**: Фреймворк для написания тестов;
-- **Chai**: Библиотека для утверждений в тестах;
-- **Sinon**: Инструмент для создания заглушек, шпионов и моков;
-- **JSDOM**: Виртуальный DOM для тестирования фронтенд-кода;
-- **ts-node**: Позволяет запускать TypeScript-код без предварительной компиляции.
+#### Testing
 
-## Локальный запуск
+* **Mocha**: Test framework;
+* **Chai**: Assertion library;
+* **Sinon**: Spies, stubs, and mocks;
+* **JSDOM**: Virtual DOM for frontend testing;
+* **ts-node**: Runs TypeScript code without pre-compilation.
 
-1. Клонируйте репозиторий:
+## Local Development
+
+1. Clone the repository:
 
    ```bash
    git clone https://github.com/ilyatitovich/middle.messenger.praktikum.yandex.git
    ```
 
-2. Перейдите в папку с проектом:
+2. Navigate into the project folder:
 
    ```bash
    cd y-chat
    ```
 
-3. Установите зависимости:
+3. Install dependencies:
 
    ```bash
    npm install
    ```
 
-4. Запустите тесты:
+4. Run tests:
 
    ```bash
    npm run test
    ```
 
-5. Запустите приложение:
+5. Start the app:
 
    ```bash
    npm run start
    ```
 
-6. Запуск в режиме разработки:
+6. Run in development mode:
 
    ```bash
    npm run dev
